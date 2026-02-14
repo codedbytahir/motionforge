@@ -1,0 +1,60 @@
+'use client';
+
+import React from 'react';
+import { Player, AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig } from 'motionforge';
+
+const HelloWorldComposition = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const scale = spring({
+    frame,
+    fps,
+    config: {
+      stiffness: 100,
+      damping: 10,
+    },
+  });
+
+  const opacity = interpolate(frame, [0, 20], [0, 1]);
+  const translateY = interpolate(frame, [0, 30], [50, 0]);
+
+  return (
+    <AbsoluteFill className="bg-gradient-to-br from-emerald-900 to-black flex items-center justify-center">
+      <div
+        style={{
+          opacity,
+          transform: `scale(${scale}) translateY(${translateY}px)`,
+          textAlign: 'center'
+        }}
+      >
+        <h1 className="text-7xl text-emerald-400 font-black mb-4">Hello MotionForge!</h1>
+        <p className="text-2xl text-emerald-600">Your programmatic video journey starts here.</p>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+export default function Home() {
+  return (
+    <main className="min-h-screen flex items-center justify-center bg-black p-10">
+      <div className="w-full max-w-5xl">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold text-white mb-2">Hello World Template</h1>
+          <p className="text-gray-400">Edit <code className="text-emerald-500">src/app/page.tsx</code> to see changes in real-time.</p>
+        </div>
+        <div className="rounded-2xl overflow-hidden border border-emerald-900/50 shadow-2xl shadow-emerald-500/10">
+          <Player
+            component={HelloWorldComposition}
+            durationInFrames={150}
+            fps={30}
+            width={1920}
+            height={1080}
+            controls
+            loop
+          />
+        </div>
+      </div>
+    </main>
+  );
+}
