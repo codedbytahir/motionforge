@@ -42,5 +42,5 @@ jobs:
         run: |
           cd packages/create-motionforge
           bun install
-          # No build script for CLI yet as it is direct JS, but verify it exists
+          # Verify binary exists
           ls bin/index.js

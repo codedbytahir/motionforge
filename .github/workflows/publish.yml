@@ -32,42 +32,65 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-bun-
 
-      - name: Install Dependencies
-        run: bun install
+      - name: Verify NPM Token
+        run: |
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "::error::NPM_TOKEN is missing. Please add it to your GitHub Repository Secrets."
+            exit 1
+          fi
 
       - name: Publish MotionForge
         run: |
+          echo "Processing motionforge..."
           cd packages/motionforge
           bun install
           bun run build
 
-          # Only publish if version changed
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
           CURRENT_VERSION=$(node -p "require('./package.json').version")
-          NPM_VERSION=$(npm view motionforge version 2>/dev/null || echo "0.0.0")
+
+          echo "Checking if $PACKAGE_NAME@$CURRENT_VERSION is already published..."
+          # Use || true to prevent exit on error if package doesn't exist
+          NPM_VERSION=$(npm view $PACKAGE_NAME version 2>/dev/null || echo "")
+
+          if [ -z "$NPM_VERSION" ]; then
+            echo "Package $PACKAGE_NAME not found on NPM. Initial publication."
+            NPM_VERSION="0.0.0"
+          fi
 
           if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
-            echo "Publishing motionforge@$CURRENT_VERSION..."
+            echo "New version detected: $CURRENT_VERSION (NPM has $NPM_VERSION). Publishing..."
             npm publish --access public --provenance
+            echo "Successfully published $PACKAGE_NAME@$CURRENT_VERSION"
           else
-            echo "motionforge@$CURRENT_VERSION is already published."
+            echo "$PACKAGE_NAME@$CURRENT_VERSION is already up to date on NPM."
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish Create-MotionForge
         run: |
+          echo "Processing create-motionforge..."
           cd packages/create-motionforge
           bun install
 
-          # Only publish if version changed
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
           CURRENT_VERSION=$(node -p "require('./package.json').version")
-          NPM_VERSION=$(npm view create-motionforge version 2>/dev/null || echo "0.0.0")
+
+          echo "Checking if $PACKAGE_NAME@$CURRENT_VERSION is already published..."
+          NPM_VERSION=$(npm view $PACKAGE_NAME version 2>/dev/null || echo "")
+
+          if [ -z "$NPM_VERSION" ]; then
+            echo "Package $PACKAGE_NAME not found on NPM. Initial publication."
+            NPM_VERSION="0.0.0"
+          fi
 
           if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
-            echo "Publishing create-motionforge@$CURRENT_VERSION..."
+            echo "New version detected: $CURRENT_VERSION (NPM has $NPM_VERSION). Publishing..."
             npm publish --access public --provenance
+            echo "Successfully published $PACKAGE_NAME@$CURRENT_VERSION"
           else
-            echo "create-motionforge@$CURRENT_VERSION is already published."
+            echo "$PACKAGE_NAME@$CURRENT_VERSION is already up to date on NPM."
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
