@@ -40,17 +40,19 @@ jobs:
           fi
 
       - name: Publish MotionForge
+        working-directory: packages/motionforge
         run: |
           echo "Processing motionforge..."
-          cd packages/motionforge
           bun install
-          bun run build
+
+          # Using bun x ensures tsup is found/run correctly
+          echo "Building motionforge..."
+          bun x tsup
 
           PACKAGE_NAME=$(node -p "require('./package.json').name")
           CURRENT_VERSION=$(node -p "require('./package.json').version")
 
           echo "Checking if $PACKAGE_NAME@$CURRENT_VERSION is already published..."
-          # Use || true to prevent exit on error if package doesn't exist
           NPM_VERSION=$(npm view $PACKAGE_NAME version 2>/dev/null || echo "")
 
           if [ -z "$NPM_VERSION" ]; then
@@ -69,9 +71,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish Create-MotionForge
+        working-directory: packages/create-motionforge
         run: |
           echo "Processing create-motionforge..."
-          cd packages/create-motionforge
           bun install
 
           PACKAGE_NAME=$(node -p "require('./package.json').name")

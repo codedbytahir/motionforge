@@ -25,22 +25,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-bun-
 
-      - name: Install Dependencies
+      - name: Install Root Dependencies
         run: bun install
 
-      - name: Lint
-        run: bun run lint
-        continue-on-error: true
-
       - name: Build Framework
+        working-directory: packages/motionforge
         run: |
-          cd packages/motionforge
           bun install
-          bun run build
+          bun x tsup
 
       - name: Build CLI
+        working-directory: packages/create-motionforge
         run: |
-          cd packages/create-motionforge
           bun install
-          # Verify binary exists
           ls bin/index.js
