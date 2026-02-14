@@ -38,7 +38,6 @@ jobs:
       - name: Publish MotionForge
         run: |
           cd packages/motionforge
-          bun install
           bun run build
 
           # Only publish if version changed
@@ -57,7 +56,11 @@ jobs:
       - name: Publish Create-MotionForge
         run: |
           cd packages/create-motionforge
-          bun install
+          
+          # Build if build script exists
+          if grep -q '"build"' package.json; then
+            bun run build
+          fi
 
           # Only publish if version changed
           CURRENT_VERSION=$(node -p "require('./package.json').version")
