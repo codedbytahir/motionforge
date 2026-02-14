@@ -58,28 +58,17 @@ This scaffold provides a robust foundation built with:
 
 ## 🚀 Quick Start
 
-There are two ways to use MotionForge depending on your needs:
-
-### 1. Starting a New Project (Recommended)
-Use the CLI to bootstrap a complete video project with templates and configurations ready to go.
+The fastest way to get started with MotionForge is by using the CLI tool:
 
 ```bash
-# This will work once you publish the package to NPM
 npx create-motionforge@latest
 ```
 
-**Note:** If you haven't published to NPM yet, you can test it locally from this repo:
-```bash
-cd packages/create-motionforge
-bun run start
-```
-
-### 2. Adding to an Existing Project
-If you already have a Next.js or React project, just install the library:
-
-```bash
-npm install motionforge
-```
+This will guide you through:
+- 📁 Choosing a project name
+- 🎨 Selecting a template (**Hello World** or **Blank**)
+- 💅 Adding **Tailwind CSS** support
+- 🤖 Including **AI Agent Guidelines** (Google Gemini/Z.ai GLM)
 
 ## 🛠️ Development Setup (for Framework Contributors)
 
@@ -150,15 +139,10 @@ This scaffold includes a comprehensive set of modern web development tools:
 
 MotionForge is a high-performance, React-based programmatic video framework. It is designed to be a modern alternative to Remotion, offering seamless integration with Next.js and Tailwind CSS.
 
-### 🚀 Getting Started
-To create a new project:
+### 🚀 Getting Started with the CLI
+You can create a new MotionForge project in seconds:
 ```bash
 npx create-motionforge@latest
-```
-
-To add to an existing project:
-```bash
-npm install motionforge
 ```
 
 ### Key Features:
