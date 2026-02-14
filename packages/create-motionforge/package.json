@@ -5,6 +5,11 @@
   "bin": {
     "create-motionforge": "./bin/index.js"
   },
+  "files": [
+    "bin",
+    "templates",
+    "README.md"
+  ],
   "type": "module",
   "scripts": {
     "start": "node ./bin/index.js"
