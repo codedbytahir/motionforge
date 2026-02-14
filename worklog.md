@@ -444,11 +444,35 @@ export {
 ```
 
 ---
-**Framework Version:** 1.2.0
+**Framework Version:** 1.3.0
 **Total Components:** 70+
-**Total Icons:** 50+
+**Total Icons:** 55+
 **Total Hooks:** 25+
-**AI Guidelines:** 2
+**AI Guidelines:** 2 (Enhanced for Gemini)
 **Demo Compositions:** 5
 **Cache System:** LRU with TTL
-**Export Formats:** WebM, PNG sequence
+**Export Formats:** WebM (WebCodecs & MediaRecorder)
+
+---
+## Task ID: 6 - Advanced Export System & AI Guideline Overhaul
+
+**Status:** COMPLETED
+
+**Work Done:**
+
+### 🚀 High-Performance Export System:
+- **Frame-by-Frame Engine**: Implemented a robust rendering engine in `VideoExportManager` that drives frames manually, ensuring zero frame drops.
+- **WebCodecs Integration**: Added `WebCodecsEncoder` for hardware-accelerated video encoding, significantly increasing export speed.
+- **SVG-based DOM Capture**: Improved `CanvasRenderer.captureFrame` using the SVG `foreignObject` technique to accurately capture complex DOM elements to canvas.
+- **Simplified Export UI**: Added a professional "Export" button and progress overlay to the `Player` component with real-time feedback.
+
+### 🤖 Professional AI Guidelines (Gemini):
+- **Deep Overhaul**: Re-wrote `GOOGLE-AI-GUIDELINES.md` for professional video engineering.
+- **Advanced Patterns**: Added cinematic techniques like staggered animations, 3D depth, and professional timing curves.
+- **AI Prompting Tips**: Provided specific strategies for Gemini to generate high-quality MotionForge code.
+- **Muxing & Export**: Documented the internal export process for AI understanding.
+
+### 📝 Documentation & Cleanup:
+- Updated `README.md` with MotionForge features and export instructions.
+- Synchronized AI guidelines across package and source directories.
+- Refined icon library with `Loader2Icon` for progress states.

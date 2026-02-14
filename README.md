@@ -35,6 +35,7 @@ This scaffold provides a robust foundation built with:
 - **🖱️ DND Kit** - Modern drag and drop toolkit for React
 - **📊 Recharts** - Redefined chart library built with React and D3
 - **🖼️ Sharp** - High performance image processing
+- **🎬 MotionForge** - High-performance programmatic video creation framework
 
 ### 🌍 Internationalization & Utilities
 - **🌍 Next Intl** - Internationalization library for Next.js
@@ -47,12 +48,13 @@ This scaffold provides a robust foundation built with:
 - **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
 - **🔒 Type Safety** - Full TypeScript configuration with Zod validation
 - **📱 Responsive** - Mobile-first design principles with smooth animations
+- **🎬 Video Export** - Frame-accurate video rendering with WebCodecs support
 - **🗄️ Database Ready** - Prisma ORM configured for rapid backend development
 - **🔐 Auth Included** - NextAuth.js for secure authentication flows
 - **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
 - **🌍 i18n Ready** - Multi-language support with Next Intl
 - **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Structured codebase perfect for AI assistance
+- **🤖 AI-Friendly** - Professional guidelines for Google Gemini and GLM
 
 ## 🚀 Quick Start
 
@@ -128,6 +130,19 @@ This scaffold includes a comprehensive set of modern web development tools:
 - **Image Optimization**: Automatic image processing with Sharp
 - **Type Safety**: End-to-end TypeScript with Zod validation
 - **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
+
+## 🎬 MotionForge Video Framework
+
+This scaffold includes the **MotionForge** framework for creating professional videos with React.
+
+### Key Features:
+- **Frame-Perfect Rendering**: deterministic animations driven by frame number.
+- **High-Speed Export**: Frame-by-frame video export using WebCodecs.
+- **Cinematic Effects**: Native support for spring physics, 3D transforms, and particle systems.
+- **AI-Powered**: Comes with specialized guidelines for Google Gemini to generate high-quality video code.
+
+### Exporting Video:
+Use the "Export" button in the Player to render your composition to a high-quality WebM video.
 
 ## 🤝 Get Started with Z.ai
 

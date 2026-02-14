@@ -17,6 +17,7 @@ export type { CacheStats } from './cache';
 export {
   CanvasRenderer,
   WebMEncoder,
+  WebCodecsEncoder,
   FrameSequenceEncoder,
   VideoExportManager,
   videoExportManager,
@@ -286,7 +287,8 @@ export const renderJobManager = new RenderJobManager();
 
 // High-level API for rendering
 export async function renderCompositionToVideo(
-  canvas: HTMLCanvasElement,
+  setFrame: (frame: number) => void,
+  element: HTMLElement,
   config: VideoConfig,
   options?: {
     onProgress?: (progress: number) => void;
@@ -296,7 +298,7 @@ export async function renderCompositionToVideo(
   const { VideoExportManager } = await import('./export');
   const manager = new VideoExportManager();
   
-  const result = await manager.exportFromCanvas(canvas, {
+  const result = await manager.exportVideo(setFrame, element, {
     config,
     onProgress: options?.onProgress 
       ? (p) => options.onProgress!(p.percentage)
