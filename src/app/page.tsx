@@ -4,11 +4,39 @@ import React, { useState } from 'react';
 import { Player } from '@/lib/remotion';
 import { DemoComposition } from '@/lib/remotion/demo/DemoComposition';
 import { DemoComposition2 } from '@/lib/remotion/demo/DemoComposition2';
+import { DemoComposition3 } from '@/lib/remotion/demo/DemoComposition3';
+import { DemoComposition4 } from '@/lib/remotion/demo/DemoComposition4';
+import { DemoComposition5 } from '@/lib/remotion/demo/DemoComposition5';
+import {
+  PlayIcon,
+  FilmIcon,
+  SparkleIcon,
+  LayersIcon,
+  VideoIcon,
+  ArrowRightIcon,
+  ArrowDownIcon,
+  ImageIcon,
+  CameraIcon,
+  ClockIcon,
+  SettingsIcon,
+  HeartIcon,
+} from '@/lib/remotion/icons';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
+
+// Icon wrapper component for consistent styling
+const IconWrapper: React.FC<{ 
+  children: React.ReactNode; 
+  color?: string;
+  size?: number;
+}> = ({ children, color = '#10b981', size = 28 }) => (
+  <div style={{ color, width: size, height: size, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    {children}
+  </div>
+);
 
 // Demo compositions configuration
 const demoCompositions = [
@@ -25,6 +53,27 @@ const demoCompositions = [
     description: 'Typewriter, counter, neon effects',
     component: DemoComposition2,
     durationInFrames: 540,
+  },
+  {
+    id: '3d',
+    name: '3D Transforms',
+    description: '3D rotations, perspective, cubes',
+    component: DemoComposition3,
+    durationInFrames: 900,
+  },
+  {
+    id: 'particles',
+    name: 'Particle Systems',
+    description: 'Floating, exploding, confetti effects',
+    component: DemoComposition4,
+    durationInFrames: 1440,
+  },
+  {
+    id: 'text',
+    name: 'Text Animations',
+    description: 'Letter, word, wave, rainbow effects',
+    component: DemoComposition5,
+    durationInFrames: 1590,
   },
 ];
 
@@ -87,32 +136,38 @@ const features = [
   {
     title: 'Composition',
     description: 'Define your video with dimensions, frame rate, and duration',
-    icon: '🎬',
+    icon: FilmIcon,
+    color: '#10b981',
   },
   {
     title: 'Sequence',
     description: 'Organize your video into timed sequences and scenes',
-    icon: '🎞️',
+    icon: LayersIcon,
+    color: '#34d399',
   },
   {
     title: 'Spring Animations',
     description: 'Natural physics-based animations with customizable damping',
-    icon: '🌊',
+    icon: SparkleIcon,
+    color: '#6ee7b7',
   },
   {
     title: 'Interpolation',
     description: 'Smooth transitions between values with easing functions',
-    icon: '📈',
+    icon: ArrowRightIcon,
+    color: '#059669',
   },
   {
     title: 'Timeline Player',
     description: 'Real-time preview with play, pause, and seek controls',
-    icon: '▶️',
+    icon: PlayIcon,
+    color: '#047857',
   },
   {
     title: 'Video Rendering',
     description: 'Export your compositions to MP4, WebM, or GIF',
-    icon: '🎥',
+    icon: VideoIcon,
+    color: '#10b981',
   },
 ];
 
@@ -148,9 +203,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-700 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
+                <VideoIcon size={28} color="white" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 via-emerald-300 to-teal-400 bg-clip-text text-transparent">
@@ -177,27 +230,31 @@ export default function Home() {
           <TabsList className="bg-[#0f0f0f] border border-emerald-900/50">
             <TabsTrigger 
               value="player" 
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white text-emerald-400"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white text-emerald-400 flex items-center gap-2"
             >
-              ▶️ Player
+              <PlayIcon size={16} />
+              Player
             </TabsTrigger>
             <TabsTrigger 
               value="features" 
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white text-emerald-400"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white text-emerald-400 flex items-center gap-2"
             >
-              ✨ Features
+              <SparklesIcon size={16} />
+              Features
             </TabsTrigger>
             <TabsTrigger 
               value="api" 
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white text-emerald-400"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white text-emerald-400 flex items-center gap-2"
             >
-              📚 API
+              <BookIcon size={16} />
+              API
             </TabsTrigger>
             <TabsTrigger 
               value="code" 
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white text-emerald-400"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white text-emerald-400 flex items-center gap-2"
             >
-              💻 Examples
+              <CodeIcon size={16} />
+              Examples
             </TabsTrigger>
           </TabsList>
 
@@ -250,12 +307,14 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
               {[
-                { icon: '🎨', title: 'Animated Background', desc: 'Dynamic gradient that shifts colors over time' },
-                { icon: '✨', title: 'Particle Effects', desc: '100 particles with spring-based physics' },
-                { icon: '📊', title: 'Data Visualization', desc: 'Animated charts and waveform displays' },
+                { Icon: CameraIcon, title: '3D Transforms', desc: 'Rotate, perspective, and cube effects', color: '#10b981' },
+                { Icon: SparkleIcon, title: 'Particle Systems', desc: 'Floating, exploding, confetti particles', color: '#34d399' },
+                { Icon: LayersIcon, title: 'Text Animations', desc: 'Letter-by-letter, wave, rainbow effects', color: '#6ee7b7' },
               ].map((item, i) => (
                 <Card key={i} className="bg-[#0f0f0f] border-emerald-900/50 p-5 hover:border-emerald-600/50 transition-all duration-300 group">
-                  <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">{item.icon}</div>
+                  <div className="mb-3 group-hover:scale-110 transition-transform">
+                    <item.Icon size={32} color={item.color} />
+                  </div>
                   <h3 className="font-semibold text-lg mb-2 text-emerald-400">{item.title}</h3>
                   <p className="text-sm text-emerald-700">{item.desc}</p>
                 </Card>
@@ -280,7 +339,9 @@ export default function Home() {
                   key={index} 
                   className="bg-[#0f0f0f] border-emerald-900/50 p-6 hover:border-emerald-600/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-900/20 group"
                 >
-                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">{feature.icon}</div>
+                  <div className="mb-4 group-hover:scale-110 transition-transform">
+                    <feature.icon size={40} color={feature.color} />
+                  </div>
                   <h3 className="font-semibold text-lg mb-2 text-emerald-400">{feature.title}</h3>
                   <p className="text-sm text-emerald-700">{feature.description}</p>
                 </Card>
@@ -292,7 +353,8 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card className="bg-[#0f0f0f] border-emerald-900/50 p-6">
                 <h3 className="font-semibold text-lg mb-4 flex items-center gap-2 text-emerald-400">
-                  <span>🌊</span> Spring Physics
+                  <SparkleIcon size={24} color="#10b981" />
+                  Spring Physics
                 </h3>
                 <div className="space-y-3 text-sm text-emerald-300">
                   <p>Spring animations provide natural, physics-based motion. Configure:</p>
@@ -307,7 +369,8 @@ export default function Home() {
 
               <Card className="bg-[#0f0f0f] border-emerald-900/50 p-6">
                 <h3 className="font-semibold text-lg mb-4 flex items-center gap-2 text-emerald-400">
-                  <span>📈</span> Easing Functions
+                  <ArrowRightIcon size={24} color="#10b981" />
+                  Easing Functions
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {easingFunctions.map((fn) => (
@@ -492,14 +555,17 @@ export default function Home() {
 
             <Card className="bg-gradient-to-r from-emerald-950/50 via-teal-950/50 to-emerald-950/50 border-emerald-900/50 p-6">
               <div className="flex items-start gap-4">
-                <div className="text-4xl">💡</div>
+                <div>
+                  <InfoIcon size={32} color="#10b981" />
+                </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2 text-emerald-400">Pro Tips</h3>
                   <ul className="space-y-2 text-sm text-emerald-300">
-                    <li>• Use <code className="text-emerald-400 bg-emerald-950/50 px-1 rounded">Sequence</code> components to organize your video into scenes</li>
-                    <li>• Combine <code className="text-emerald-400 bg-emerald-950/50 px-1 rounded">spring</code> and <code className="text-emerald-400 bg-emerald-950/50 px-1 rounded">interpolate</code> for complex animations</li>
-                    <li>• Pre-calculate values outside of render for better performance</li>
-                    <li>• Use <code className="text-emerald-400 bg-emerald-950/50 px-1 rounded">useVideoConfig</code> to make responsive compositions</li>
+                    <li>Use <code className="text-emerald-400 bg-emerald-950/50 px-1 rounded">Sequence</code> components to organize your video into scenes</li>
+                    <li>Combine <code className="text-emerald-400 bg-emerald-950/50 px-1 rounded">spring</code> and <code className="text-emerald-400 bg-emerald-950/50 px-1 rounded">interpolate</code> for complex animations</li>
+                    <li>Pre-calculate values outside of render for better performance</li>
+                    <li>Use <code className="text-emerald-400 bg-emerald-950/50 px-1 rounded">useVideoConfig</code> to make responsive compositions</li>
+                    <li>Always use icons from <code className="text-emerald-400 bg-emerald-950/50 px-1 rounded">motionforge/icons</code> instead of emojis for professional results</li>
                   </ul>
                 </div>
               </div>
@@ -514,7 +580,7 @@ export default function Home() {
           <div className="flex items-center justify-between text-sm text-emerald-600">
             <div className="flex items-center gap-2">
               <span>Built with</span>
-              <span className="text-emerald-400">❤</span>
+              <HeartIcon size={16} color="#10b981" />
               <span>using React & TypeScript</span>
             </div>
             <div className="flex items-center gap-4">
@@ -529,6 +595,31 @@ export default function Home() {
     </div>
   );
 }
+
+// Additional icons needed
+const CodeIcon: React.FC<{ size?: number; color?: string }> = ({ size = 24, color = 'currentColor' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" fill={color} />
+  </svg>
+);
+
+const BookIcon: React.FC<{ size?: number; color?: string }> = ({ size = 24, color = 'currentColor' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z" fill={color} />
+  </svg>
+);
+
+const SparklesIcon: React.FC<{ size?: number; color?: string }> = ({ size = 24, color = 'currentColor' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2zm0 3.24l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 14.2l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 5.24z" fill={color} />
+  </svg>
+);
+
+const InfoIcon: React.FC<{ size?: number; color?: string }> = ({ size = 24, color = 'currentColor' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill={color} />
+  </svg>
+);
 
 // API Item Component
 const ApiItem: React.FC<{
