@@ -12,7 +12,7 @@ jobs:
       id-token: write # Required for provenance
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
@@ -40,23 +40,26 @@ jobs:
           fi
 
       - name: Publish MotionForge
+        working-directory: packages/motionforge
         run: |
           echo "Processing motionforge..."
-          cd packages/motionforge
-          bun run build
-
+          bun install
+          
+          # Using bun x ensures tsup is found/run correctly
+          echo "Building motionforge..."
+          bun x tsup
+          
           PACKAGE_NAME=$(node -p "require('./package.json').name")
           CURRENT_VERSION=$(node -p "require('./package.json').version")
-
+          
           echo "Checking if $PACKAGE_NAME@$CURRENT_VERSION is already published..."
-          # Use || true to prevent exit on error if package doesn't exist
           NPM_VERSION=$(npm view $PACKAGE_NAME version 2>/dev/null || echo "")
-
+          
           if [ -z "$NPM_VERSION" ]; then
             echo "Package $PACKAGE_NAME not found on NPM. Initial publication."
             NPM_VERSION="0.0.0"
           fi
-
+          
           if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
             echo "New version detected: $CURRENT_VERSION (NPM has $NPM_VERSION). Publishing..."
             npm publish --access public --provenance
@@ -68,26 +71,22 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish Create-MotionForge
+        working-directory: packages/create-motionforge
         run: |
           echo "Processing create-motionforge..."
-          cd packages/create-motionforge
+          bun install
           
-          # Build if build script exists
-          if grep -q '"build"' package.json; then
-            bun run build
-          fi
-
           PACKAGE_NAME=$(node -p "require('./package.json').name")
           CURRENT_VERSION=$(node -p "require('./package.json').version")
-
+          
           echo "Checking if $PACKAGE_NAME@$CURRENT_VERSION is already published..."
           NPM_VERSION=$(npm view $PACKAGE_NAME version 2>/dev/null || echo "")
-
+          
           if [ -z "$NPM_VERSION" ]; then
             echo "Package $PACKAGE_NAME not found on NPM. Initial publication."
             NPM_VERSION="0.0.0"
           fi
-
+          
           if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
             echo "New version detected: $CURRENT_VERSION (NPM has $NPM_VERSION). Publishing..."
             npm publish --access public --provenance
