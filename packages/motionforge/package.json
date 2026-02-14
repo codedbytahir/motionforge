@@ -62,7 +62,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/codedbytahir/motionforge.git"
+    "url": "git+https://github.com/codedbytahir/motionforge.git",
+    "directory": "packages/motionforge"
   },
   "bugs": {
     "url": "https://github.com/codedbytahir/motionforge/issues"
