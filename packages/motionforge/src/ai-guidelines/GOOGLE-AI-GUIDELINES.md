@@ -1,17 +1,17 @@
-# MotionForge AI Agent Guidelines for Google AI (Gemini)
+# 🎬 MotionForge Professional AI Video Engineering Guide (Google Gemini)
 
-## Framework Overview
+## 🚀 Framework Overview
 
-MotionForge is a programmatic video creation framework built on React. It enables developers to create videos using React components, frame-by-frame rendering, and physics-based animations. This guide is specifically designed for Google AI models (Gemini) to understand and use the framework effectively.
+MotionForge is a high-performance, programmatic video creation framework built on React. It enables the creation of cinematic videos using React components, frame-accurate rendering, and advanced physics-based animations. This guide is optimized for **Google Gemini (Pro/Ultra)** to architect, develop, and optimize professional video content.
 
-## Core Philosophy
+## 💎 Core Philosophy: Video as a Function of Time
 
-MotionForge treats video as a function of time (frame). Every visual element is a React component that receives the current frame number and renders accordingly. This declarative approach allows for:
+In MotionForge, **Video = ƒ(frame)**. Every visual element is a pure React component that derives its state from the current frame. This deterministic approach ensures:
 
-- Precise frame-level control
-- Reusable animation components
-- Data-driven video generation
-- Type-safe video development
+- **Frame-Perfect Accuracy**: Zero jitter, guaranteed consistency across renders.
+- **Parametric Design**: Videos can be generated dynamically from any data source.
+- **Cinematic Motion**: Native support for spring physics, interpolation, and easing.
+- **Web-First**: Uses modern web technologies (Canvas, SVG, WebCodecs) for maximum performance.
 
 ## Project Structure
 
@@ -626,42 +626,137 @@ const { transform } = useSlide(
 );
 ```
 
-## Best Practices for Google AI
+## 🏆 Professional Workflow & Best Practices
 
-### 1. Component Structure
+### 1. Advanced Component Architecture
+
+Always use `AbsoluteFill` as your primary container to ensure proper layering and positioning.
 
 ```typescript
-// CORRECT: Proper structure
-const MyVideo: React.FC = () => {
+/**
+ * ✅ PROFESSIONAL PATTERN: Layered Composition
+ */
+const CinematicComposition: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps, width, height } = useVideoConfig();
-  
+  const { width, height, fps } = useVideoConfig();
+
   return (
-    <AbsoluteFill style={{ backgroundColor: '#0a0a0a' }}>
-      {/* Content */}
+    <AbsoluteFill style={{ backgroundColor: '#050505', overflow: 'hidden' }}>
+      {/* Layer 0: Background/Ambient */}
+      <Sequence from={0} name="Background">
+        <DynamicBackground />
+      </Sequence>
+
+      {/* Layer 1: Content/Visuals */}
+      <Sequence from={30} durationInFrames={120} name="MainVisual">
+        <Transition.Fade>
+          <HeroGraphic />
+        </Transition.Fade>
+      </Sequence>
+
+      {/* Layer 2: Overlays/UI/Text */}
+      <Sequence from={60} name="Typography">
+        <AnimatedTitle text="MOTIONFORGE" />
+      </Sequence>
+
+      {/* Layer 3: Post-Processing/Vignette */}
+      <Vignette intensity={0.5} />
     </AbsoluteFill>
   );
 };
-
-// WRONG: Missing AbsoluteFill
-const MyVideo = () => <div>Content</div>;
 ```
 
-### 2. Animation Timing
+### 2. Cinematic Animation Mastery
+
+Professional video requires "natural" movement. Avoid linear animations unless intentional.
 
 ```typescript
-// CORRECT: Use spring for natural motion
-const scale = spring({ frame, fps, config: { damping: 12 } });
+// 🟢 RECOMMENDED: Spring with Damping for "Pop"
+const popScale = spring({
+  frame: frame - delay,
+  fps,
+  config: { stiffness: 200, damping: 12, mass: 0.5 }
+});
 
-// CORRECT: Use interpolate for precise timing
-const opacity = interpolate(frame, [0, 30], [0, 1], {
+// 🟢 RECOMMENDED: Interpolation with Cubic Easing for Smoothness
+const smoothX = interpolate(frame, [0, 60], [-100, 0], {
+  easing: Easing.easeOutCubic,
   extrapolateLeft: 'clamp',
   extrapolateRight: 'clamp'
 });
-
-// WRONG: Unclamped values can cause issues
-const opacity = interpolate(frame, [0, 30], [0, 1]); // No clamping
 ```
+
+### 3. Staggered Animations (The "Pro" Look)
+
+Use index-based delays to create sophisticated reveal patterns.
+
+```typescript
+const StaggeredReveal: React.FC<{ items: string[] }> = ({ items }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  return (
+    <div style={{ display: 'flex', gap: 20 }}>
+      {items.map((text, i) => {
+        const delay = i * 4; // 4-frame stagger
+        const progress = spring({ frame: frame - delay, fps });
+
+        return (
+          <div style={{
+            opacity: progress,
+            transform: `translateY(${(1 - progress) * 20}px)`
+          }}>
+            {text}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+```
+
+### 4. 3D Space & Depth
+
+MotionForge supports 3D transforms. Use them to create depth.
+
+```typescript
+<Perspective3D perspective={1000}>
+  <Rotate3D y={frame} x={15}>
+    <Card3D />
+  </Rotate3D>
+</Perspective3D>
+```
+
+## 🛠️ High-Performance Export System
+
+MotionForge features a high-speed, frame-accurate export system.
+
+### How to Trigger Export Programmatically
+
+```typescript
+import { renderCompositionToVideo, downloadVideo } from 'motionforge';
+
+const startExport = async () => {
+  const blob = await renderCompositionToVideo(
+    (frame) => console.log(`Rendering frame ${frame}`),
+    document.getElementById('video-element'),
+    { width: 1920, height: 1080, fps: 30, durationInFrames: 300 }
+  );
+
+  if (blob) {
+    downloadVideo(blob, 'my-professional-video.webm');
+  }
+};
+```
+
+## 💡 AI Prompting Tips for Gemini
+
+When asking Gemini to generate videos, use these keywords for better results:
+- **"Create a cinematic sequence with staggered animations"**
+- **"Use spring physics with overshoot for the title reveal"**
+- **"Apply a neon glow effect with hue-cycling background"**
+- **"Implement a 3D rotating cube transition between scenes"**
+- **"Use interpolation with Easing.bezier(0.25, 0.1, 0.25, 1) for professional timing"**
 
 ### 3. Scene Organization
 
