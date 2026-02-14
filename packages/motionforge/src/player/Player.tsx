@@ -2,6 +2,8 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CompositionProps } from '../core/types';
+import { renderCompositionToVideo, downloadVideo, RenderProgress } from '../renderer';
+import { DownloadIcon, VideoIcon, ClockIcon, Loader2Icon } from '../icons';
 
 // Player Context
 import { PlayerProvider, usePlayer, FrameContext } from '../core/context';
@@ -114,6 +116,8 @@ const Controls: React.FC<{
   onPlaybackRateChange: (rate: number) => void;
   frame: number;
   totalFrames: number;
+  onExport: () => void;
+  isExporting: boolean;
 }> = ({
   playing,
   onPlayPause,
@@ -124,6 +128,8 @@ const Controls: React.FC<{
   onPlaybackRateChange,
   frame,
   totalFrames,
+  onExport,
+  isExporting,
 }) => {
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
   const speeds = [0.25, 0.5, 1, 1.5, 2];
@@ -220,12 +226,33 @@ const Controls: React.FC<{
           <span className="text-emerald-500">{totalFrames}</span>
         </span>
       </div>
+
+      {/* Export button */}
+      <button
+        onClick={onExport}
+        disabled={isExporting}
+        className={`ml-auto flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-900/50 text-white rounded-lg transition-all duration-200 shadow-lg shadow-emerald-500/20 font-medium ${isExporting ? 'cursor-not-allowed' : 'hover:scale-105 active:scale-95'}`}
+        title="Export Video"
+      >
+        {isExporting ? (
+          <>
+            <Loader2Icon size={18} />
+            <span>Exporting...</span>
+          </>
+        ) : (
+          <>
+            <DownloadIcon size={18} />
+            <span>Export</span>
+          </>
+        )}
+      </button>
     </div>
   );
 };
 
 // Canvas component - renders the video composition
 const Canvas: React.FC<{
+  canvasRef?: React.RefObject<HTMLDivElement | null>;
   component: React.ComponentType<Record<string, unknown>>;
   width: number;
   height: number;
@@ -236,6 +263,7 @@ const Canvas: React.FC<{
   playbackRate: number;
   defaultProps?: Record<string, unknown>;
 }> = ({
+  canvasRef,
   component: Component,
   width,
   height,
@@ -250,6 +278,7 @@ const Canvas: React.FC<{
 
   return (
     <div
+      ref={canvasRef as any}
       className="relative rounded-xl overflow-hidden shadow-2xl shadow-emerald-900/30 border border-emerald-900/30"
       style={{
         width: width * scale,
@@ -329,8 +358,12 @@ export const Player: React.FC<PlayerProps> = ({
   const [frame, setFrame] = useState(0);
   const [playing, setPlaying] = useState(autoPlay);
   const [playbackRate, setPlaybackRate] = useState(1);
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState<number>(0);
+
   const animationRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number>(0);
+  const canvasRef = useRef<HTMLDivElement>(null);
 
   // Animation loop
   useEffect(() => {
@@ -429,14 +462,96 @@ export const Player: React.FC<PlayerProps> = ({
     setFrame((f) => Math.min(durationInFrames - 1, f + 1));
   }, [durationInFrames]);
 
+  const handleExport = async () => {
+    if (isExporting || !canvasRef.current) return;
+
+    setIsExporting(true);
+    setExportProgress(0);
+    setPlaying(false);
+
+    try {
+      // The canvas element we want to capture is the inner div that has the scale transform
+      const elementToCapture = canvasRef.current.querySelector('div') as HTMLElement;
+
+      const blob = await renderCompositionToVideo(
+        (f) => setFrame(f),
+        elementToCapture,
+        { width, height, fps, durationInFrames },
+        {
+          onProgress: (progress) => setExportProgress(progress),
+        }
+      );
+
+      if (blob) {
+        downloadVideo(blob, `motionforge-export-${Date.now()}.webm`);
+      }
+    } catch (error) {
+      console.error('Export failed:', error);
+      alert('Export failed. Check console for details.');
+    } finally {
+      setIsExporting(false);
+      setExportProgress(0);
+    }
+  };
+
   return (
     <div
       className={`flex flex-col bg-[#0a0a0a] rounded-2xl p-5 border border-emerald-900/30 ${className || ''}`}
       style={style}
     >
+      {/* Export Progress Overlay */}
+      {isExporting && (
+        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-6">
+          <div className="bg-[#0f0f0f] border border-emerald-900/50 rounded-2xl p-8 max-w-md w-full shadow-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                  <VideoIcon size={24} className="text-emerald-500" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-emerald-400">Exporting Video</h3>
+                  <p className="text-sm text-emerald-700">High Quality Render</p>
+                </div>
+              </div>
+              <Loader2Icon size={24} className="text-emerald-500" />
+            </div>
+
+            <div className="space-y-4">
+              <div className="h-4 bg-emerald-950 rounded-full overflow-hidden border border-emerald-900/30">
+                <div
+                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-300"
+                  style={{ width: `${exportProgress}%` }}
+                />
+              </div>
+
+              <div className="flex justify-between text-sm font-mono">
+                <span className="text-emerald-500">Progress</span>
+                <span className="text-emerald-400">{Math.round(exportProgress)}%</span>
+              </div>
+
+              <div className="pt-4 border-t border-emerald-900/20 grid grid-cols-2 gap-4">
+                <div className="bg-emerald-950/20 p-3 rounded-xl border border-emerald-900/10 text-center">
+                  <div className="text-xs text-emerald-700 uppercase mb-1">Resolution</div>
+                  <div className="text-sm text-emerald-400">{width}x{height}</div>
+                </div>
+                <div className="bg-emerald-950/20 p-3 rounded-xl border border-emerald-900/10 text-center">
+                  <div className="text-xs text-emerald-700 uppercase mb-1">Frames</div>
+                  <div className="text-sm text-emerald-400">{durationInFrames}</div>
+                </div>
+              </div>
+
+              <p className="text-xs text-center text-emerald-800 italic pt-2">
+                Please keep this tab active for faster rendering.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Canvas */}
       <div className="flex justify-center mb-5">
         <Canvas
+          canvasRef={canvasRef}
           component={component}
           width={width}
           height={height}
@@ -462,6 +577,8 @@ export const Player: React.FC<PlayerProps> = ({
             onPlaybackRateChange={setPlaybackRate}
             frame={frame}
             totalFrames={durationInFrames}
+            onExport={handleExport}
+            isExporting={isExporting}
           />
           <Timeline
             durationInFrames={durationInFrames}
