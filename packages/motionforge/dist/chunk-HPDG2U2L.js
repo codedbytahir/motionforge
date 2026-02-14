@@ -18,17 +18,56 @@ var CanvasRenderer = class {
    * Capture a single frame from a DOM element
    */
   async captureFrame(element) {
-    this.ctx.fillStyle = "#000000";
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     if (element instanceof HTMLCanvasElement) {
       this.ctx.drawImage(element, 0, 0, this.canvas.width, this.canvas.height);
     } else if (element instanceof HTMLImageElement) {
       this.ctx.drawImage(element, 0, 0, this.canvas.width, this.canvas.height);
     } else {
-      this.ctx.fillStyle = "#0a0a0a";
-      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      try {
+        const data = await this.domToDataUrl(element);
+        const img = await this.loadImage(data);
+        this.ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
+      } catch (e) {
+        console.error("Failed to capture frame:", e);
+        this.ctx.fillStyle = "#0a0a0a";
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      }
     }
     return this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+  }
+  async domToDataUrl(element) {
+    const width = this.config.width;
+    const height = this.config.height;
+    const clone = element.cloneNode(true);
+    this.inlineStyles(element, clone);
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+        <foreignObject width="100%" height="100%">
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            ${new XMLSerializer().serializeToString(clone)}
+          </div>
+        </foreignObject>
+      </svg>
+    `;
+    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  }
+  inlineStyles(source, target) {
+    const computed = window.getComputedStyle(source);
+    for (const key of Array.from(computed)) {
+      target.style.setProperty(key, computed.getPropertyValue(key), computed.getPropertyPriority(key));
+    }
+    for (let i = 0; i < source.children.length; i++) {
+      this.inlineStyles(source.children[i], target.children[i]);
+    }
+  }
+  loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
   }
   /**
    * Convert ImageData to Blob
@@ -73,6 +112,54 @@ var CanvasRenderer = class {
    */
   dispose() {
     this.canvas.remove();
+  }
+};
+var WebCodecsEncoder = class {
+  constructor(config) {
+    this.encoder = null;
+    this.chunks = [];
+    this.frameCount = 0;
+    this.config = config;
+  }
+  async start(fps, bitrate = 5e6) {
+    if (typeof VideoEncoder === "undefined") {
+      throw new Error("WebCodecs is not supported in this browser");
+    }
+    this.chunks = [];
+    this.frameCount = 0;
+    const init = {
+      output: (chunk) => {
+        const data = new Uint8Array(chunk.byteLength);
+        chunk.copyTo(data);
+        this.chunks.push(new Blob([data], { type: "video/webm" }));
+      },
+      error: (e) => console.error(e)
+    };
+    this.encoder = new VideoEncoder(init);
+    const config = {
+      codec: "vp09.00.10.08",
+      width: this.config.width,
+      height: this.config.height,
+      bitrate,
+      framerate: fps
+    };
+    this.encoder.configure(config);
+  }
+  async addFrame(canvas) {
+    if (!this.encoder) return;
+    const frame = new VideoFrame(canvas, {
+      timestamp: this.frameCount * 1e6 / this.config.fps
+    });
+    this.encoder.encode(frame, { keyFrame: this.frameCount % 60 === 0 });
+    frame.close();
+    this.frameCount++;
+  }
+  async stop() {
+    if (!this.encoder) return new Blob();
+    await this.encoder.flush();
+    this.encoder.close();
+    this.encoder = null;
+    return new Blob(this.chunks, { type: "video/webm" });
   }
 };
 var WebMEncoder = class {
@@ -188,11 +275,74 @@ var VideoExportManager = class {
     this.abortController = null;
   }
   /**
-   * Export video from frames
+   * Export video by driving frames manually (frame-by-frame)
+   * This is much more robust than real-time recording
+   */
+  async exportVideo(setFrame, element, options) {
+    const startTime = Date.now();
+    const { config, onProgress, signal } = options;
+    const useWebCodecs = typeof VideoEncoder !== "undefined";
+    try {
+      this.isRendering = true;
+      this.abortController = new AbortController();
+      const mergedSignal = this.mergeSignals(signal, this.abortController.signal);
+      this.renderer = new CanvasRenderer(config);
+      const canvas = this.renderer.getCanvas();
+      const bitrate = options.rendererConfig?.bitrate ?? 5e6;
+      let webCodecsEncoder = null;
+      if (useWebCodecs) {
+        webCodecsEncoder = new WebCodecsEncoder(config);
+        await webCodecsEncoder.start(config.fps, bitrate);
+      } else {
+        this.encoder = new WebMEncoder(canvas);
+        await this.encoder.start(config.fps, bitrate);
+      }
+      for (let frame = 0; frame < config.durationInFrames; frame++) {
+        if (mergedSignal.aborted) throw new Error("Render aborted");
+        setFrame(frame);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await new Promise((resolve) => setTimeout(resolve, 20));
+        await this.renderer.captureFrame(element);
+        if (useWebCodecs && webCodecsEncoder) {
+          await webCodecsEncoder.addFrame(canvas);
+        } else {
+          await new Promise((resolve) => setTimeout(resolve, 1e3 / config.fps));
+        }
+        if (onProgress) {
+          onProgress(calculateProgress(frame, config.durationInFrames, startTime));
+        }
+      }
+      const blob = useWebCodecs && webCodecsEncoder ? await webCodecsEncoder.stop() : await this.encoder.stop();
+      const url = URL.createObjectURL(blob);
+      return {
+        success: true,
+        blob,
+        url,
+        frameCount: config.durationInFrames,
+        duration: Date.now() - startTime
+      };
+    } catch (error) {
+      return {
+        success: false,
+        frameCount: 0,
+        duration: Date.now() - startTime,
+        error: error instanceof Error ? error.message : "Unknown error"
+      };
+    } finally {
+      this.isRendering = false;
+      this.encoder = null;
+      if (this.renderer) {
+        this.renderer.dispose();
+        this.renderer = null;
+      }
+    }
+  }
+  /**
+   * Export video from frames (LEGACY/REAL-TIME)
    */
   async exportFromCanvas(canvas, options) {
     const startTime = Date.now();
-    const { config, onProgress, signal } = options;
+    const { config, signal } = options;
     try {
       this.isRendering = true;
       this.abortController = new AbortController();
@@ -200,19 +350,18 @@ var VideoExportManager = class {
       this.encoder = new WebMEncoder(canvas);
       const bitrate = options.rendererConfig?.bitrate ?? 5e6;
       await this.encoder.start(config.fps, bitrate);
+      const durationMs = config.durationInFrames / config.fps * 1e3;
       await new Promise((resolve, reject) => {
-        const checkComplete = () => {
+        const timeout = setTimeout(resolve, durationMs + 500);
+        const checkAbort = () => {
           if (mergedSignal.aborted) {
+            clearTimeout(timeout);
             reject(new Error("Render aborted"));
-            return;
-          }
-          if (!this.encoder?.isRecording()) {
-            resolve();
-          } else {
-            requestAnimationFrame(checkComplete);
+          } else if (this.isRendering) {
+            requestAnimationFrame(checkAbort);
           }
         };
-        setTimeout(checkComplete, 100);
+        checkAbort();
       });
       const blob = await this.encoder.stop();
       const url = URL.createObjectURL(blob);
@@ -344,6 +493,7 @@ var export_default = VideoExportManager;
 
 export {
   CanvasRenderer,
+  WebCodecsEncoder,
   WebMEncoder,
   FrameSequenceEncoder,
   VideoExportManager,

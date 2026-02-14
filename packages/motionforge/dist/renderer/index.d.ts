@@ -154,6 +154,9 @@ declare class CanvasRenderer {
      * Capture a single frame from a DOM element
      */
     captureFrame(element: HTMLElement): Promise<ImageData>;
+    private domToDataUrl;
+    private inlineStyles;
+    private loadImage;
     /**
      * Convert ImageData to Blob
      */
@@ -174,6 +177,19 @@ declare class CanvasRenderer {
      * Dispose renderer
      */
     dispose(): void;
+}
+/**
+ * WebCodecs Video Encoder for high-performance encoding
+ */
+declare class WebCodecsEncoder {
+    private encoder;
+    private chunks;
+    private config;
+    private frameCount;
+    constructor(config: VideoConfig);
+    start(fps: number, bitrate?: number): Promise<void>;
+    addFrame(canvas: HTMLCanvasElement): Promise<void>;
+    stop(): Promise<Blob>;
 }
 /**
  * WebM Video Encoder using MediaRecorder
@@ -229,7 +245,12 @@ declare class VideoExportManager {
     private isRendering;
     private abortController;
     /**
-     * Export video from frames
+     * Export video by driving frames manually (frame-by-frame)
+     * This is much more robust than real-time recording
+     */
+    exportVideo(setFrame: (frame: number) => void, element: HTMLElement, options: Omit<ExportOptions, 'compositionId'>): Promise<ExportResult>;
+    /**
+     * Export video from frames (LEGACY/REAL-TIME)
      */
     exportFromCanvas(canvas: HTMLCanvasElement, options: Omit<ExportOptions, 'compositionId'>): Promise<ExportResult>;
     /**
@@ -317,11 +338,11 @@ interface RenderJobState {
     error?: string;
 }
 declare const renderJobManager: RenderJobManager;
-declare function renderCompositionToVideo(canvas: HTMLCanvasElement, config: VideoConfig, options?: {
+declare function renderCompositionToVideo(setFrame: (frame: number) => void, element: HTMLElement, config: VideoConfig, options?: {
     onProgress?: (progress: number) => void;
     onComplete?: (blob: Blob) => void;
 }): Promise<Blob | null>;
 declare function downloadVideo(blob: Blob, filename?: string): void;
 declare function downloadFrame(imageData: ImageData, filename?: string): void;
 
-export { type CacheStats, CanvasRenderer, type ExportOptions, type ExportResult, FrameCache, FrameSequenceEncoder, MemoCache, RenderJobManager, type RenderOptions, type RenderProgress, type RenderResult, type VideoConfig, VideoExportManager, type VideoRendererConfig, WebMEncoder, buildFFmpegCommand, calculateProgress, calculateVideoSize, checkEncodingSupport, createDebouncedCache, createThrottledCache, downloadFrame, downloadVideo, estimateFileSize, estimateRenderTime, frameCache, frameToDataURL, generateFrames, renderCompositionToVideo, renderJobManager, renderVideo, validateRenderConfig, videoExportManager };
+export { type CacheStats, CanvasRenderer, type ExportOptions, type ExportResult, FrameCache, FrameSequenceEncoder, MemoCache, RenderJobManager, type RenderOptions, type RenderProgress, type RenderResult, type VideoConfig, VideoExportManager, type VideoRendererConfig, WebCodecsEncoder, WebMEncoder, buildFFmpegCommand, calculateProgress, calculateVideoSize, checkEncodingSupport, createDebouncedCache, createThrottledCache, downloadFrame, downloadVideo, estimateFileSize, estimateRenderTime, frameCache, frameToDataURL, generateFrames, renderCompositionToVideo, renderJobManager, renderVideo, validateRenderConfig, videoExportManager };

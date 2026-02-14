@@ -1055,6 +1055,9 @@ declare class CanvasRenderer {
      * Capture a single frame from a DOM element
      */
     captureFrame(element: HTMLElement): Promise<ImageData>;
+    private domToDataUrl;
+    private inlineStyles;
+    private loadImage;
     /**
      * Convert ImageData to Blob
      */
@@ -1130,7 +1133,12 @@ declare class VideoExportManager {
     private isRendering;
     private abortController;
     /**
-     * Export video from frames
+     * Export video by driving frames manually (frame-by-frame)
+     * This is much more robust than real-time recording
+     */
+    exportVideo(setFrame: (frame: number) => void, element: HTMLElement, options: Omit<ExportOptions, 'compositionId'>): Promise<ExportResult>;
+    /**
+     * Export video from frames (LEGACY/REAL-TIME)
      */
     exportFromCanvas(canvas: HTMLCanvasElement, options: Omit<ExportOptions, 'compositionId'>): Promise<ExportResult>;
     /**
@@ -1218,7 +1226,7 @@ interface RenderJobState {
     error?: string;
 }
 declare const renderJobManager: RenderJobManager;
-declare function renderCompositionToVideo(canvas: HTMLCanvasElement, config: VideoConfig, options?: {
+declare function renderCompositionToVideo(setFrame: (frame: number) => void, element: HTMLElement, config: VideoConfig, options?: {
     onProgress?: (progress: number) => void;
     onComplete?: (blob: Blob) => void;
 }): Promise<Blob | null>;
@@ -1307,6 +1315,7 @@ declare const SparkleIcon: React$1.FC<IconProps>;
 declare const MagicWandIcon: React$1.FC<IconProps>;
 declare const LightningIcon: React$1.FC<IconProps>;
 declare const LayersIcon: React$1.FC<IconProps>;
+declare const Loader2Icon: React$1.FC<IconProps>;
 declare const Icons: {
     Play: React$1.FC<IconProps>;
     Pause: React$1.FC<IconProps>;
@@ -1373,6 +1382,7 @@ declare const Icons: {
     MagicWand: React$1.FC<IconProps>;
     Lightning: React$1.FC<IconProps>;
     Layers: React$1.FC<IconProps>;
+    Loader2: React$1.FC<IconProps>;
 };
 
-export { AbsoluteFill, type AnimationTrack, ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, Audio, type AudioProps$1 as AudioProps, Blur, Bounce, type CacheStats, CalendarIcon, CameraIcon, CanvasRenderer, CheckIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, Circle, ClockIcon, CloseIcon, CommentIcon, Composition, type CompositionManager, CompositionManagerProvider, type CompositionProps$1 as CompositionProps, Confetti, CopyIcon, Counter, Cube3D, DeleteIcon, AbsoluteFill as Div, DownloadIcon, Easing, type EasingFunction, EditIcon, ErrorIcon, type ExportOptions, type ExportResult, Fade, FastForwardIcon, FileIcon, FilmIcon, Flip3D, FolderIcon, FrameCache, type FrameContextValue, FrameProvider, FrameSequenceEncoder, Freeze, FullscreenExitIcon, FullscreenIcon, G, Glitch, GradientText, HeartIcon, HeartOutlineIcon, Highlight, Icons, ImageIcon, type ImageProps, Img, InfoIcon, type InterpolateOptions, type Keyframe, type LayerProps, LayersIcon, LetterByLetter, LightningIcon, Loop, MagicWandIcon, MaskReveal, MemoCache, MicIcon, MinusIcon, MusicIcon, NeonGlow, ParticleSystem, Path, PauseIcon, Perspective3D, PlayIcon, Player, PlayerComposition, type PlayerProps, PlayerProvider, PlusIcon, ProgressBar, Pulse, QuestionIcon, RainbowText, Rect, RefreshIcon, type RenderJob, RenderJobManager, type RenderProgress, RepeatIcon, ReplayIcon, Retiming, Reverse, RewindIcon, Rotate, Rotate3D, SVG, SaveIcon, Scale, SearchIcon, Sequence, type SequenceProps$1 as SequenceProps, Series, SettingsIcon, ShakeEffect, ShareIcon, ShuffleIcon, SkipBackIcon, SkipForwardIcon, Slide, SparkleIcon, type SpringConfig, StarIcon, StarOutlineIcon, StopIcon, SuccessIcon, Swing, Text, type TextProps$1 as TextProps, ThumbDownIcon, ThumbUpIcon, type TimelineState, TimerIcon, Trail, type TransitionConfig, type TransitionName, Typewriter, UploadIcon, Video, type VideoConfig, VideoExportManager, VideoIcon, type VideoProps$1 as VideoProps, type VideoRendererConfig, VolumeHighIcon, VolumeLowIcon, VolumeMediumIcon, VolumeMuteIcon, WarningIcon, WaveText, WebMEncoder, WordByWord, blur, bounce, buildFFmpegCommand, calculateProgress, calculateVideoSize, checkEncodingSupport, combine, createDebouncedCache, createThrottledCache, downloadFrame, downloadVideo, Easing as easing, estimateFileSize, estimateRenderTime, fade, flash, flip, frameCache, frameToDataURL, generateFrames, getFramesFromSeconds, getSecondsFromFrames, glitch, interpolate, interpolateColors, measureSpring, noise2D, pulse as pulseTransition, random, range, renderCompositionToVideo, renderJobManager, renderVideo, rotate as rotateTransition, scale as scaleTransition, shake as shakeTransition, slide, slideWithFade, spring, staticFile, transitions, useAnimation, useAnimationValue, useBatchFrameProcessor, useCachedFrame, useComposition, useVideoConfig as useConfig, useCurrentFrame, useCycle, useDelay, useDurationInFrames, useFade, useFrameRange, useInterpolate, useKeyframeState, useKeyframes, useLoop, useMemoizedFrame, useOptimizedInterpolate, useOptimizedSpring, usePerformanceMonitor, usePrecomputeFrames, useProgress, usePulse, useRelativeCurrentFrame, useRenderPriority, useSequence, useShake, useSlide, useSpring, useThrottledFrame, useTimeline, useTimelineState, useTransform, useVideoConfig$1 as useVideoConfig, useWindowedFrame, validateRenderConfig, videoExportManager, wipe, zoom };
+export { AbsoluteFill, type AnimationTrack, ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, Audio, type AudioProps$1 as AudioProps, Blur, Bounce, type CacheStats, CalendarIcon, CameraIcon, CanvasRenderer, CheckIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, Circle, ClockIcon, CloseIcon, CommentIcon, Composition, type CompositionManager, CompositionManagerProvider, type CompositionProps$1 as CompositionProps, Confetti, CopyIcon, Counter, Cube3D, DeleteIcon, AbsoluteFill as Div, DownloadIcon, Easing, type EasingFunction, EditIcon, ErrorIcon, type ExportOptions, type ExportResult, Fade, FastForwardIcon, FileIcon, FilmIcon, Flip3D, FolderIcon, FrameCache, type FrameContextValue, FrameProvider, FrameSequenceEncoder, Freeze, FullscreenExitIcon, FullscreenIcon, G, Glitch, GradientText, HeartIcon, HeartOutlineIcon, Highlight, Icons, ImageIcon, type ImageProps, Img, InfoIcon, type InterpolateOptions, type Keyframe, type LayerProps, LayersIcon, LetterByLetter, LightningIcon, Loader2Icon, Loop, MagicWandIcon, MaskReveal, MemoCache, MicIcon, MinusIcon, MusicIcon, NeonGlow, ParticleSystem, Path, PauseIcon, Perspective3D, PlayIcon, Player, PlayerComposition, type PlayerProps, PlayerProvider, PlusIcon, ProgressBar, Pulse, QuestionIcon, RainbowText, Rect, RefreshIcon, type RenderJob, RenderJobManager, type RenderProgress, RepeatIcon, ReplayIcon, Retiming, Reverse, RewindIcon, Rotate, Rotate3D, SVG, SaveIcon, Scale, SearchIcon, Sequence, type SequenceProps$1 as SequenceProps, Series, SettingsIcon, ShakeEffect, ShareIcon, ShuffleIcon, SkipBackIcon, SkipForwardIcon, Slide, SparkleIcon, type SpringConfig, StarIcon, StarOutlineIcon, StopIcon, SuccessIcon, Swing, Text, type TextProps$1 as TextProps, ThumbDownIcon, ThumbUpIcon, type TimelineState, TimerIcon, Trail, type TransitionConfig, type TransitionName, Typewriter, UploadIcon, Video, type VideoConfig, VideoExportManager, VideoIcon, type VideoProps$1 as VideoProps, type VideoRendererConfig, VolumeHighIcon, VolumeLowIcon, VolumeMediumIcon, VolumeMuteIcon, WarningIcon, WaveText, WebMEncoder, WordByWord, blur, bounce, buildFFmpegCommand, calculateProgress, calculateVideoSize, checkEncodingSupport, combine, createDebouncedCache, createThrottledCache, downloadFrame, downloadVideo, Easing as easing, estimateFileSize, estimateRenderTime, fade, flash, flip, frameCache, frameToDataURL, generateFrames, getFramesFromSeconds, getSecondsFromFrames, glitch, interpolate, interpolateColors, measureSpring, noise2D, pulse as pulseTransition, random, range, renderCompositionToVideo, renderJobManager, renderVideo, rotate as rotateTransition, scale as scaleTransition, shake as shakeTransition, slide, slideWithFade, spring, staticFile, transitions, useAnimation, useAnimationValue, useBatchFrameProcessor, useCachedFrame, useComposition, useVideoConfig as useConfig, useCurrentFrame, useCycle, useDelay, useDurationInFrames, useFade, useFrameRange, useInterpolate, useKeyframeState, useKeyframes, useLoop, useMemoizedFrame, useOptimizedInterpolate, useOptimizedSpring, usePerformanceMonitor, usePrecomputeFrames, useProgress, usePulse, useRelativeCurrentFrame, useRenderPriority, useSequence, useShake, useSlide, useSpring, useThrottledFrame, useTimeline, useTimelineState, useTransform, useVideoConfig$1 as useVideoConfig, useWindowedFrame, validateRenderConfig, videoExportManager, wipe, zoom };

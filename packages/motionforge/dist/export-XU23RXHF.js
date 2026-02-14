@@ -2,17 +2,19 @@ import {
   CanvasRenderer,
   FrameSequenceEncoder,
   VideoExportManager,
+  WebCodecsEncoder,
   WebMEncoder,
   calculateProgress,
   checkEncodingSupport,
   estimateFileSize,
   export_default,
   videoExportManager
-} from "./chunk-KFPIOAIT.js";
+} from "./chunk-HPDG2U2L.js";
 export {
   CanvasRenderer,
   FrameSequenceEncoder,
   VideoExportManager,
+  WebCodecsEncoder,
   WebMEncoder,
   calculateProgress,
   checkEncodingSupport,

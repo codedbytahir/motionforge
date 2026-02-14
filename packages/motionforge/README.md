@@ -21,7 +21,7 @@
 - 📊 **Interpolation System** - Smooth transitions with 20+ easing functions
 - 🎮 **Interactive Player** - Real-time preview with timeline controls
 - 📦 **Frame Caching** - LRU cache for optimized performance
-- 🎥 **Video Export** - WebM encoding with MediaRecorder API
+- 🎥 **Video Export** - High-performance WebCodecs & Frame-by-frame rendering
 - 🎯 **TypeScript First** - Full type safety out of the box
 
 ## 📦 Installation

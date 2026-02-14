@@ -58,17 +58,28 @@ This scaffold provides a robust foundation built with:
 
 ## 🚀 Quick Start
 
-The fastest way to get started with MotionForge is by using the CLI tool:
+There are two ways to use MotionForge depending on your needs:
+
+### 1. Starting a New Project (Recommended)
+Use the CLI to bootstrap a complete video project with templates and configurations ready to go.
 
 ```bash
+# This will work once you publish the package to NPM
 npx create-motionforge@latest
 ```
 
-This will guide you through:
-- 📁 Choosing a project name
-- 🎨 Selecting a template (**Hello World** or **Blank**)
-- 💅 Adding **Tailwind CSS** support
-- 🤖 Including **AI Agent Guidelines** (Google Gemini/Z.ai GLM)
+**Note:** If you haven't published to NPM yet, you can test it locally from this repo:
+```bash
+cd packages/create-motionforge
+bun run start
+```
+
+### 2. Adding to an Existing Project
+If you already have a Next.js or React project, just install the library:
+
+```bash
+npm install motionforge
+```
 
 ## 🛠️ Development Setup (for Framework Contributors)
 
@@ -139,10 +150,15 @@ This scaffold includes a comprehensive set of modern web development tools:
 
 MotionForge is a high-performance, React-based programmatic video framework. It is designed to be a modern alternative to Remotion, offering seamless integration with Next.js and Tailwind CSS.
 
-### 🚀 Getting Started with the CLI
-You can create a new MotionForge project in seconds:
+### 🚀 Getting Started
+To create a new project:
 ```bash
 npx create-motionforge@latest
+```
+
+To add to an existing project:
+```bash
+npm install motionforge
 ```
 
 ### Key Features:
@@ -153,6 +169,23 @@ npx create-motionforge@latest
 
 ### Exporting Video:
 Use the "Export" button in the Player to render your composition to a high-quality WebM video.
+
+## 🚀 CI/CD & Automated Publishing
+
+MotionForge is configured with GitHub Actions to automate testing and publishing.
+
+### Automated Publishing
+Whenever you push a change to the `main` branch, the workflow will:
+1.  Run the CI verification suite (Lint, Build, Type-check).
+2.  Check if the version in `package.json` for `motionforge` or `create-motionforge` has been bumped.
+3.  If a new version is detected, it will automatically publish the package to NPM with **Provenance** (secure, verifiable builds).
+
+### How to set up
+To enable automated publishing, you must add your NPM token to your GitHub repository:
+1.  Go to your GitHub Repository **Settings** > **Secrets and variables** > **Actions**.
+2.  Create a **New repository secret**.
+3.  Name: `NPM_TOKEN`.
+4.  Value: Your NPM Access Token (Automation type recommended).
 
 ---
 

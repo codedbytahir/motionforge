@@ -2,12 +2,13 @@ import {
   CanvasRenderer,
   FrameSequenceEncoder,
   VideoExportManager,
+  WebCodecsEncoder,
   WebMEncoder,
   calculateProgress,
   checkEncodingSupport,
   estimateFileSize,
   videoExportManager
-} from "../chunk-KFPIOAIT.js";
+} from "../chunk-HPDG2U2L.js";
 
 // src/renderer/cache.ts
 var FrameCache = class {
@@ -368,10 +369,10 @@ var RenderJobManager = class {
   }
 };
 var renderJobManager = new RenderJobManager();
-async function renderCompositionToVideo(canvas, config, options) {
-  const { VideoExportManager: VideoExportManager2 } = await import("../export-7P6CMM42.js");
+async function renderCompositionToVideo(setFrame, element, config, options) {
+  const { VideoExportManager: VideoExportManager2 } = await import("../export-XU23RXHF.js");
   const manager = new VideoExportManager2();
-  const result = await manager.exportFromCanvas(canvas, {
+  const result = await manager.exportVideo(setFrame, element, {
     config,
     onProgress: options?.onProgress ? (p) => options.onProgress(p.percentage) : void 0
   });
@@ -412,6 +413,7 @@ export {
   MemoCache,
   RenderJobManager,
   VideoExportManager,
+  WebCodecsEncoder,
   WebMEncoder,
   buildFFmpegCommand,
   calculateProgress,
