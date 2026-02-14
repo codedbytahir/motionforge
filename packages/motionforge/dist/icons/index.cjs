@@ -52,6 +52,7 @@ __export(icons_exports, {
   InfoIcon: () => InfoIcon,
   LayersIcon: () => LayersIcon,
   LightningIcon: () => LightningIcon,
+  Loader2Icon: () => Loader2Icon,
   MagicWandIcon: () => MagicWandIcon,
   MicIcon: () => MicIcon,
   MinusIcon: () => MinusIcon,
@@ -1275,6 +1276,28 @@ var LayersIcon = ({
     children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z", fill: color })
   }
 );
+var Loader2Icon = ({
+  size = 24,
+  color = "currentColor",
+  className,
+  style
+}) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+  "svg",
+  {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: color,
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    xmlns: "http://www.w3.org/2000/svg",
+    className: `animate-spin ${className || ""}`,
+    style,
+    children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M21 12a9 9 0 1 1-6.219-8.56" })
+  }
+);
 var Icons = {
   // Playback
   Play: PlayIcon,
@@ -1350,7 +1373,8 @@ var Icons = {
   Sparkle: SparkleIcon,
   MagicWand: MagicWandIcon,
   Lightning: LightningIcon,
-  Layers: LayersIcon
+  Layers: LayersIcon,
+  Loader2: Loader2Icon
 };
 var icons_default = Icons;
 // Annotate the CommonJS export names for ESM import in node:
@@ -1387,6 +1411,7 @@ var icons_default = Icons;
   InfoIcon,
   LayersIcon,
   LightningIcon,
+  Loader2Icon,
   MagicWandIcon,
   MicIcon,
   MinusIcon,

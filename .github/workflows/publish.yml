@@ -1,0 +1,73 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # Required for provenance
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Publish MotionForge
+        run: |
+          cd packages/motionforge
+          bun install
+          bun run build
+
+          # Only publish if version changed
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          NPM_VERSION=$(npm view motionforge version 2>/dev/null || echo "0.0.0")
+
+          if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
+            echo "Publishing motionforge@$CURRENT_VERSION..."
+            npm publish --access public --provenance
+          else
+            echo "motionforge@$CURRENT_VERSION is already published."
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Create-MotionForge
+        run: |
+          cd packages/create-motionforge
+          bun install
+
+          # Only publish if version changed
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          NPM_VERSION=$(npm view create-motionforge version 2>/dev/null || echo "0.0.0")
+
+          if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
+            echo "Publishing create-motionforge@$CURRENT_VERSION..."
+            npm publish --access public --provenance
+          else
+            echo "create-motionforge@$CURRENT_VERSION is already published."
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

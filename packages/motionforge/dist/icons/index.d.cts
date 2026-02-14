@@ -82,6 +82,7 @@ declare const SparkleIcon: React.FC<IconProps>;
 declare const MagicWandIcon: React.FC<IconProps>;
 declare const LightningIcon: React.FC<IconProps>;
 declare const LayersIcon: React.FC<IconProps>;
+declare const Loader2Icon: React.FC<IconProps>;
 declare const Icons: {
     Play: React.FC<IconProps>;
     Pause: React.FC<IconProps>;
@@ -148,6 +149,7 @@ declare const Icons: {
     MagicWand: React.FC<IconProps>;
     Lightning: React.FC<IconProps>;
     Layers: React.FC<IconProps>;
+    Loader2: React.FC<IconProps>;
 };
 
-export { ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, CalendarIcon, CameraIcon, CheckIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ClockIcon, CloseIcon, CommentIcon, CopyIcon, DeleteIcon, DownloadIcon, EditIcon, ErrorIcon, FastForwardIcon, FileIcon, FilmIcon, FolderIcon, FullscreenExitIcon, FullscreenIcon, HeartIcon, HeartOutlineIcon, Icons, ImageIcon, InfoIcon, LayersIcon, LightningIcon, MagicWandIcon, MicIcon, MinusIcon, MusicIcon, PauseIcon, PlayIcon, PlusIcon, QuestionIcon, RefreshIcon, RepeatIcon, ReplayIcon, RewindIcon, SaveIcon, SearchIcon, SettingsIcon, ShareIcon, ShuffleIcon, SkipBackIcon, SkipForwardIcon, SparkleIcon, StarIcon, StarOutlineIcon, StopIcon, SuccessIcon, ThumbDownIcon, ThumbUpIcon, TimerIcon, UploadIcon, VideoIcon, VolumeHighIcon, VolumeLowIcon, VolumeMediumIcon, VolumeMuteIcon, WarningIcon, Icons as default };
+export { ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, CalendarIcon, CameraIcon, CheckIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ClockIcon, CloseIcon, CommentIcon, CopyIcon, DeleteIcon, DownloadIcon, EditIcon, ErrorIcon, FastForwardIcon, FileIcon, FilmIcon, FolderIcon, FullscreenExitIcon, FullscreenIcon, HeartIcon, HeartOutlineIcon, Icons, ImageIcon, InfoIcon, LayersIcon, LightningIcon, Loader2Icon, MagicWandIcon, MicIcon, MinusIcon, MusicIcon, PauseIcon, PlayIcon, PlusIcon, QuestionIcon, RefreshIcon, RepeatIcon, ReplayIcon, RewindIcon, SaveIcon, SearchIcon, SettingsIcon, ShareIcon, ShuffleIcon, SkipBackIcon, SkipForwardIcon, SparkleIcon, StarIcon, StarOutlineIcon, StopIcon, SuccessIcon, ThumbDownIcon, ThumbUpIcon, TimerIcon, UploadIcon, VideoIcon, VolumeHighIcon, VolumeLowIcon, VolumeMediumIcon, VolumeMuteIcon, WarningIcon, Icons as default };

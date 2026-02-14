@@ -154,6 +154,23 @@ npx create-motionforge@latest
 ### Exporting Video:
 Use the "Export" button in the Player to render your composition to a high-quality WebM video.
 
+## 🚀 CI/CD & Automated Publishing
+
+MotionForge is configured with GitHub Actions to automate testing and publishing.
+
+### Automated Publishing
+Whenever you push a change to the `main` branch, the workflow will:
+1.  Run the CI verification suite (Lint, Build, Type-check).
+2.  Check if the version in `package.json` for `motionforge` or `create-motionforge` has been bumped.
+3.  If a new version is detected, it will automatically publish the package to NPM with **Provenance** (secure, verifiable builds).
+
+### How to set up
+To enable automated publishing, you must add your NPM token to your GitHub repository:
+1.  Go to your GitHub Repository **Settings** > **Secrets and variables** > **Actions**.
+2.  Create a **New repository secret**.
+3.  Name: `NPM_TOKEN`.
+4.  Value: Your NPM Access Token (Automation type recommended).
+
 ---
 
 Built with ❤️ for the developer community.

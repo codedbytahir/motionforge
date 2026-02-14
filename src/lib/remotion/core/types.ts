@@ -128,6 +128,7 @@ export interface VideoRendererConfig {
   codec?: 'h264' | 'h265' | 'vp8' | 'vp9';
   crf?: number;
   pixelFormat?: string;
+  bitrate?: number;
 }
 
 export interface CompositionManager {
