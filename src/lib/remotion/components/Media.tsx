@@ -6,7 +6,7 @@ import { interpolate } from '../utils/animation';
 
 // Absolute Fill - Container component
 interface AbsoluteFillProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
 }
@@ -223,11 +223,6 @@ export const Img: React.FC<ImgProps> = ({
 };
 
 // StaticFile component - for local static assets
-interface StaticFileProps {
-  src: string;
-  style?: React.CSSProperties;
-}
-
 export const staticFile = (path: string): string => {
   // In a real implementation, this would resolve to a static file path
   return `/static/${path}`;
