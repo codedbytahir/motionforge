@@ -47,6 +47,8 @@ export {
   G,
   staticFile,
 } from './components/Media';
+export { Lottie } from './components/Lottie';
+export type { LottieProps } from './components/Lottie';
 
 // Effect components
 export {

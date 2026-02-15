@@ -259,6 +259,62 @@ MotionForge uses a dark theme by default with emerald green accents. Customize c
 }
 ```
 
+## 🎭 Using Lottie in MotionForge
+
+MotionForge provides first-class, production-grade Lottie support. Animations are synchronized with the frame system for deterministic, frame-perfect rendering.
+
+### Basic Usage
+
+```tsx
+import { Lottie, AbsoluteFill } from 'motionforge';
+
+const MyComposition = () => {
+  return (
+    <AbsoluteFill>
+      <Lottie
+        src="https://assets.lottiefiles.com/packages/lf20_u4j3X6.json"
+        width={400}
+        height={400}
+      />
+    </AbsoluteFill>
+  );
+};
+```
+
+### Advanced Configuration
+
+The `Lottie` component supports several props to control playback and appearance:
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `src` | `string \| object` | - | URL to JSON or imported JSON object |
+| `frameStart` | `number` | `0` | The frame at which the Lottie starts |
+| `frameEnd` | `number` | - | The frame at which the Lottie ends |
+| `playbackRate` | `number` | `1` | Speed of the animation |
+| `loop` | `boolean` | `false` | Whether to loop the animation |
+| `width` | `number \| string` | `100%` | Width of the container |
+| `height` | `number \| string` | `100%` | Height of the container |
+
+### Syncing with Sequences
+
+`Lottie` automatically detects if it's inside a `Sequence` and adjusts its internal timing to match the relative frame.
+
+```tsx
+<Sequence from={30} durationInFrames={120}>
+  <Lottie
+    src={myAnimationData}
+    playbackRate={1.5}
+    loop
+  />
+</Sequence>
+```
+
+### Performance Tips
+
+1. **Pre-loading**: For imported JSON objects, Lottie initializes instantly. For URLs, it fetches the data once and memoizes the instance.
+2. **SSR Support**: The component handles server-side rendering gracefully by only initializing the Lottie engine on the client.
+3. **Memoization**: Internal animation instances are memoized and properly cleaned up to prevent memory leaks.
+
 ## 📖 Documentation
 
 - [Getting Started](https://motionforge.dev/docs/getting-started)

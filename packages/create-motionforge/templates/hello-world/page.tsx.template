@@ -1,7 +1,16 @@
 'use client';
 
 import React from 'react';
-import { Player, AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig } from 'motionforge';
+import {
+  Player,
+  AbsoluteFill,
+  useCurrentFrame,
+  interpolate,
+  spring,
+  useVideoConfig,
+  Lottie,
+  Sequence
+} from 'motionforge';
 
 const HelloWorldComposition = () => {
   const frame = useCurrentFrame();
@@ -25,12 +34,26 @@ const HelloWorldComposition = () => {
         style={{
           opacity,
           transform: `scale(${scale}) translateY(${translateY}px)`,
-          textAlign: 'center'
+          textAlign: 'center',
+          zIndex: 10,
         }}
       >
         <h1 className="text-7xl text-emerald-400 font-black mb-4">Hello MotionForge!</h1>
         <p className="text-2xl text-emerald-600">Your programmatic video journey starts here.</p>
       </div>
+
+      {/* Lottie Animation Example */}
+      <Sequence from={30} durationInFrames={120}>
+        <AbsoluteFill style={{ justifyContent: 'center', alignItems: 'center', opacity: 0.4 }}>
+          <div style={{ width: 600, height: 600 }}>
+            <Lottie
+              src="https://assets.lottiefiles.com/packages/lf20_u4j3X6.json"
+              playbackRate={0.5}
+              loop
+            />
+          </div>
+        </AbsoluteFill>
+      </Sequence>
     </AbsoluteFill>
   );
 };

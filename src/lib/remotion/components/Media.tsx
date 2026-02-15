@@ -6,7 +6,7 @@ import { interpolate } from '../utils/animation';
 
 // Absolute Fill - Container component
 interface AbsoluteFillProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
 }
