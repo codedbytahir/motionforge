@@ -130,7 +130,7 @@ export function useOptimizedSpring(
 export function useOptimizedInterpolate(
   inputRange: number[],
   outputRange: number[],
-  options?: { easing?: (t: number) => number; extrapolateLeft?: string; extrapolateRight?: string }
+  options?: { easing?: (t: number) => number; extrapolateLeft?: 'clamp' | 'extend' | 'identity'; extrapolateRight?: 'clamp' | 'extend' | 'identity' }
 ): (frame: number) => number {
   return useCallback((frame: number) => {
     return interpolate(frame, inputRange, outputRange, options);

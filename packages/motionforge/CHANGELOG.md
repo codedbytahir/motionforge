@@ -5,6 +5,18 @@ All notable changes to MotionForge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2024-03-20
+
+### Added
+- Full Lottie animation integration with `<Lottie />` component
+- Deterministic frame synchronization with MotionForge timeline
+- Support for both remote JSON URLs and local JSON objects
+- Advanced Lottie controls: `frameStart`, `frameEnd`, `playbackRate`, `loop`
+- Automatic relative frame mapping within `<Sequence />`
+- Production-grade performance with memoization and instance cleanup
+- CLI template updates with Lottie support and examples
+- Comprehensive Lottie documentation in README
+
 ## [1.2.0] - 2024-01-15
 
 ### Added

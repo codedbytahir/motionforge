@@ -107,7 +107,7 @@ const SequenceFrameProvider: React.FC<SequenceFrameProviderProps> = ({
 };
 
 // Relative Frame Context
-const RelativeFrameContext = createContext<number>(0);
+const RelativeFrameContext = createContext<number | null>(null);
 
 export const useRelativeCurrentFrame = () => useContext(RelativeFrameContext);
 

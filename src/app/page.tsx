@@ -7,6 +7,7 @@ import { DemoComposition2 } from '@/lib/remotion/demo/DemoComposition2';
 import { DemoComposition3 } from '@/lib/remotion/demo/DemoComposition3';
 import { DemoComposition4 } from '@/lib/remotion/demo/DemoComposition4';
 import { DemoComposition5 } from '@/lib/remotion/demo/DemoComposition5';
+import { DemoLottie } from '@/lib/remotion/demo/DemoLottie';
 import {
   PlayIcon,
   FilmIcon,
@@ -74,6 +75,13 @@ const demoCompositions = [
     description: 'Letter, word, wave, rainbow effects',
     component: DemoComposition5,
     durationInFrames: 1590,
+  },
+  {
+    id: 'lottie',
+    name: 'Lottie',
+    description: 'Deterministic Lottie animations',
+    component: DemoLottie,
+    durationInFrames: 300,
   },
 ];
 
