@@ -59,6 +59,18 @@ export interface TextProps {
   children: React.ReactNode;
 }
 
+export interface LottieAnimationProps {
+  src: string | object;
+  frameStart?: number;
+  frameEnd?: number;
+  playbackRate?: number;
+  loop?: boolean;
+  width?: number | string;
+  height?: number | string;
+  style?: React.CSSProperties;
+  className?: string;
+}
+
 export interface SpringConfig {
   frame: number;
   fps: number;

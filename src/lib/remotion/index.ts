@@ -6,7 +6,7 @@
  * marketing videos, and automated video generation.
  *
  * @package MotionForge
- * @version 1.2.0
+ * @version 1.3.0
  * @license MIT
  */
 
@@ -47,6 +47,7 @@ export {
   G,
   staticFile,
 } from './components/Media';
+export { LottieAnimation } from './components/Lottie';
 
 // Effect components
 export {
@@ -214,6 +215,7 @@ export type {
   AudioProps,
   ImageProps,
   TextProps,
+  LottieAnimationProps,
   SpringConfig,
   InterpolateOptions,
   EasingFunction,

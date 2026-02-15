@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Player, AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig } from 'motionforge';
+import { Player, AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig, LottieAnimation } from 'motionforge';
 
 const HelloWorldComposition = () => {
   const frame = useCurrentFrame();
@@ -20,7 +20,7 @@ const HelloWorldComposition = () => {
   const translateY = interpolate(frame, [0, 30], [50, 0]);
 
   return (
-    <AbsoluteFill className="bg-gradient-to-br from-emerald-900 to-black flex items-center justify-center">
+    <AbsoluteFill className="bg-gradient-to-br from-emerald-950 to-black flex items-center justify-center">
       <div
         style={{
           opacity,
@@ -30,6 +30,16 @@ const HelloWorldComposition = () => {
       >
         <h1 className="text-7xl text-emerald-400 font-black mb-4">Hello MotionForge!</h1>
         <p className="text-2xl text-emerald-600">Your programmatic video journey starts here.</p>
+
+        {/* Lottie Example: Clean, deterministic, and frame-synced */}
+        <div className="flex justify-center mt-12">
+          <div className="w-48 h-48 bg-emerald-500/10 rounded-full flex items-center justify-center p-4 border border-emerald-500/20 shadow-[0_0_50px_-12px_rgba(16,185,129,0.3)]">
+            <LottieAnimation
+              src="https://assets10.lottiefiles.com/packages/lf20_m6cu96.json"
+              loop
+            />
+          </div>
+        </div>
       </div>
     </AbsoluteFill>
   );

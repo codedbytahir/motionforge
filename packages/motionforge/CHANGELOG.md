@@ -5,6 +5,20 @@ All notable changes to MotionForge will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2024-02-25
+
+### Added
+- Production-grade Lottie animation support with `<LottieAnimation />`
+- Frame-perfect synchronization between Lottie and MotionForge timeline
+- Deterministic Lottie rendering (disabled internal requestAnimationFrame)
+- Support for relative frame contexts in `Sequence`
+- New Lottie demo and sample assets
+- Lottie support in `create-motionforge` CLI templates
+
+### Changed
+- Updated `useRelativeCurrentFrame` to support `null` as default value for better sequence detection
+- Improved CLI template to include `lottie-web` by default
+
 ## [1.2.0] - 2024-01-15
 
 ### Added

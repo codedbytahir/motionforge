@@ -18,6 +18,7 @@
 - 🎬 **Frame-Based Rendering** - Precise control over every frame
 - 🎨 **70+ Effect Components** - Fade, Scale, Slide, 3D transforms, particles, and more
 - 🌊 **Spring Physics** - Natural, physics-based animations
+- 🎬 **Lottie Support** - Full integration with Lottie-web for vector animations
 - 📊 **Interpolation System** - Smooth transitions with 20+ easing functions
 - 🎮 **Interactive Player** - Real-time preview with timeline controls
 - 📦 **Frame Caching** - LRU cache for optimized performance
@@ -41,6 +42,8 @@ bun add motionforge
 ```
 
 ## 🚀 Quick Start
+
+### Basic Animation
 
 ```tsx
 import { 
@@ -87,8 +90,38 @@ const MyVideo = () => {
     </AbsoluteFill>
   );
 };
+```
 
-// Use with Player
+### Using Lottie
+
+MotionForge provides first-class support for Lottie animations, fully synchronized with the frame system.
+
+```tsx
+import { LottieAnimation } from 'motionforge';
+import myAnimation from './animation.json';
+
+const MyComp = () => {
+  return (
+    <LottieAnimation
+      src={myAnimation}
+      loop
+      playbackRate={1}
+    />
+  );
+};
+```
+
+**Properties for `<LottieAnimation />`:**
+- `src`: JSON object or URL to the Lottie file.
+- `frameStart`: Frame to start from (default: 0).
+- `frameEnd`: Frame to end at (default: animation end).
+- `playbackRate`: Speed of playback (default: 1).
+- `loop`: Whether to loop the animation (default: false).
+- `width`/`height`: Dimensions of the container.
+
+### Player Integration
+
+```tsx
 const App = () => (
   <Player
     component={MyVideo}
@@ -115,6 +148,15 @@ const App = () => (
 | `Retiming` | Variable speed playback |
 | `Reverse` | Play content backwards |
 | `Series` | Sequential scene management |
+
+### Media Components
+
+| Component | Description |
+|-----------|-------------|
+| `Video` | Frame-synced video playback |
+| `Audio` | Frame-synced audio playback |
+| `Img` | Static image component |
+| `LottieAnimation` | Production-grade, frame-synced Lottie animations |
 
 ### Effect Components
 
