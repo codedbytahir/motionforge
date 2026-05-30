@@ -48,6 +48,7 @@ export {
   staticFile,
 } from './components/Media';
 export { Lottie } from './components/Lottie';
+export { HyperFrame } from './components/HyperFrame';
 export type { LottieProps } from './components/Lottie';
 
 // Effect components

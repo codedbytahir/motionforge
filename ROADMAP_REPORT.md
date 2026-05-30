@@ -12,29 +12,18 @@ MotionForge stands at a critical inflection point. While Remotion.dev has establ
 
 **MotionForge's Strategic Leverage:** 100% Free-Forever, Open-Source, and MIT-licensed.
 
-The current version of MotionForge (v2.0) has achieved parity in rendering performance via WebCodecs and actually exceeds Remotion in out-of-the-box "cinematic" effects (KineticTypography, 3D Depth Galleries). However, it suffers from a **DX Gap** (initialization friction) and an **Infrastructure Gap** (lack of cloud rendering). This report provides the blueprint to close these gaps and position MotionForge as the elite open-source challenger.
+The current version of MotionForge (v2.0) has achieved parity in rendering performance via WebCodecs and exceeds Remotion in out-of-the-box "cinematic" effects. However, to truly disrupt the market, MotionForge must lean into its **Agent-First Architecture** and **HTML-Native Rendering**, providing a lighter, more flexible alternative to React-heavy workflows.
 
 ---
 
 ## 2. THE DX & SCAFFOLDING BLUEPRINT
 
-To compete with Remotion's `npx create-video`, MotionForge must evolve its CLI from a basic file copier to a smart project architect.
+MotionForge has successfully closed the "Initialization Gap." Our `npx create-motionforge` CLI now mirrors the "Full Project" experience of `npx create-video`.
 
-### Proposed `create-motionforge` Wizard Flow:
-1. **Project Archetype:**
-   - `blank`: A barebones setup for pros.
-   - `hello-world`: Basic animation examples.
-   - `cinematic`: Pre-configured with v2.0 high-end typography and WebGL components.
-2. **Styling Engine:** Toggle Tailwind CSS 4 integration.
-3. **Runtime Optimization:** Auto-detect `bun`, `pnpm`, or `npm`.
-4. **Agentic AI Layer:** Option to include `AGENTS.md` and guideline files (Google Gemini/Z.ai) to help AI assistants write better video code.
-
-### Technical Implementation:
-The CLI should use a "template-patching" approach rather than static copying.
-```bash
-# Target Command
-npx create-motionforge@latest --template cinematic --tailwind --git
-```
+### Improved Scaffolding Flow:
+1. **Full Project Structure:** Even the `blank` template now generates a complete Next.js environment with `.gitignore`, `next.config.ts`, `README.md`, and a standard `Composition.tsx`.
+2. **Standardized Entry Points:** Every project follows a clear `src/app/page.tsx` -> `Composition.tsx` hierarchy, ensuring instant productivity.
+3. **AI-Ready Guidelines:** Optional inclusion of `AGENTS.md` and guideline files to ensure AI assistants can maintain the project autonomously.
 
 ---
 
@@ -42,71 +31,51 @@ npx create-motionforge@latest --template cinematic --tailwind --git
 
 | Remotion Feature | MotionForge Equivalent | Gap Level | Recommended Architectural Fix |
 |:---|:---|:---|:---|
-| `delayRender()` | **Missing** | **CRITICAL** | Implement a global `AsyncManager` in `core/context.tsx` that blocks the `VideoExportManager` until all registered handles are cleared. |
-| `getInputProps()`| **Missing** | **HIGH** | Add an `inputProps` field to the `VideoConfig` and a hook that reads from `window.__MOTIONFORGE_PROPS__` (injected during render). |
-| `<Sequence>` | `Sequence` | Low | Current implementation is solid. Needs better integration with a visual timeline. |
-| `measureText()` | **Missing** | Medium | Implement a headless canvas utility that calculates text metrics for dynamic layouts. |
-| `<OffthreadVideo>`| `Video` | Medium | Current `Video` uses standard DOM. Implement a WebWorker-based decoder for smoother multi-track handling. |
-| `staticFile()` | `staticFile` | Low | Already implemented; needs to support remote URL resolution. |
+| `delayRender()` | **Missing** | **CRITICAL** | Implement a global `AsyncManager` in `core/context.tsx` to block frame capture during data fetching. |
+| `getInputProps()`| **Missing** | **HIGH** | Add support for serializable props injected via CLI or Node.js environment. |
+| `<Sequence>` | `Sequence` | Low | Already parity. |
+| `measureText()` | **Missing** | Medium | Headless canvas utility for dynamic text-wrapping calculations. |
+| **HTML-Native Mode**| `HyperFrame` | **EXCEEDS** | MotionForge now supports rendering raw HTML/CSS/JS strings directly, providing parity with the "Hyperframes" library. |
 
 ---
 
-## 4. IMMEDIATE ENTRANCE FEATURES (The Top 5 Priorities)
+## 4. THE "HTML-NATIVE" (HYPERFRAMES) REVOLUTION
 
-### 1. Async Synchronization (`delayRender` / `continueRender`)
-**Why:** Critical for data-driven videos (fetching prices, user names, or weather).
-**Pseudocode:**
-```typescript
-// core/context.tsx
-const [locks, setLocks] = useState(0);
-const delayRender = () => { setLocks(l => l + 1); return handle; };
-const continueRender = (handle) => { setLocks(l => l - 1); };
+MotionForge now includes `HyperFrame`, a breakthrough component that allows developers (and AI agents) to create video frames using standard web code instead of complex React components.
 
-// renderer/export.ts
-while (context.locks > 0) {
-  await new Promise(r => setTimeout(r, 100)); // Block frame capture
-}
+### Architectural Advantage:
+- **Zero-Build Rendering:** Agents can generate a video by simply writing a single HTML string.
+- **GSAP & Plain JS Support:** Direct integration of industry-standard animation libraries without React wrappers.
+- **Lightweight Execution:** Significantly lower memory overhead compared to deeply nested React component trees.
+
+**Example Usage:**
+```tsx
+<HyperFrame
+  html="<div id='box'></div>"
+  js="document.getElementById('box').style.transform = `rotate(${frame}deg)`"
+/>
 ```
 
-### 2. Parameterized Renders (`getInputProps`)
-**Why:** Allows one template to generate thousands of personalized videos.
-**Approach:** Create a `useInputProps<T>()` hook that consumes a global context object, populated via the CLI or Node.js API.
-
-### 3. Audio Waveform Engine
-**Why:** Essential for "Audiogram" style videos and social media content.
-**Approach:** Use the `Web Audio API` (specifically `AudioContext.decodeAudioData`) to generate peak data arrays for visualization.
-
-### 4. Advanced Composition Primitives (`<Series>`)
-**Why:** Current `<Series>` is basic. It needs to support auto-calculating `from` offsets based on the duration of children.
-**Approach:** Use `React.Children.map` to calculate cumulative durations and inject the correct `from` prop into each child.
-
-### 5. Headless Studio UI (The "Forge Editor")
-**Why:** Developers need a timeline to debug animations.
-**Approach:** A browser-based IDE with a frame-accurate scrubber, property editor (using `dat.gui` or `leva`), and real-time performance monitoring.
-
 ---
 
-## 5. THE "CLOUD REDEFINED" ARCHITECTURE PROPOSAL
-### "Zero-Dollar" Distributed Rendering
+## 5. IMMEDIATE ENTRANCE FEATURES (The Top 5 Priorities)
 
-Remotion's Cloud rendering is expensive because of proprietary orchestration. MotionForge can offer a free alternative by leveraging **GitHub Actions Matrix Strategy**.
+### 1. Async Synchronization (`delayRender`)
+Crucial for data-driven videos where assets must load before the frame is captured.
 
-**The Workflow:**
-1. **Dispatcher:** A GitHub Action triggered by a webhook with `inputProps`.
-2. **Chunking:** The Dispatcher calculates how many frames to render and splits the job into $N$ chunks (e.g., 20 parallel workers).
-3. **Workers (The Matrix):**
-   - 20 GitHub Runners start in parallel.
-   - Each runner uses `playwright` to open the local dev server and render a specific range of frames (e.g., Worker 1: 0-99, Worker 2: 100-199).
-   - Frames are saved as PNGs and uploaded as transient artifacts.
-4. **Assembler:**
-   - A final job waits for all workers to finish.
-   - It downloads all PNG artifacts.
-   - Runs `ffmpeg` to stitch them into a single MP4/WebM.
-   - Uploads the final video to a storage provider (S3/Supabase).
+### 2. Parameterized Renders (`getInputProps`)
+Enables high-volume personalization by allowing external data to drive the composition.
 
-**Cost:** $0 for Open Source projects (GitHub Actions is free). For private repos, it only consumes standard runner minutes, avoiding the "Per-Render" surcharge.
+### 3. Audio Peak Engine
+Native support for generating audio waveforms to support "Audiogram" and Podcast video generation.
+
+### 4. Advanced Composition Primitives
+Auto-offsetting in `<Series>` to eliminate manual frame math when chaining clips.
+
+### 5. Forge Studio (The IDE)
+A browser-based timeline editor with real-time scrubbing and property manipulation handles.
 
 ---
 
 ## Conclusion
-MotionForge has the visual "soul" to beat Remotion. By implementing the **Async Sync** API and the **GitHub Actions Cloud** proposal, it will transition from a "cool library" to a "production-grade powerhouse."
+By combining the "Cinematic Soul" of our WebGL effects with the "HTML-Native" flexibility of HyperFrames, MotionForge is no longer just a "Remotion alternative"—it is a next-generation video-as-code engine built for the era of AI automation.
