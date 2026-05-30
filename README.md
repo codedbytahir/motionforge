@@ -1,176 +1,84 @@
-# 🚀 Welcome to MotionForge Code Scaffold
+# 🎥 MotionForge
 
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with high-performance video creation and professional UI tools.
+**The Cinematic Programmatic Video Engine**
 
-## ✨ Technology Stack
+<div align="center">
+  <video src="./public/demo-cinematic.webm" width="100%" autoplay muted loop></video>
+</div>
 
-This scaffold provides a robust foundation built with:
-
-### 🎯 Core Framework
-- **⚡ Next.js 16** - The React framework for production with App Router
-- **📘 TypeScript 5** - Type-safe JavaScript for better developer experience
-- **🎨 Tailwind CSS 4** - Utility-first CSS framework for rapid UI development
-
-### 🧩 UI Components & Styling
-- **🧩 shadcn/ui** - High-quality, accessible components built on Radix UI
-- **🎯 Lucide React** - Beautiful & consistent icon library
-- **🌈 Framer Motion** - Production-ready motion library for React
-- **🎨 Next Themes** - Perfect dark mode in 2 lines of code
-
-### 📋 Forms & Validation
-- **🎣 React Hook Form** - Performant forms with easy validation
-- **✅ Zod** - TypeScript-first schema validation
-
-### 🔄 State Management & Data Fetching
-- **🐻 Zustand** - Simple, scalable state management
-- **🔄 TanStack Query** - Powerful data synchronization for React
-- **🌐 Fetch** - Promise-based HTTP request
-
-### 🗄️ Database & Backend
-- **🗄️ Prisma** - Next-generation TypeScript ORM
-- **🔐 NextAuth.js** - Complete open-source authentication solution
-
-### 🎨 Advanced UI Features
-- **📊 TanStack Table** - Headless UI for building tables and datagrids
-- **🖱️ DND Kit** - Modern drag and drop toolkit for React
-- **📊 Recharts** - Redefined chart library built with React and D3
-- **🖼️ Sharp** - High performance image processing
-- **🎬 MotionForge** - High-performance programmatic video creation framework
-
-### 🌍 Internationalization & Utilities
-- **🌍 Next Intl** - Internationalization library for Next.js
-- **📅 Date-fns** - Modern JavaScript date utility library
-- **🪝 ReactUse** - Collection of essential React hooks for modern development
-
-## 🎯 Why This Scaffold?
-
-- **🏎️ Fast Development** - Pre-configured tooling and best practices
-- **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
-- **🔒 Type Safety** - Full TypeScript configuration with Zod validation
-- **📱 Responsive** - Mobile-first design principles with smooth animations
-- **🎬 Video Export** - Frame-accurate video rendering with WebCodecs support
-- **🗄️ Database Ready** - Prisma ORM configured for rapid backend development
-- **🔐 Auth Included** - NextAuth.js for secure authentication flows
-- **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
-- **🌍 i18n Ready** - Multi-language support with Next Intl
-- **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Professional guidelines for Google Gemini and GLM
-
-## 🚀 Quick Start
-
-The fastest way to get started with MotionForge is by using the CLI tool:
-
-```bash
-npx create-motionforge@latest
-```
-
-This will guide you through:
-- 📁 Choosing a project name
-- 🎨 Selecting a template (**Hello World** or **Blank**)
-- 💅 Adding **Tailwind CSS** support
-- 🤖 Including **AI Agent Guidelines** (Google Gemini/Z.ai GLM)
-
-## 🛠️ Development Setup (for Framework Contributors)
-
-If you want to contribute to the MotionForge framework or run the main scaffold:
-
-```bash
-# Install dependencies
-bun install
-
-# Start development server
-bun run dev
-
-# Build for production
-bun run build
-
-# Start production server
-bun start
-```
-
-Open [http://localhost:3000](http://localhost:3000) to see the main framework demo.
-
-## 📁 Project Structure
-
-```
-src/
-├── app/                 # Next.js App Router pages
-├── components/          # Reusable React components
-│   └── ui/             # shadcn/ui components
-├── hooks/              # Custom React hooks
-└── lib/                # Utility functions and configurations
-```
-
-## 🎨 Available Features & Components
-
-This scaffold includes a comprehensive set of modern web development tools:
-
-### 🧩 UI Components (shadcn/ui)
-- **Layout**: Card, Separator, Aspect Ratio, Resizable Panels
-- **Forms**: Input, Textarea, Select, Checkbox, Radio Group, Switch
-- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton
-- **Navigation**: Breadcrumb, Menubar, Navigation Menu, Pagination
-- **Overlay**: Dialog, Sheet, Popover, Tooltip, Hover Card
-- **Data Display**: Badge, Avatar, Calendar
-
-### 📊 Advanced Data Features
-- **Tables**: Powerful data tables with sorting, filtering, pagination (TanStack Table)
-- **Charts**: Beautiful visualizations with Recharts
-- **Forms**: Type-safe forms with React Hook Form + Zod validation
-
-### 🎨 Interactive Features
-- **Animations**: Smooth micro-interactions with Framer Motion
-- **Drag & Drop**: Modern drag-and-drop functionality with DND Kit
-- **Theme Switching**: Built-in dark/light mode support
-
-### 🔐 Backend Integration
-- **Authentication**: Ready-to-use auth flows with NextAuth.js
-- **Database**: Type-safe database operations with Prisma
-- **API Client**: HTTP requests with Fetch + TanStack Query
-- **State Management**: Simple and scalable with Zustand
-
-### 🌍 Production Features
-- **Internationalization**: Multi-language support with Next Intl
-- **Image Optimization**: Automatic image processing with Sharp
-- **Type Safety**: End-to-end TypeScript with Zod validation
-- **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
-
-## 🎬 MotionForge Video Framework
-
-MotionForge is a high-performance, React-based programmatic video framework. It is designed to be a modern alternative to Remotion, offering seamless integration with Next.js and Tailwind CSS.
-
-### 🚀 Getting Started with the CLI
-You can create a new MotionForge project in seconds:
-```bash
-npx create-motionforge@latest
-```
-
-### Key Features:
-- **Frame-Perfect Rendering**: deterministic animations driven by frame number.
-- **High-Speed Export**: Frame-by-frame video export using WebCodecs.
-- **Cinematic Effects**: Native support for spring physics, 3D transforms, and particle systems.
-- **AI-Powered**: Comes with specialized guidelines for Google Gemini to generate high-quality video code.
-
-### Exporting Video:
-Use the "Export" button in the Player to render your composition to a high-quality WebM video.
-
-## 🚀 CI/CD & Automated Publishing
-
-MotionForge is configured with GitHub Actions to automate testing and publishing.
-
-### Automated Publishing
-Whenever you push a change to the `main` branch, the workflow will:
-1.  Run the CI verification suite (Lint, Build, Type-check).
-2.  Check if the version in `package.json` for `motionforge` or `create-motionforge` has been bumped.
-3.  If a new version is detected, it will automatically publish the package to NPM with **Provenance** (secure, verifiable builds).
-
-### How to set up
-To enable automated publishing, you must add your NPM token to your GitHub repository:
-1.  Go to your GitHub Repository **Settings** > **Secrets and variables** > **Actions**.
-2.  Create a **New repository secret**.
-3.  Name: `NPM_TOKEN`.
-4.  Value: Your NPM Access Token (Automation type recommended).
+MotionForge is a high-performance framework for creating videos programmatically using React, Next.js, and WebGL. It provides a deterministic, frame-accurate rendering engine that allows you to build complex motion graphics with the power of modern web technologies.
 
 ---
 
-Built with ❤️ for the developer community.
+## ✨ New in v2.0: Cinematic Suite
+
+We've integrated a suite of high-end animations designed for modern video production:
+
+### 🖋️ Cinematic Typography
+- **KineticTypography**: Staggered, velocity-based character animations with fluid organic motion.
+- **LiquidText**: SVG-based liquid fill animations for high-impact headings.
+- **TextStack3D**: Multi-layered 3D text effects with deep perspective.
+
+### 🌐 WebGL & Shaders (Powered by Three.js)
+- **DepthGallery3D**: Immersive 3D environments with distance-based fog and depth-of-field.
+- **ShaderImageReveal**: Perlin noise-based threshold reveals for cinematic transitions.
+- **DitheringEffect**: Real-time Ordered/Floyd-Steinberg dithering for a stylized aesthetic.
+
+### 📐 Layout & Transitions
+- **StickyGridScroll**: Smooth, frame-accurate grid transitions.
+- **FlipImageReveal**: Seamless thumbnail-to-fullscreen expansions using the FLIP technique.
+- **CardExpansionMask**: Circular SVG mask reveals for focus-driven content.
+
+---
+
+## 🚀 Quick Start
+
+```bash
+npx create-motionforge@latest my-video
+```
+
+Or install in an existing project:
+
+```bash
+npm install motionforge
+```
+
+### Basic Usage
+
+```tsx
+import { AbsoluteFill, KineticTypography } from 'motionforge';
+
+export const MyComposition = () => {
+  return (
+    <AbsoluteFill className="bg-black flex items-center justify-center">
+      <KineticTypography
+        text="HELLO WORLD"
+        type="velocity"
+        fontSize={120}
+      />
+    </AbsoluteFill>
+  );
+};
+```
+
+---
+
+## 🛠️ Tech Stack
+
+- **React 19**: The latest rendering capabilities.
+- **Next.js 15**: Robust application framework.
+- **Three.js & R3F**: Industry-standard 3D rendering.
+- **Tailwind CSS 4**: Modern, lightning-fast styling.
+- **Framer Motion**: Complex physics and layout animations.
+
+---
+
+## 📜 Principles
+
+1. **Deterministic**: Every frame is calculated based on its number, ensuring perfect exports.
+2. **Modular**: Only import what you need. Light and fast by default.
+3. **Cinematic**: Built-in effects that look like they were made in After Effects.
+
+---
+
+Built with ❤️ by the MotionForge Team.
