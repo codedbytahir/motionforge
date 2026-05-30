@@ -86,6 +86,17 @@ export {
   Confetti,
 } from './components/Effects';
 
+// New Cinematic Animations
+export { KineticTypography } from './components/animations/KineticTypography';
+export { LiquidText } from './components/animations/LiquidText';
+export { TextStack3D } from './components/animations/TextStack3D';
+export { StickyGridScroll } from './components/animations/StickyGridScroll';
+export { FlipImageReveal } from './components/animations/FlipImageReveal';
+export { CardExpansionMask } from './components/animations/CardExpansionMask';
+export { DepthGallery3D } from './components/animations/DepthGallery3D';
+export { ShaderImageReveal } from './components/animations/ShaderImageReveal';
+export { DitheringEffect } from './components/animations/DitheringEffect';
+
 // Animation utilities
 export {
   spring,
