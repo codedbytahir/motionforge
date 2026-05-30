@@ -2,6 +2,10 @@
 
 **The Cinematic Programmatic Video Engine**
 
+<div align="center">
+  <video src="./public/demo-cinematic.webm" width="100%" autoplay muted loop></video>
+</div>
+
 MotionForge is a high-performance framework for creating videos programmatically using React, Next.js, and WebGL. It provides a deterministic, frame-accurate rendering engine that allows you to build complex motion graphics with the power of modern web technologies.
 
 ---
