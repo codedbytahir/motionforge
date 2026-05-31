@@ -6,7 +6,7 @@
  * marketing videos, and automated video generation.
  *
  * @package MotionForge
- * @version 1.2.0
+ * @version 1.4.0
  * @license MIT
  */
 
@@ -48,6 +48,7 @@ export {
   staticFile,
 } from './components/Media';
 export { Lottie } from './components/Lottie';
+export { HyperFrame } from './components/HyperFrame';
 export type { LottieProps } from './components/Lottie';
 
 // Effect components

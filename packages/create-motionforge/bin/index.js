@@ -16,7 +16,7 @@ const program = new Command();
 program
   .name('create-motionforge')
   .description('Bootstrap a new MotionForge project')
-  .version('1.0.0')
+  .version('1.1.0')
   .argument('[project-name]', 'Name of the project')
   .option('-t, --template <type>', 'Template type (hello-world, blank)')
   .option('--tailwind', 'Use Tailwind CSS')
@@ -97,8 +97,10 @@ program
     try {
       await fs.ensureDir(targetPath);
       await fs.ensureDir(path.join(targetPath, 'src/app'));
+      await fs.ensureDir(path.join(targetPath, 'public'));
 
-      const templatesRoot = path.join(__dirname, '../../../templates');
+      // Correctly resolve templates path relative to bin/index.js
+      const templatesRoot = path.resolve(__dirname, '../templates');
 
       // 1. Copy shared files
       await fs.copy(path.join(templatesRoot, 'shared/tsconfig.json'), path.join(targetPath, 'tsconfig.json'));
@@ -124,15 +126,20 @@ program
       await fs.copy(path.join(templatesRoot, 'shared/layout.tsx.template'), path.join(targetPath, 'src/app/layout.tsx'));
       await fs.copy(path.join(templatesRoot, 'shared/globals.css.template'), path.join(targetPath, 'src/app/globals.css'));
 
-      // 4. Copy Template specific Page
-      const pageTemplate = await fs.readFile(path.join(templatesRoot, selectedTemplate, 'page.tsx.template'), 'utf-8');
-      let pageContent = pageTemplate;
+      // 4. Template specific files
+      const templateDir = path.join(templatesRoot, selectedTemplate);
+      const files = await fs.readdir(templateDir);
 
-      if (!useTailwind) {
-        // Simple regex to remove className attributes if tailwind is not used
-        pageContent = pageContent.replace(/className="[^"]*"/g, '');
+      for (const file of files) {
+        if (file.endsWith('.template')) {
+          let content = await fs.readFile(path.join(templateDir, file), 'utf-8');
+          if (!useTailwind) {
+            content = content.replace(/className="[^"]*"/g, '');
+          }
+          const targetFileName = file.replace('.template', '');
+          await fs.writeFile(path.join(targetPath, 'src/app', targetFileName), content);
+        }
       }
-      await fs.writeFile(path.join(targetPath, 'src/app/page.tsx'), pageContent);
 
       // 5. Copy AI Guidelines
       if (selectedGuidelines.includes('google')) {
@@ -142,7 +149,48 @@ program
         await fs.copy(path.join(templatesRoot, 'shared/GLM-AI-GUIDELINES.md'), path.join(targetPath, 'GLM-AI-GUIDELINES.md'));
       }
 
-      // 6. Tailwind Config if needed
+      // 6. Essential Next.js / PostCSS / Git files
+      await fs.writeFile(path.join(targetPath, '.gitignore'), `node_modules
+.next
+out
+build
+.env
+.env.local
+.DS_Store`);
+
+      await fs.writeFile(path.join(targetPath, 'next.config.ts'), `import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;`);
+
+      await fs.writeFile(path.join(targetPath, 'README.md'), `# ${targetName}
+
+Generated with [MotionForge](https://github.com/codedbytahir/motionforge).
+
+## Getting Started
+
+First, install the dependencies:
+
+\`\`\`bash
+bun install
+# or
+npm install
+\`\`\`
+
+Then, run the development server:
+
+\`\`\`bash
+bun dev
+# or
+npm run dev
+\`\`\`
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.`);
+
+      // 7. Tailwind Config if needed
       if (useTailwind) {
         await fs.writeFile(path.join(targetPath, 'tailwind.config.ts'), `import type { Config } from "tailwindcss";
 

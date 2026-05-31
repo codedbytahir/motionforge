@@ -1,6 +1,6 @@
 {
   "name": "motionforge",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "A React-based framework for creating videos programmatically. Build stunning videos with React components, spring animations, and frame-perfect control.",
   "author": "MotionForge Team",
   "license": "MIT",

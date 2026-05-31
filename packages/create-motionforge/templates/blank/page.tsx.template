@@ -1,28 +1,19 @@
-'use client';
+import { AbsoluteFill, Composition } from 'motionforge';
+import { MyComposition } from './Composition';
 
-import React from 'react';
-import { Player, AbsoluteFill } from 'motionforge';
-
-const MyComposition = () => {
+export default function VideoPage() {
   return (
-    <AbsoluteFill className="bg-[#0a0a0a] flex items-center justify-center">
-      <h1 className="text-4xl text-white font-bold">New MotionForge Project</h1>
-    </AbsoluteFill>
-  );
-};
-
-export default function Home() {
-  return (
-    <main className="min-h-screen flex items-center justify-center bg-black">
-      <Player
-        component={MyComposition}
-        durationInFrames={120}
-        fps={30}
-        width={1920}
-        height={1080}
-        controls
-        loop
-      />
-    </main>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black">
+      <div className="w-[1280px] h-[720px] shadow-2xl rounded-lg overflow-hidden border border-emerald-500/20">
+        <Composition
+          id="main"
+          component={MyComposition}
+          width={1280}
+          height={720}
+          fps={30}
+          durationInFrames={150}
+        />
+      </div>
+    </div>
   );
 }
