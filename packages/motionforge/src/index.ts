@@ -6,7 +6,7 @@
  * marketing videos, and automated video generation.
  *
  * @package MotionForge
- * @version 1.2.0
+ * @version 1.4.0
  * @license MIT
  */
 
