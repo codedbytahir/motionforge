@@ -3,7 +3,7 @@
 <div align="center">
   <img src="https://img.shields.io/npm/v/motionforge?color=10b981&label=npm&style=for-the-badge" alt="npm version" />
   <img src="https://img.shields.io/npm/dt/motionforge?color=10b981&style=for-the-badge" alt="downloads" />
-  <img src="https://img.shields.io/github/license/motionforge/motionforge?color=10b981&style=for-the-badge" alt="license" />
+  <img src="https://img.shields.io/github/license/codedbytahir/motionforge?color=10b981&style=for-the-badge" alt="license" />
 </div>
 
 <div align="center">
