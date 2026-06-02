@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CompositionProps } from '../core/types';
 import { renderCompositionToVideo, downloadVideo, RenderProgress } from '../renderer';
 import { DownloadIcon, VideoIcon, ClockIcon, Loader2Icon } from '../icons';
+import { PlayerEmitter } from './player-emitter';
 
 // Player Context
 import { PlayerProvider, usePlayer, FrameContext } from '../core/context';
@@ -274,18 +275,43 @@ const Canvas: React.FC<{
   playbackRate,
   defaultProps = {},
 }) => {
-  const scale = Math.min(1, 800 / width);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerSize, setContainerSize] = useState({ width: 800, height: 450 });
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      if (entries[0]) {
+        const { width: containerWidth, height: containerHeight } = entries[0].contentRect;
+        setContainerSize({ width: containerWidth, height: containerHeight });
+      }
+    });
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const scale = Math.min(
+    containerSize.width / width,
+    containerSize.height / height,
+    1 // Never upscale beyond 1x
+  );
 
   return (
     <div
-      ref={canvasRef as any}
-      className="relative rounded-xl overflow-hidden shadow-2xl shadow-emerald-900/30 border border-emerald-900/30"
-      style={{
-        width: width * scale,
-        height: height * scale,
-        backgroundColor: '#0a0a0a',
-      }}
+      ref={containerRef}
+      className="flex justify-center items-center w-full min-h-[200px]"
     >
+      <div
+        ref={canvasRef as any}
+        className="relative rounded-xl overflow-hidden shadow-2xl shadow-emerald-900/30 border border-emerald-900/30"
+        style={{
+          width: width * scale,
+          height: height * scale,
+          backgroundColor: '#0a0a0a',
+        }}
+      >
       {/* Canvas border glow effect */}
       <div
         className="absolute -inset-px rounded-xl"
@@ -295,17 +321,17 @@ const Canvas: React.FC<{
         }}
       />
 
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width,
-          height,
-          transform: `scale(${scale})`,
-          transformOrigin: 'top left',
-        }}
-      >
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width,
+            height,
+            transform: `scale(${scale})`,
+            transformOrigin: 'top left',
+          }}
+        >
         <FrameContext.Provider
           value={{
             frame,
@@ -322,6 +348,7 @@ const Canvas: React.FC<{
         >
           <Component {...defaultProps} />
         </FrameContext.Provider>
+        </div>
       </div>
     </div>
   );
@@ -335,11 +362,13 @@ export interface PlayerProps {
   width?: number;
   height?: number;
   defaultProps?: Record<string, unknown>;
+  inputProps?: Record<string, unknown>;
   controls?: boolean;
   loop?: boolean;
   autoPlay?: boolean;
   style?: React.CSSProperties;
   className?: string;
+  emitter?: PlayerEmitter;
 }
 
 export const Player: React.FC<PlayerProps> = ({
@@ -349,11 +378,13 @@ export const Player: React.FC<PlayerProps> = ({
   width = 1920,
   height = 1080,
   defaultProps = {},
+  inputProps,
   controls = true,
   loop = true,
   autoPlay = false,
   style,
   className,
+  emitter,
 }) => {
   const [frame, setFrame] = useState(0);
   const [playing, setPlaying] = useState(autoPlay);
@@ -364,10 +395,12 @@ export const Player: React.FC<PlayerProps> = ({
   const animationRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number>(0);
   const canvasRef = useRef<HTMLDivElement>(null);
+  const emitterRef = useRef(emitter ?? new PlayerEmitter());
 
   // Animation loop
   useEffect(() => {
     if (playing) {
+      emitterRef.current.emit('play');
       const frameDuration = 1000 / (fps * playbackRate);
 
       const animate = (currentTime: number) => {
@@ -379,6 +412,7 @@ export const Player: React.FC<PlayerProps> = ({
                 return 0;
               }
               setPlaying(false);
+              emitterRef.current.emit('ended');
               return prevFrame;
             }
             return nextFrame;
@@ -396,6 +430,7 @@ export const Player: React.FC<PlayerProps> = ({
         if (animationRef.current) {
           cancelAnimationFrame(animationRef.current);
         }
+        emitterRef.current.emit('pause');
       };
     }
   }, [playing, fps, playbackRate, durationInFrames, loop]);
@@ -442,7 +477,10 @@ export const Player: React.FC<PlayerProps> = ({
   }, [durationInFrames]);
 
   const handleSeek = useCallback((targetFrame: number) => {
-    setFrame(Math.max(0, Math.min(targetFrame, durationInFrames - 1)));
+    const frameToSeek = Math.max(0, Math.min(targetFrame, durationInFrames - 1));
+    setFrame(frameToSeek);
+    emitterRef.current.emit('seek', { frame: frameToSeek });
+    emitterRef.current.emit('seeked', { frame: frameToSeek });
   }, [durationInFrames]);
 
   const handlePlayPause = useCallback(() => {
@@ -468,6 +506,7 @@ export const Player: React.FC<PlayerProps> = ({
     setIsExporting(true);
     setExportProgress(0);
     setPlaying(false);
+    emitterRef.current.emit('exportstart');
 
     try {
       // The canvas element we want to capture is the inner div that has the scale transform
@@ -478,15 +517,20 @@ export const Player: React.FC<PlayerProps> = ({
         elementToCapture,
         { width, height, fps, durationInFrames },
         {
-          onProgress: (progress) => setExportProgress(progress),
+          onProgress: (progress) => {
+            setExportProgress(progress);
+            emitterRef.current.emit('exportprogress', { progress });
+          },
         }
       );
 
       if (blob) {
+        emitterRef.current.emit('exportcomplete', { blob });
         downloadVideo(blob, `motionforge-export-${Date.now()}.webm`);
       }
     } catch (error) {
       console.error('Export failed:', error);
+      emitterRef.current.emit('exporterror', { error: error instanceof Error ? error : new Error(String(error)) });
       alert('Export failed. Check console for details.');
     } finally {
       setIsExporting(false);

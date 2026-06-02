@@ -133,6 +133,8 @@ export const spring = ({
   to = 1,
   durationInFrames,
   durationRestThreshold = 0.005,
+  delay = 0,
+  reverse = false,
 }: SpringConfig): number => {
   const {
     damping = 10,
@@ -141,42 +143,51 @@ export const spring = ({
     overshootClamping = false,
   } = config;
 
+  // Apply delay: return `from` value during delay frames
+  if (frame < delay) {
+    return reverse ? to : from;
+  }
+
+  // Calculate effective frame (after delay)
+  const effectiveFrame = frame - delay;
+
   // Calculate natural frequency and damping ratio
   const omega = Math.sqrt(stiffness / mass);
   const zeta = damping / (2 * Math.sqrt(stiffness * mass));
-  
+
   // Calculate duration if not provided
   const actualDuration = durationInFrames ?? Math.ceil(fps * 2);
-  
+
   // Normalize time
-  const t = Math.min(frame / actualDuration, 1);
+  const t = Math.min(effectiveFrame / actualDuration, 1);
   const time = t * actualDuration / fps;
-  
+
   let value: number;
-  
+
   if (zeta < 1) {
-    // Underdamped
     const omegaD = omega * Math.sqrt(1 - zeta * zeta);
     value = 1 - Math.exp(-zeta * omega * time) * (
       Math.cos(omegaD * time) + (zeta * omega / omegaD) * Math.sin(omegaD * time)
     );
   } else if (zeta === 1) {
-    // Critically damped
     value = 1 - (1 + omega * time) * Math.exp(-omega * time);
   } else {
-    // Overdamped
     const r1 = -omega * (zeta - Math.sqrt(zeta * zeta - 1));
     const r2 = -omega * (zeta + Math.sqrt(zeta * zeta - 1));
     const c2 = (1 - r1 / (r1 - r2)) / (r1 - r2);
     const c1 = 1 / (r1 - r2) - c2;
     value = 1 - c1 * Math.exp(r1 * time) - c2 * Math.exp(r2 * time);
   }
-  
-  // Clamp overshoot if needed
+
   if (overshootClamping) {
     value = Math.max(0, Math.min(1, value));
   }
-  
+
+  // Apply reverse: swap from/to and invert the value
+  if (reverse) {
+    return to + (from - to) * value;
+  }
+
   return from + (to - from) * value;
 };
 
@@ -191,6 +202,7 @@ export const interpolate = (
     extrapolateLeft = 'clamp',
     extrapolateRight = 'clamp',
     easing,
+    posterize,
   } = options;
 
   if (inputRange.length !== outputRange.length) {
@@ -201,29 +213,52 @@ export const interpolate = (
     throw new Error('inputRange must have at least 2 elements');
   }
 
-  // Check if input is outside the range
-  if (input < inputRange[0]) {
+  // Apply posterization (quantize input)
+  let posterizedInput = input;
+  if (posterize !== undefined && posterize > 0) {
+    posterizedInput = Math.floor(input / posterize) * posterize;
+  }
+
+  // Handle extrapolation left
+  if (posterizedInput < inputRange[0]) {
     if (extrapolateLeft === 'clamp') {
       return outputRange[0];
     } else if (extrapolateLeft === 'identity') {
-      return input;
+      return posterizedInput;
+    } else if (extrapolateLeft === 'wrap') {
+      const rangeWidth = inputRange[inputRange.length - 1] - inputRange[0];
+      const offset = ((posterizedInput - inputRange[0]) % rangeWidth + rangeWidth) % rangeWidth;
+      return interpolate(inputRange[0] + offset, inputRange, outputRange, {
+        ...options,
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+      });
     }
-    // extend - continue the linear extrapolation
+    // 'extend' — fall through to segment calculation
   }
 
-  if (input > inputRange[inputRange.length - 1]) {
+  // Handle extrapolation right
+  if (posterizedInput > inputRange[inputRange.length - 1]) {
     if (extrapolateRight === 'clamp') {
       return outputRange[outputRange.length - 1];
     } else if (extrapolateRight === 'identity') {
-      return input;
+      return posterizedInput;
+    } else if (extrapolateRight === 'wrap') {
+      const rangeWidth = inputRange[inputRange.length - 1] - inputRange[0];
+      const offset = ((posterizedInput - inputRange[0]) % rangeWidth + rangeWidth) % rangeWidth;
+      return interpolate(inputRange[0] + offset, inputRange, outputRange, {
+        ...options,
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+      });
     }
-    // extend - continue the linear extrapolation
+    // 'extend' — fall through to segment calculation
   }
 
   // Find the segment
   let segmentIndex = 0;
   for (let i = 1; i < inputRange.length; i++) {
-    if (input <= inputRange[i]) {
+    if (posterizedInput <= inputRange[i]) {
       segmentIndex = i - 1;
       break;
     }
@@ -235,11 +270,20 @@ export const interpolate = (
   const outputEnd = outputRange[segmentIndex + 1];
 
   // Calculate progress
-  let progress = (input - inputStart) / (inputEnd - inputStart);
-  
-  // Apply easing
+  let progress = (posterizedInput - inputStart) / (inputEnd - inputStart);
+
+  // Apply per-segment easing
   if (easing) {
-    progress = easing(progress);
+    if (Array.isArray(easing)) {
+      // Per-segment easing: use the easing function for this segment
+      const segmentEasing = segmentIndex < easing.length ? easing[segmentIndex] : easing[easing.length - 1];
+      if (segmentEasing) {
+        progress = segmentEasing(progress);
+      }
+    } else {
+      // Single easing function applied to all segments
+      progress = easing(progress);
+    }
   }
 
   return outputStart + progress * (outputEnd - outputStart);

@@ -29,6 +29,7 @@ interface SequenceProps {
   children: ReactNode;
   showInTimeline?: boolean;
   layout?: 'absolute-fill' | 'none';
+  premountFor?: number;  // NEW: number of frames to premount before `from`
 }
 
 // Sequence Component - renders children only during specified frame range
@@ -39,16 +40,22 @@ export const Sequence: React.FC<SequenceProps> = ({
   name,
   children,
   layout = 'absolute-fill',
+  premountFor = 0,  // NEW
 }) => {
   const currentFrame = useCurrentFrame();
   const startFrame = from + offset;
   const endFrame = durationInFrames !== undefined ? startFrame + durationInFrames : Infinity;
-  
-  // Calculate relative frame
-  const relativeFrame = currentFrame - startFrame;
-  
+
   // Check if sequence is active
   const isActive = currentFrame >= startFrame && currentFrame < endFrame;
+
+  // Premounting: render children before the sequence starts, but invisible
+  const premountStart = startFrame - premountFor;
+  const isPremounted = premountFor > 0 && currentFrame >= premountStart && currentFrame < startFrame;
+  const shouldRender = isActive || isPremounted;
+
+  // Calculate relative frame
+  const relativeFrame = isActive ? currentFrame - startFrame : 0;
   
   const contextValue: SequenceContextValue = {
     relativeFrom: startFrame,
@@ -59,7 +66,7 @@ export const Sequence: React.FC<SequenceProps> = ({
   };
 
   // Don't render children if not active (optimization)
-  if (!isActive) {
+  if (!shouldRender) {
     return null;
   }
 
@@ -77,6 +84,9 @@ export const Sequence: React.FC<SequenceProps> = ({
           bottom: 0,
           display: 'flex',
           flexDirection: 'column',
+          // Premounted: invisible but rendered for audio preloading
+          opacity: isPremounted ? 0 : 1,
+          pointerEvents: isPremounted ? 'none' : 'auto',
         }}
       >
         <SequenceFrameProvider relativeFrame={relativeFrame}>
@@ -162,7 +172,8 @@ export const useLoop = () => useContext(LoopContext);
 // Freeze Component - freezes a frame for specified duration
 interface FreezeProps {
   frame: number;
-  durationInFrames: number;
+  durationInFrames?: number;
+  active?: boolean | ((frame: number) => boolean);  // NEW
   children: ReactNode;
   name?: string;
 }
@@ -170,12 +181,23 @@ interface FreezeProps {
 export const Freeze: React.FC<FreezeProps> = ({
   frame: freezeFrame,
   durationInFrames,
+  active = true,  // NEW: default to always active
   children,
 }) => {
   const currentFrame = useCurrentFrame();
-  
-  // Calculate which frame to show
-  const displayFrame = currentFrame < durationInFrames ? freezeFrame : currentFrame - durationInFrames + freezeFrame;
+
+  // Evaluate active state
+  const isActive = typeof active === 'function' ? active(currentFrame) : active;
+
+  // If not active, pass through the current frame unchanged
+  if (!isActive) {
+    return <>{children}</>;
+  }
+
+  // Calculate which frame to show when frozen
+  const displayFrame = durationInFrames !== undefined
+    ? (currentFrame < durationInFrames ? freezeFrame : currentFrame - durationInFrames + freezeFrame)
+    : freezeFrame;
 
   return (
     <SequenceFrameProvider relativeFrame={displayFrame}>
@@ -229,33 +251,46 @@ export const Reverse: React.FC<ReverseProps> = ({
   );
 };
 
-// Series Component - plays sequences in series
+// Series Component - plays sequences in series with optional gaps/overlaps
 interface SeriesProps {
   children: ReactNode;
 }
 
+// Add Series.Sequence sub-component for typed children
+interface SeriesSequenceProps {
+  durationInFrames: number;
+  offset?: number;  // NEW: positive = gap, negative = overlap
+  children: ReactNode;
+}
+
+export const SeriesSequence: React.FC<SeriesSequenceProps> = ({ children }) => {
+  // This component is just a container — the Series parent reads its props
+  return <>{children}</>;
+};
+
 export const Series: React.FC<SeriesProps> = ({ children }) => {
   const currentFrame = useCurrentFrame();
-  
+
   // Calculate cumulative frames for each child
   let accumulatedFrames = 0;
   let activeChildIndex = -1;
   let relativeFrame = currentFrame;
 
   const childArray = React.Children.toArray(children);
-  
+
   for (let i = 0; i < childArray.length; i++) {
     const child = childArray[i];
-    if (React.isValidElement<{ durationInFrames?: number }>(child) && child.props.durationInFrames) {
-      const childDuration = child.props.durationInFrames;
-      
-      if (currentFrame >= accumulatedFrames && currentFrame < accumulatedFrames + childDuration) {
+    if (React.isValidElement(child)) {
+      const childDuration = (child.props as any).durationInFrames ?? 0;
+      const childOffset = (child.props as any).offset ?? 0;
+
+      if (childDuration > 0 && currentFrame >= accumulatedFrames && currentFrame < accumulatedFrames + childDuration) {
         activeChildIndex = i;
         relativeFrame = currentFrame - accumulatedFrames;
         break;
       }
-      
-      accumulatedFrames += childDuration;
+
+      accumulatedFrames += childDuration + childOffset;
     }
   }
 
@@ -264,12 +299,15 @@ export const Series: React.FC<SeriesProps> = ({ children }) => {
   }
 
   const activeChild = childArray[activeChildIndex];
-  
+
   return (
     <SequenceFrameProvider relativeFrame={relativeFrame}>
       {activeChild}
     </SequenceFrameProvider>
   );
 };
+
+// Attach SeriesSequence as a sub-component
+export const SeriesWithSequence = Object.assign(Series, { Sequence: SeriesSequence });
 
 export { SequenceContext };
