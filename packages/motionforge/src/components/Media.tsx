@@ -47,7 +47,7 @@ const TAILWIND_CLASS_CONFLICTS: Record<string, string[]> = {
  * Check if a className token conflicts with a specific CSS property.
  * Parses the className into individual tokens and checks against the prefix map.
  */
-function shouldOmitStyleProperty(classNameTokens: string[], cssProperty: string): boolean {
+export function shouldOmitStyleProperty(classNameTokens: string[], cssProperty: string): boolean {
   for (const token of classNameTokens) {
     for (const [prefix, properties] of Object.entries(TAILWIND_CLASS_CONFLICTS)) {
       if (token.startsWith(prefix) && properties.includes(cssProperty)) {

@@ -1,0 +1,3 @@
+import{renderMedia as i,ensureFfmpeg as m}from"@motionforge/renderer";async function a(e){var t,n;console.log(`[MotionForge] Rendering still from "${e.compositionId}" at frame ${(t=e.frame)!=null?t:0}...`),await m();let o=e.props?JSON.parse(e.props):void 0,r=await i({serveUrl:e.entry,compositionId:e.compositionId,outputLocation:e.output,codec:"gif",fps:1,width:Number(e.width)||1920,height:Number(e.height)||1080,durationInFrames:1,inputProps:o,frameRange:[Number(e.frame)||0,Number(e.frame)||0]});r.success?(console.log(`
+  \u2713 Rendered frame ${(n=e.frame)!=null?n:0}`),console.log(`  Output: ${r.outputLocation}`)):(console.error(`
+  \u2717 Still render failed: ${r.error}`),process.exit(1))}export{a};

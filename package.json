@@ -14,7 +14,10 @@
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "test": "bun run test:unit && bun run test:e2e",
+    "test:unit": "bun test packages/motionforge/src/__tests__ packages/motionforge-renderer/src/__tests__ packages/motionforge-cli/src/__tests__",
+    "test:e2e": "npx playwright test"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
