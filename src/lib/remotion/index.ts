@@ -215,7 +215,6 @@ export type {
 
 // Icons
 export * from './icons';
-export { default as Icons } from './icons';
 
 // Types
 export type {
@@ -237,4 +236,16 @@ export type {
   FrameContextValue,
   VideoRendererConfig,
   CompositionManager,
+  PhysicsConfig,
+  PhysicsBodyProps,
+  StudioConfig,
+  StudioTemplate,
 } from './core/types';
+
+// Physics Components (lazy-loaded from ./components/physics)
+// Import from 'motionforge/physics' for physics features:
+//   import { RapierWorld, RigidBody, PhysicsScene } from 'motionforge/physics';
+
+// Studio Templates
+export { templates, getTemplate } from './studio/templates';
+export type { StudioTemplate as StudioTemplateItem } from './studio/templates';

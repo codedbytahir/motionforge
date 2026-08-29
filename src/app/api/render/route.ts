@@ -223,20 +223,20 @@ async function startRenderJob(
   if (!job) return;
 
   job.status = 'processing';
-  job.startTime = Date.now();
-  renderJobManager.startJob(jobId);
+    job.startTime = Date.now();
+    renderJobManager.startJob(jobId);
 
-  try {
-    // Simulate frame-by-frame rendering
-    const totalFrames = config.durationInFrames;
-    const frameDelay = rendererConfig?.quality === 'high' ? 50 : 
-                       rendererConfig?.quality === 'low' ? 10 : 25;
+    try {
+      // Simulate frame-by-frame rendering
+      const totalFrames = config.durationInFrames;
+      const frameDelay = rendererConfig?.quality === 'high' ? 50 : 
+                         rendererConfig?.quality === 'low' ? 10 : 25;
 
-    for (let frame = 0; frame < totalFrames; frame++) {
-      // Check if job was cancelled
-      if (job.status === 'cancelled') {
-        return;
-      }
+      for (let frame = 0; frame < totalFrames; frame++) {
+        // Check if job was cancelled (cast to full union to avoid TS2367 narrowing)
+        if ((job as EnhancedJobState).status === 'cancelled') {
+          return;
+        }
 
       // Update progress
       const progress = ((frame + 1) / totalFrames) * 100;

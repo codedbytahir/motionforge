@@ -147,3 +147,78 @@
   background: oklch(0.5 0.12 160);
   color: white;
 }
+
+/* Forge Studio - Monaco Editor overrides */
+.monaco-editor {
+  border-radius: 0 !important;
+}
+
+.monaco-editor .minimap {
+  opacity: 0.5;
+}
+
+.monaco-editor .scroll-decoration {
+  display: none !important;
+}
+
+/* Smooth scrollbar for dark theme */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.3 0.06 160) transparent;
+}
+
+/* Physics canvas container */
+.physics-canvas canvas {
+  border-radius: inherit;
+}
+
+/* Glow effects for premium feel */
+.glow-emerald {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), 0 0 60px rgba(16, 185, 129, 0.05);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15), 0 0 60px rgba(139, 92, 246, 0.05);
+}
+
+.glow-blue {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15), 0 0 60px rgba(59, 130, 246, 0.05);
+}
+
+/* Range input styling for timeline */
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+
+input[type="range"]::-moz-range-thumb:active {
+  transform: scale(1.2);
+}
+
+/* Animate pulse for loading states */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Code editor line numbers */
+.line-numbers {
+  counter-reset: line;
+}
+
+.line-numbers .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 3em;
+  text-align: right;
+  margin-right: 1em;
+  color: #2d4a3a;
+}
