@@ -1,4 +1,5 @@
 // Core types for Remotion-like video framework
+// Extended with Physics and Studio types for MotionForge v2.0
 
 export interface VideoConfig {
   width: number;
@@ -138,4 +139,45 @@ export interface CompositionManager {
   unregisterComposition: (id: string) => void;
   setCurrentComposition: (id: string) => void;
   getComposition: (id: string) => CompositionProps | undefined;
+}
+
+// ──── Physics Types ────
+
+export interface PhysicsConfig {
+  gravity?: [number, number, number];
+  timeStep?: number;
+  paused?: boolean;
+}
+
+export interface PhysicsBodyProps {
+  position?: [number, number, number];
+  rotation?: [number, number, number];
+  mass?: number;
+  restitution?: number;
+  friction?: number;
+  linearDamping?: number;
+  angularDamping?: number;
+  type?: 'dynamic' | 'fixed' | 'kinematicPositionBased' | 'kinematicVelocityBased';
+  colliders?: 'ball' | 'cuboid' | 'capsule' | 'trimesh' | 'convexHull' | 'hull' | false;
+}
+
+// ──── Studio Types ────
+
+export interface StudioConfig {
+  width: number;
+  height: number;
+  fps: number;
+  durationInFrames: number;
+  theme?: 'dark' | 'light';
+  autoCompile?: boolean;
+  autoSave?: boolean;
+}
+
+export interface StudioTemplate {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  color: string;
+  code: string;
 }
