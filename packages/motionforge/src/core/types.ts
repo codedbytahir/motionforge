@@ -72,12 +72,15 @@ export interface SpringConfig {
   to?: number;
   durationInFrames?: number;
   durationRestThreshold?: number;
+  delay?: number;
+  reverse?: boolean;
 }
 
 export interface InterpolateOptions {
-  extrapolateLeft?: 'clamp' | 'extend' | 'identity';
-  extrapolateRight?: 'clamp' | 'extend' | 'identity';
-  easing?: (t: number) => number;
+  extrapolateLeft?: 'clamp' | 'extend' | 'identity' | 'wrap';
+  extrapolateRight?: 'clamp' | 'extend' | 'identity' | 'wrap';
+  easing?: EasingFunction | EasingFunction[];
+  posterize?: number;
 }
 
 export type EasingFunction = (t: number) => number;

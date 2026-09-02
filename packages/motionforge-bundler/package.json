@@ -1,0 +1,26 @@
+{
+  "name": "@motionforge/bundler",
+  "version": "1.0.0",
+  "description": "Project bundler for MotionForge",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "webpack": "^5.107.2",
+    "webpack-dev-middleware": "^8.0.3",
+    "webpack-hot-middleware": "^2.26.1",
+    "esbuild-loader": "^4.4.3",
+    "css-loader": "^7.1.4",
+    "style-loader": "^4.0.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

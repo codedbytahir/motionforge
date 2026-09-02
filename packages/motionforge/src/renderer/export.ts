@@ -39,6 +39,37 @@ export interface ExportResult {
 }
 
 /**
+ * Wait for the delayRender/continueRender protocol to signal readiness.
+ * Polls window.__MOTIONFORGE_RENDER_READY via requestAnimationFrame.
+ * Falls back to a 20ms minimum wait if the protocol is not used.
+ */
+function waitForRenderReady(timeoutMs: number = 30000): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    const minimumWait = 16; // At least one frame tick for React to call delayRender
+
+    setTimeout(() => {
+      const check = () => {
+        // If no delayRender was called, consider the frame ready
+        if (typeof window !== 'undefined' && (window as any).__MOTIONFORGE_RENDER_READY !== false) {
+          resolve();
+          return;
+        }
+        if (Date.now() - start > timeoutMs) {
+          reject(new Error(
+            `[MotionForge] Frame render timed out after ${timeoutMs}ms. ` +
+            `A delayRender() was called but continueRender() was never called.`
+          ));
+          return;
+        }
+        requestAnimationFrame(check);
+      };
+      check();
+    }, minimumWait);
+  });
+}
+
+/**
  * Canvas renderer for frame capture
  */
 export class CanvasRenderer {
@@ -435,9 +466,9 @@ export class VideoExportManager {
         // 1. Set frame
         setFrame(frame);
 
-        // 2. Wait for React render and any effects
+        // 2. Wait for React render and async operations to complete
         await new Promise(resolve => requestAnimationFrame(resolve));
-        await new Promise(resolve => setTimeout(resolve, 20));
+        await waitForRenderReady(30000); // 30-second timeout
 
         // 3. Capture frame
         await this.renderer.captureFrame(element);

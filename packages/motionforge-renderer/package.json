@@ -1,0 +1,38 @@
+{
+  "name": "@motionforge/renderer",
+  "version": "1.0.0",
+  "description": "Server-side rendering engine for MotionForge",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "puppeteer-core": "^25.1.0",
+    "execa": "^9.6.1",
+    "ws": "^8.21.0",
+    "source-map": "^0.8.0-beta.0"
+  },
+  "peerDependencies": {
+    "motionforge": ">=1.4.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.1",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

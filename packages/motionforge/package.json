@@ -83,15 +83,15 @@
   "devDependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
+    "@types/react": "^19.2.16",
+    "@types/react-dom": "^19.2.3",
     "@types/three": "^0.184.1",
     "framer-motion": "^12.40.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "three": "^0.184.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": ">=18.0.0"

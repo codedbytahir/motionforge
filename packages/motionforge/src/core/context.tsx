@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
+import React, { createContext, useContext, useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { FrameContextValue, CompositionProps, TimelineState } from './types';
 
 // Frame Context - provides current frame information to all children
@@ -101,18 +101,73 @@ export const FrameProvider: React.FC<FrameProviderProps> = ({
   children,
   initialFrame = 0,
 }) => {
-  const [frame, setFrameState] = useState(initialFrame);
-  const [playing, setPlaying] = useState(false);
-  const [playbackRate, setPlaybackRate] = useState(1);
+  // Use a stable ID for the composition if possible, otherwise use a generic key
+  const compositionId = useMemo(() => {
+    // In a real scenario, we'd get this from context or props
+    return 'default';
+  }, []);
+
+  // Restore frame from localStorage (survives full reloads)
+  const [frame, setFrameState] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem(`__mf_frame_${compositionId}`);
+        const savedFps = localStorage.getItem(`__mf_fps_${compositionId}`);
+        const savedDuration = localStorage.getItem(`__mf_duration_${compositionId}`);
+        if (saved && savedFps === String(fps) && savedDuration === String(durationInFrames)) {
+          const restoredFrame = parseInt(saved, 10);
+          if (!isNaN(restoredFrame) && restoredFrame >= 0 && restoredFrame < durationInFrames) {
+            return restoredFrame;
+          }
+        }
+      } catch {
+        // localStorage not available
+      }
+    }
+    return initialFrame;
+  });
+
+  const [playing, setPlaying] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        return localStorage.getItem(`__mf_playing_${compositionId}`) === 'true';
+      } catch { return false; }
+    }
+    return false;
+  });
+
+  const [playbackRate, setPlaybackRate] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem(`__mf_playbackRate_${compositionId}`);
+        return saved ? parseFloat(saved) : 1;
+      } catch { return 1; }
+    }
+    return 1;
+  });
+
   const animationRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number>(0);
-  const frameRef = useRef<number>(initialFrame);
+  const frameRef = useRef<number>(frame);
 
   const setFrame = useCallback((newFrame: number) => {
     const clampedFrame = Math.max(0, Math.min(newFrame, durationInFrames - 1));
     setFrameState(clampedFrame);
     frameRef.current = clampedFrame;
   }, [durationInFrames]);
+
+  // Persist state on every change
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem(`__mf_frame_${compositionId}`, String(frame));
+        localStorage.setItem(`__mf_fps_${compositionId}`, String(fps));
+        localStorage.setItem(`__mf_duration_${compositionId}`, String(durationInFrames));
+        localStorage.setItem(`__mf_playing_${compositionId}`, String(playing));
+        localStorage.setItem(`__mf_playbackRate_${compositionId}`, String(playbackRate));
+      } catch { /* ignore */ }
+    }
+  }, [frame, fps, durationInFrames, playing, playbackRate, compositionId]);
 
   useEffect(() => {
     if (playing) {

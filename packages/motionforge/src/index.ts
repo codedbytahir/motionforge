@@ -21,8 +21,31 @@ export {
   PlayerProvider,
 } from './core/context';
 
+export {
+  delayRender,
+  continueRender,
+  isRenderReady,
+  cancelAllDelays,
+} from './core/delay-render';
+
+export {
+  getInputProps,
+  serializeInputProps,
+  deserializeInputProps,
+  resolveProps,
+} from './core/input-props';
+
+export {
+  preloadImage,
+  preloadVideo,
+  preloadAudio,
+  preloadFont,
+  preloadAssets,
+  usePreloadAssets,
+} from './core/preload';
+
 // Components
-export { Composition, PlayerComposition, useVideoConfig as useConfig, useComposition } from './components/Composition';
+export { Composition, PlayerComposition, useVideoConfig as useConfig, useComposition, Still } from './components/Composition';
 export {
   Sequence,
   Loop,
@@ -30,6 +53,7 @@ export {
   Retiming,
   Reverse,
   Series,
+  SeriesSequence,
   useSequence,
   useRelativeCurrentFrame,
 } from './components/Sequence';
@@ -173,6 +197,10 @@ export {
 // Player
 export { Player } from './player/Player';
 export type { PlayerProps } from './player/Player';
+export { PlayerEmitter } from './player/player-emitter';
+export { Thumbnail } from './player/Thumbnail';
+export type { ThumbnailProps } from './player/Thumbnail';
+export * as PlayerInternals from './player/internals';
 
 // Renderer
 export {

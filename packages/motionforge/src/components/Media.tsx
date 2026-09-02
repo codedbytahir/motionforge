@@ -11,26 +11,78 @@ interface AbsoluteFillProps {
   className?: string;
 }
 
+/**
+ * Mapping of Tailwind CSS class prefixes to the inline CSS properties they control.
+ * If a className contains a prefix from this map, the corresponding inline style is omitted.
+ */
+const TAILWIND_CLASS_CONFLICTS: Record<string, string[]> = {
+  // Position properties
+  'top-': ['top'],
+  'left-': ['left'],
+  'right-': ['right'],
+  'bottom-': ['bottom'],
+  'inset-': ['top', 'left', 'right', 'bottom'],
+  // Size properties
+  'w-': ['width'],
+  'h-': ['height'],
+  'size-': ['width', 'height'],
+  // Display properties
+  'flex': ['display'],
+  'grid': ['display'],
+  'block': ['display'],
+  'inline': ['display'],
+  'hidden': ['display'],
+  // Flex direction
+  'flex-col': ['flexDirection'],
+  'flex-row': ['flexDirection'],
+  'flex-wrap': ['flexWrap'],
+  // Alignment
+  'items-': ['alignItems'],
+  'justify-': ['justifyContent'],
+  'self-': ['alignSelf'],
+  'place-': ['placeItems', 'placeContent'],
+};
+
+/**
+ * Check if a className token conflicts with a specific CSS property.
+ * Parses the className into individual tokens and checks against the prefix map.
+ */
+function shouldOmitStyleProperty(classNameTokens: string[], cssProperty: string): boolean {
+  for (const token of classNameTokens) {
+    for (const [prefix, properties] of Object.entries(TAILWIND_CLASS_CONFLICTS)) {
+      if (token.startsWith(prefix) && properties.includes(cssProperty)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 export const AbsoluteFill: React.FC<AbsoluteFillProps> = ({
   children,
   style,
   className,
 }) => {
+  // Parse className into individual tokens for prefix matching
+  const classNameTokens = className ? className.split(/\s+/) : [];
+
+  const computedStyle: React.CSSProperties = {};
+
+  // Only set inline styles that don't conflict with Tailwind classes
+  if (!shouldOmitStyleProperty(classNameTokens, 'position')) computedStyle.position = 'absolute';
+  if (!shouldOmitStyleProperty(classNameTokens, 'top')) computedStyle.top = 0;
+  if (!shouldOmitStyleProperty(classNameTokens, 'left')) computedStyle.left = 0;
+  if (!shouldOmitStyleProperty(classNameTokens, 'right')) computedStyle.right = 0;
+  if (!shouldOmitStyleProperty(classNameTokens, 'bottom')) computedStyle.bottom = 0;
+  if (!shouldOmitStyleProperty(classNameTokens, 'width')) computedStyle.width = '100%';
+  if (!shouldOmitStyleProperty(classNameTokens, 'height')) computedStyle.height = '100%';
+  if (!shouldOmitStyleProperty(classNameTokens, 'display')) computedStyle.display = 'flex';
+  if (!shouldOmitStyleProperty(classNameTokens, 'flexDirection')) computedStyle.flexDirection = 'column';
+
   return (
     <div
       className={className}
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        ...style,
-      }}
+      style={{ ...computedStyle, ...style }}
     >
       {children}
     </div>
