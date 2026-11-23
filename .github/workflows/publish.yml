@@ -2,8 +2,8 @@ name: Publish npm packages
 on:
   workflow_dispatch:
     inputs:
-      confirm_release_reviewed:
-        description: 'Confirm all release blockers in audit/final/REVIEW.md have been resolved'
+      confirm_publication_with_known_findings:
+        description: 'Authorize publication with the unresolved findings disclosed in audit/final/REVIEW.md'
         required: true
         type: boolean
         default: false
@@ -11,7 +11,7 @@ permissions:
   contents: read
 jobs:
   publish:
-    if: inputs.confirm_release_reviewed
+    if: inputs.confirm_publication_with_known_findings
     runs-on: ubuntu-latest
     environment: npm-release
     permissions:
@@ -35,8 +35,10 @@ jobs:
           npm run test:package --prefix packages/motionforge
           npm test --prefix packages/create-motionforge
           node audit/final/test-review.mjs
-      - name: Publish exact versions (OIDC; no long-lived token)
+      - name: Publish exact versions (existing npm secret or configured OIDC)
         shell: bash
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -euo pipefail
           for dir in packages/motionforge packages/create-motionforge; do

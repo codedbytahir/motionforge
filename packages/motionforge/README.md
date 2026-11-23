@@ -1,5 +1,8 @@
 # MotionForge 1.5 — Trolic integration
 
+> **Audit disclosure:** Published at the maintainer’s request with incomplete manual review and license clearance. See https://github.com/codedbytahir/motionforge/blob/main/audit/final/REVIEW.md for unresolved findings and limitations. This is not an audit-cleared release.
+
+
 See RELEASE.md for API additions, migration notes, validation and current export limitations. Use `motionforge/trolic` for the lightweight compiler-injected React bridge.
 
 # MotionForge
