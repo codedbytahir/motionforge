@@ -1,0 +1,58 @@
+{
+  "create-motionforge": {
+    "version": "1.2.0",
+    "bin": {
+      "create-motionforge": "bin/index.js"
+    },
+    "dist": {
+      "shasum": "f4232c83976cd98894bac24e96ec5ed2b6f31b73",
+      "tarball": "https://registry.npmjs.org/create-motionforge/-/create-motionforge-1.2.0.tgz",
+      "fileCount": 38,
+      "integrity": "sha512-jf8QNGymZ4RhMbimK6H9Ls389oo7brNdIVlUdUAbrKfl9JoGl6gJN8B3ZmQm2C/zkBJk1Ov/raUpFIUeSrT2lg==",
+      "signatures": [
+        {
+          "sig": "MEYCIQC2ktU/TjhOQhn7zwP/dV89/SVsf6YJWIPZMjw738m1lQIhAIMwdoR4LutOSAb4KAw4Xrh7DbORm6IIIBVd4lL/RvcS",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "sig": "MEQCIGtasaSqhnzxUO2MhsYLhqYnzLJm+nuVXybhZWA1Nv9XAiBmf6KA9aKQFPJASJDIvE0KjFMrdRaYWNPFUa9DmdHheg==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "attestations": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/create-motionforge@1.2.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "unpackedSize": 100678
+    }
+  },
+  "motionforge": {
+    "version": "1.5.0",
+    "bin": null,
+    "dist": {
+      "shasum": "04001925e7cb185ca4af15de8e62fdac320097ce",
+      "tarball": "https://registry.npmjs.org/motionforge/-/motionforge-1.5.0.tgz",
+      "fileCount": 89,
+      "integrity": "sha512-mH6MBSffML+6Aaty1PV7c+SssL9APTQtq3PBOoyACQpiVWTV8qxNX+RCeEyk6AkKSUBt087DhzThCCQ0uUPGDQ==",
+      "signatures": [
+        {
+          "sig": "MEUCIGgPtNesg5FpNlrGED/plU7LY+mzVKkWSSVudqU4Go/LAiEA4QN9gz5E6z8WpfLx5N/rebf+PZ78ATDGCMo8u2qdZzM=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "sig": "MEYCIQDvVOAC9qddgZmZqcEXbSMiyTuxfOcejzKGXn9xvOZDggIhAIgZF3/ugwXSXQbK6SPRDBWWgPzVdSf16G//CcAjWbcD",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "attestations": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/motionforge@1.5.0",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "unpackedSize": 6015378
+    }
+  }
+}

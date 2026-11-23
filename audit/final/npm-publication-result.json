@@ -1,0 +1,17 @@
+{
+  "status": "published; both exact registry versions independently verified",
+  "workflow": "https://github.com/codedbytahir/motionforge/actions/runs/45260246434",
+  "workflow_conclusion": "success",
+  "source_commit": "6b71ff91a7107e9fc77f066cebdbac79efb0d444",
+  "packages": [
+    "motionforge@1.5.0",
+    "create-motionforge@1.2.0"
+  ],
+  "tarball_checksums": {
+    "create-motionforge": true,
+    "motionforge": true
+  },
+  "provenance": "Both metadata responses include SLSA provenance attestations",
+  "cli_bin_verified": "create-motionforge: bin/index.js",
+  "audit_cleared": false
+}

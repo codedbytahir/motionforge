@@ -1,6 +1,6 @@
 # MotionForge 1.5.0 + create-motionforge 1.2.0
 
-Source preview for GitHub publication; not published to npm. Not audit-cleared: see audit/final/REVIEW.md.
+Published to npm: motionforge@1.5.0 and create-motionforge@1.2.0. Exact registry versions and provenance metadata independently verified. Not audit-cleared: see audit/final/REVIEW.md.
 
 ## motionforge 1.5.0
 - New optional `motionforge/trolic` entry: `Trolic`, `Lottie`, `mapSourceFrame` and types. Inject the real Trolic `compileForProfile` function; the compiler is not copied or bundled.
