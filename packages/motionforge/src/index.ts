@@ -239,3 +239,10 @@ export type {
   VideoRendererConfig,
   CompositionManager,
 } from './core/types';
+
+export { Trolic } from './components/Trolic';
+export type { TrolicProps, TrolicCompiler } from './components/Trolic';
+export { mapSourceFrame } from './utils/frame-time';
+
+export {exportOfflineVideo,mixOfflineAudio} from './renderer/offline';
+export type {OfflineExportOptions,OfflineExportResult,OfflineAudioClip} from './renderer/offline';

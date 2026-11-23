@@ -1,0 +1,18 @@
+'use client';
+import React,{useEffect,useRef,useState} from 'react';
+import {exportOfflineVideo,mixOfflineAudio} from 'motionforge/renderer';
+
+export default function OfflineExportPage(){
+ const canvas=useRef<HTMLCanvasElement>(null),controller=useRef<AbortController|null>(null),download=useRef<string|null>(null);
+ const [busy,setBusy]=useState(false),[progress,setProgress]=useState(0),[url,setUrl]=useState<string|null>(null),[error,setError]=useState('');
+ const paint=(frame:number)=>{const ctx=canvas.current!.getContext('2d')!;ctx.fillStyle='#102a23';ctx.fillRect(0,0,640,360);ctx.fillStyle='#f3f0dd';ctx.font='bold 34px sans-serif';ctx.fillText('MotionForge',36,62);ctx.font='20px sans-serif';ctx.fillText('Real offline export',36,98);ctx.fillStyle=frame>=30?'#dce7a1':'#10b981';ctx.beginPath();ctx.arc(60+frame*8,205,32,0,2*Math.PI);ctx.fill();ctx.fillStyle='#f3f0dd';ctx.font='16px monospace';ctx.fillText(`Frame ${String(frame).padStart(2,'0')} / 59`,36,324);};
+ useEffect(()=>{paint(0);return ()=>{controller.current?.abort();if(download.current)URL.revokeObjectURL(download.current);};},[]);
+ const start=async()=>{if(busy||!canvas.current)return;setBusy(true);setError('');setProgress(0);if(download.current)URL.revokeObjectURL(download.current);setUrl(null);controller.current=new AbortController();
+  try{await document.fonts.ready;const clip=new AudioBuffer({length:4800,sampleRate:48000,numberOfChannels:1});const data=clip.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=.2*Math.sin(i/48000*1000*2*Math.PI)*Math.sin(i/data.length*Math.PI);
+   const audio=await mixOfflineAudio([{buffer:clip,at:1}],2);
+   const result=await exportOfflineVideo({canvas:canvas.current,config:{width:640,height:360,fps:30,durationInFrames:60},audio,signal:controller.current.signal,renderFrame:async frame=>{await document.fonts.ready;paint(frame);},onProgress:n=>setProgress(n)});
+   download.current=URL.createObjectURL(result.blob);setUrl(download.current);
+  }catch(cause){setError(cause instanceof Error?cause.message:String(cause));}finally{setBusy(false);}
+ };
+ return <main style={{maxWidth:860,margin:'48px auto',padding:24,color:'#f3f0dd',background:'#102a23',borderRadius:12,fontFamily:'sans-serif'}}><a href="/" style={{color:'inherit'}}>MotionForge home</a><h1 style={{fontSize:36,marginTop:24}}>Offline video + audio</h1><p>Render 60 canvas frames, mix a PCM tone at one second, and mux VP9/Opus into a real WebM. This is not a screen recording or hosted render job.</p><canvas ref={canvas} width={640} height={360} aria-label="Canvas export preview" style={{width:'100%',border:'1px solid #769385',borderRadius:8}}/><div style={{display:'flex',gap:16,flexWrap:'wrap',margin:'24px 0'}}><button onClick={start} disabled={busy} style={{padding:'12px 20px',color:'#102a23',background:'#dce7a1',borderRadius:6,cursor:'pointer'}}>{busy?'Exporting…':'Export offline WebM'}</button>{busy?<button onClick={()=>controller.current?.abort()} style={{padding:'12px 20px'}}>Cancel</button>:null}{url?<a href={url} download="motionforge-offline.webm" style={{color:'#dce7a1',padding:12}}>Download WebM</a>:null}</div><p role="status" aria-live="polite">{busy?`${progress} / 60 frames encoded`:url?'Export complete. Download the video to inspect the result.':'Ready. Requires browser VP9 and Opus encoding support.'}</p>{error?<p role="alert">{error}</p>:null}<p style={{fontSize:14}}>Supported path: explicit canvas capture with an awaited readiness callback. This does not automatically capture arbitrary React DOM, and MP4 requires codecs that are not available in every browser.</p></main>;
+}

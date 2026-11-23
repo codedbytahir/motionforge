@@ -1,0 +1,52 @@
+npm notice
+npm notice package: create-motionforge@1.2.0
+npm notice Tarball Contents
+npm notice 354B README.md
+npm notice 4.2kB RELEASE.md
+npm notice 8.8kB bin/index.js
+npm notice 991B package.json
+npm notice 996B templates/blank/Composition.tsx.template
+npm notice 584B templates/blank/page.tsx.template
+npm notice 2.4kB templates/hello-world/page.tsx.template
+npm notice 2.4kB templates/shared/agent-integration/AGENT-CONTRACT.md
+npm notice 1.1kB templates/shared/agent-integration/README.md
+npm notice 9.4kB templates/shared/agent-integration/references/INITIAL-ASSESSMENT.md
+npm notice 8.3kB templates/shared/agent-integration/references/RESEARCH-V2.md
+npm notice 922B templates/shared/agent-integration/scripts/frame-time.mjs
+npm notice 1.5kB templates/shared/agent-integration/scripts/test-frame-time.mjs
+npm notice 1.1kB templates/shared/agent-integration/scripts/validate-skills.py
+npm notice 3.9kB templates/shared/agent-integration/skill-catalog.json
+npm notice 229B templates/shared/agent-integration/validation-results.json
+npm notice 1.0kB templates/shared/agent-skills/accessible-delivery/SKILL.md
+npm notice 1.1kB templates/shared/agent-skills/agent-safe-editing/SKILL.md
+npm notice 1.1kB templates/shared/agent-skills/audio-direction/SKILL.md
+npm notice 1.1kB templates/shared/agent-skills/frame-timing/SKILL.md
+npm notice 1.2kB templates/shared/agent-skills/image-blur-reveals/SKILL.md
+npm notice 1.1kB templates/shared/agent-skills/kinetic-typography/SKILL.md
+npm notice 1.1kB templates/shared/agent-skills/motion-director/SKILL.md
+npm notice 1.1kB templates/shared/agent-skills/package-release/SKILL.md
+npm notice 1.1kB templates/shared/agent-skills/performance-budget/SKILL.md
+npm notice 1.0kB templates/shared/agent-skills/product-demo-interactions/SKILL.md
+npm notice 1.1kB templates/shared/agent-skills/render-readiness/SKILL.md
+npm notice 991B templates/shared/agent-skills/storyboard-pacing/SKILL.md
+npm notice 1.2kB templates/shared/agent-skills/trolic-motionforge-bridge/SKILL.md
+npm notice 1.1kB templates/shared/agent-skills/trolic-vector-authoring/SKILL.md
+npm notice 1.1kB templates/shared/agent-skills/video-export/SKILL.md
+npm notice 1.0kB templates/shared/agent-skills/visual-regression/SKILL.md
+npm notice 11.7kB templates/shared/GLM-AI-GUIDELINES.md
+npm notice 236B templates/shared/globals.css.template
+npm notice 22.2kB templates/shared/GOOGLE-AI-GUIDELINES.md
+npm notice 397B templates/shared/layout.tsx.template
+npm notice 681B templates/shared/package.json.template
+npm notice 602B templates/shared/tsconfig.json
+npm notice Tarball Details
+npm notice name: create-motionforge
+npm notice version: 1.2.0
+npm notice filename: create-motionforge-1.2.0.tgz
+npm notice package size: 34.1 kB
+npm notice unpacked size: 100.4 kB
+npm notice shasum: 4648c6c9418d0b65df8561fc2402c2f604e206d7
+npm notice integrity: sha512-hjai1g4uoK3HX[...]jrWIHhIrmTKVQ==
+npm notice total files: 38
+npm notice
+create-motionforge-1.2.0.tgz

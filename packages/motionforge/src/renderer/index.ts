@@ -60,56 +60,9 @@ export const generateFrames = async (
     onProgress?: (frame: number, total: number) => void;
   }
 ): Promise<string[]> => {
-  const frames: string[] = [];
-  const startFrame = options?.startFrame ?? 0;
-  const endFrame = options?.endFrame ?? config.durationInFrames;
-  
-  for (let frame = startFrame; frame < endFrame; frame++) {
-    if (options?.onProgress) {
-      options.onProgress(frame - startFrame, endFrame - startFrame);
-    }
-    frames.push(`frame-${frame}`);
-  }
-  
-  return frames;
+  throw new Error('Use exportOfflineVideo with an explicit frame renderer; placeholder frames are disabled.');
 };
-
-// Render video configuration
-export const renderVideo = async (
-  options: RenderOptions & VideoRendererConfig
-): Promise<RenderResult> => {
-  const startTime = Date.now();
-  
-  try {
-    const frames = await generateFrames(
-      () => null,
-      options.config,
-      {
-        onProgress: (frame, total) => {
-          if (options.onProgress) {
-            options.onProgress(frame / total);
-          }
-        },
-      }
-    );
-    
-    const duration = Date.now() - startTime;
-    
-    return {
-      success: true,
-      frameCount: frames.length,
-      duration,
-      outputUrl: `${options.outputDir}/output.mp4`,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      frameCount: 0,
-      duration: Date.now() - startTime,
-      error: error instanceof Error ? error.message : 'Unknown error',
-    };
-  }
-};
+export const renderVideo = async (options: RenderOptions & VideoRendererConfig): Promise<RenderResult> => ({success:false,frameCount:0,duration:0,error:'Use exportOfflineVideo with canvas, frame readiness and optional mixed PCM audio.'});
 
 // FFmpeg command builder
 export const buildFFmpegCommand = (
@@ -340,3 +293,6 @@ export function downloadFrame(imageData: ImageData, filename: string = 'frame.pn
     }, 'image/png');
   }
 }
+
+export {exportOfflineVideo,mixOfflineAudio} from './offline';
+export type {OfflineExportOptions,OfflineExportResult,OfflineAudioClip} from './offline';

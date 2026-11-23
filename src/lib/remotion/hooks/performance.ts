@@ -15,13 +15,8 @@ export function useMemoizedFrame<T>(
   deps: unknown[] = []
 ): T {
   const frame = useCurrentFrame();
-  const memoCache = useMemo(() => MemoCache.getInstance(), []);
-  
-  const key = useMemo(() => `frame:${frame}:${JSON.stringify(deps)}`, [frame, deps]);
-  
-  return useMemo(() => {
-    return memoCache.getOrCompute(key, compute, [frame, ...deps]);
-  }, [key, compute, memoCache, frame, deps]);
+  // Instance-local memoization: unrelated components must not share a global key.
+  return useMemo(compute, [frame, compute, ...deps]);
 }
 
 /**
@@ -145,12 +140,14 @@ export function usePerformanceMonitor(): {
   fps: number;
   frameTime: number;
   renderTime: number;
+  measured: false;
 } {
   // Return default values - real monitoring requires external setup
   return useMemo(() => ({
-    fps: 60,
-    frameTime: 16.67,
+    fps: 0,
+    frameTime: 0,
     renderTime: 0,
+    measured: false as const,
   }), []);
 }
 

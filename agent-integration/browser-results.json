@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "checks": [
+    "actual Trolic/Lottie DOM",
+    "Sequence visibility",
+    "30/60 FPS position parity",
+    "A-B-A seek equality",
+    "compile once across seeks",
+    "source replacement readiness",
+    "no page errors"
+  ]
+}

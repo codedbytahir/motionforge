@@ -1,3 +1,5 @@
+'use client';
+
 import { AbsoluteFill, Composition } from 'motionforge';
 import { MyComposition } from './Composition';
 

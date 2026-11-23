@@ -193,6 +193,8 @@ export const interpolate = (
     easing,
   } = options;
 
+  if (!Number.isFinite(input) || inputRange.some((v,i)=>!Number.isFinite(v)||(i>0&&v<=inputRange[i-1])) || outputRange.some(v=>!Number.isFinite(v))) throw new RangeError('Interpolation ranges must be finite and input range strictly increasing');
+
   if (inputRange.length !== outputRange.length) {
     throw new Error('inputRange and outputRange must have the same length');
   }
@@ -221,7 +223,7 @@ export const interpolate = (
   }
 
   // Find the segment
-  let segmentIndex = 0;
+  let segmentIndex = inputRange.length - 2;
   for (let i = 1; i < inputRange.length; i++) {
     if (input <= inputRange[i]) {
       segmentIndex = i - 1;
@@ -292,7 +294,7 @@ export const interpolateColors = (
   };
 
   // Find segment
-  let segmentIndex = 0;
+  let segmentIndex = inputRange.length - 2;
   for (let i = 1; i < inputRange.length; i++) {
     if (input <= inputRange[i]) {
       segmentIndex = i - 1;
@@ -370,6 +372,7 @@ export const measureSpring = ({
   threshold?: number;
 }): number => {
   const { damping = 10, mass = 1, stiffness = 100 } = config;
+  if(![fps,damping,mass,stiffness,threshold].every(Number.isFinite)||fps<=0||mass<=0||stiffness<=0||damping<0||threshold<=0) throw new RangeError('Invalid spring measurement config');
   const omega = Math.sqrt(stiffness / mass);
   const zeta = damping / (2 * Math.sqrt(stiffness * mass));
   
@@ -418,6 +421,7 @@ export const getSecondsFromFrames = (frames: number, fps: number): number => {
 
 // Range utility
 export const range = (start: number, end: number, step: number = 1): number[] => {
+  if (![start,end,step].every(Number.isFinite) || step<=0 || Math.max(0,Math.ceil((end-start)/step))>1000000) throw new RangeError('range requires a positive step and at most 1M entries');
   const result: number[] = [];
   for (let i = start; i < end; i += step) {
     result.push(i);

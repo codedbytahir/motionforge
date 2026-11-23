@@ -1,98 +1,54 @@
-name: Publish to NPM
-
+name: Publish npm packages
 on:
-  push:
-    branches: [ main ]
-
+  workflow_dispatch:
+    inputs:
+      confirm_release_reviewed:
+        description: 'Confirm all release blockers in audit/final/REVIEW.md have been resolved'
+        required: true
+        type: boolean
+        default: false
+permissions:
+  contents: read
 jobs:
   publish:
+    if: inputs.confirm_release_reviewed
     runs-on: ubuntu-latest
+    environment: npm-release
     permissions:
       contents: read
-      id-token: write # Required for provenance
+      id-token: write
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
         with:
-          bun-version: latest
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
-
-      - name: Verify NPM Token
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+      - run: npm install --global npm@11.16.0
+      - run: npm ci --ignore-scripts
+      - run: npm ci --prefix packages/motionforge --ignore-scripts
+      - run: npm ci --prefix packages/create-motionforge --ignore-scripts
+      - name: Verify library and CLI
         run: |
-          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
-            echo "::error::NPM_TOKEN is missing. Please add it to your GitHub Repository Secrets."
-            exit 1
-          fi
-
-      - name: Publish MotionForge
-        working-directory: packages/motionforge
+          npm run typecheck --prefix packages/motionforge
+          npm run build --prefix packages/motionforge
+          npm test --prefix packages/motionforge
+          npm run test:package --prefix packages/motionforge
+          npm test --prefix packages/create-motionforge
+          node audit/final/test-review.mjs
+      - name: Publish exact versions (OIDC; no long-lived token)
+        shell: bash
         run: |
-          echo "Processing motionforge..."
-          bun install
-
-          # Using bun x ensures tsup is found/run correctly
-          echo "Building motionforge..."
-          bun x tsup
-
-          PACKAGE_NAME=$(node -p "require('./package.json').name")
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
-
-          echo "Checking if $PACKAGE_NAME@$CURRENT_VERSION is already published..."
-          NPM_VERSION=$(npm view $PACKAGE_NAME version 2>/dev/null || echo "")
-
-          if [ -z "$NPM_VERSION" ]; then
-            echo "Package $PACKAGE_NAME not found on NPM. Initial publication."
-            NPM_VERSION="0.0.0"
-          fi
-
-          if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
-            echo "New version detected: $CURRENT_VERSION (NPM has $NPM_VERSION). Publishing..."
-            npm publish --access public --provenance
-            echo "Successfully published $PACKAGE_NAME@$CURRENT_VERSION"
-          else
-            echo "$PACKAGE_NAME@$CURRENT_VERSION is already up to date on NPM."
-          fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish Create-MotionForge
-        working-directory: packages/create-motionforge
-        run: |
-          echo "Processing create-motionforge..."
-          bun install
-
-          PACKAGE_NAME=$(node -p "require('./package.json').name")
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
-
-          echo "Checking if $PACKAGE_NAME@$CURRENT_VERSION is already published..."
-          NPM_VERSION=$(npm view $PACKAGE_NAME version 2>/dev/null || echo "")
-
-          if [ -z "$NPM_VERSION" ]; then
-            echo "Package $PACKAGE_NAME not found on NPM. Initial publication."
-            NPM_VERSION="0.0.0"
-          fi
-
-          if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
-            echo "New version detected: $CURRENT_VERSION (NPM has $NPM_VERSION). Publishing..."
-            npm publish --access public --provenance
-            echo "Successfully published $PACKAGE_NAME@$CURRENT_VERSION"
-          else
-            echo "$PACKAGE_NAME@$CURRENT_VERSION is already up to date on NPM."
-          fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          set -euo pipefail
+          for dir in packages/motionforge packages/create-motionforge; do
+            name=$(node -p "require('./$dir/package.json').name")
+            version=$(node -p "require('./$dir/package.json').version")
+            # Fail closed on network/auth errors; only E404 means unpublished.
+            if npm view "$name@$version" version --json > /tmp/npm-version.json 2>/tmp/npm-version.err; then
+              echo "$name@$version already exists; skipping"
+            elif grep -q E404 /tmp/npm-version.err; then
+              (cd "$dir" && npm publish --access public --provenance)
+            else
+              cat /tmp/npm-version.err
+              exit 1
+            fi
+          done

@@ -87,6 +87,7 @@ export default function Home() {
             </span>
           </div>
 
+          <a href="/offline-export" className="text-sm text-emerald-400 hover:text-white">Offline export</a>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/60">
             <a href="#features" className="hover:text-white transition-colors">Features</a>
             <a href="#demos" className="hover:text-white transition-colors">Demos</a>

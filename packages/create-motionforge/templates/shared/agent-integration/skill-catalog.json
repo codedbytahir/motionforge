@@ -1,0 +1,82 @@
+[
+  {
+    "name": "motion-director",
+    "description": "Plan a Trolic and MotionForge film. Use for new videos, vague creative briefs, or coordinating specialist skills.",
+    "path": ".agents/skills/motion-director/SKILL.md"
+  },
+  {
+    "name": "trolic-vector-authoring",
+    "description": "Author compact editable vector illustrations. Use for Trolic scenes, path artwork, reusable assets and token-efficient agent changes.",
+    "path": ".agents/skills/trolic-vector-authoring/SKILL.md"
+  },
+  {
+    "name": "trolic-motionforge-bridge",
+    "description": "Connect Trolic assets to MotionForge. Use for Lottie adapters, source imports, cache invalidation and editable composition layers.",
+    "path": ".agents/skills/trolic-motionforge-bridge/SKILL.md"
+  },
+  {
+    "name": "frame-timing",
+    "description": "Design deterministic sequencing and retiming. Use for duration edits, reverse seeking, loops, playback drift and frame-rate conversion.",
+    "path": ".agents/skills/frame-timing/SKILL.md"
+  },
+  {
+    "name": "storyboard-pacing",
+    "description": "Build fast readable product stories. Use for launch films, scene order, hooks and cutting slow videos.",
+    "path": ".agents/skills/storyboard-pacing/SKILL.md"
+  },
+  {
+    "name": "kinetic-typography",
+    "description": "Create readable animated text. Use for title cards, captions, text reveals, typography and font readiness.",
+    "path": ".agents/skills/kinetic-typography/SKILL.md"
+  },
+  {
+    "name": "image-blur-reveals",
+    "description": "Animate image and text entrances with subtle blur. Use for Gaussian blur-to-sharp reveals, image appearances and visual polish.",
+    "path": ".agents/skills/image-blur-reveals/SKILL.md"
+  },
+  {
+    "name": "product-demo-interactions",
+    "description": "Stage truthful cursor and UI interactions. Use for buttons, compiler demos, screen recordings and interaction timing.",
+    "path": ".agents/skills/product-demo-interactions/SKILL.md"
+  },
+  {
+    "name": "audio-direction",
+    "description": "Design restrained original or licensed film audio. Use for music, click synchronization, SFX, fades and mix QA.",
+    "path": ".agents/skills/audio-direction/SKILL.md"
+  },
+  {
+    "name": "render-readiness",
+    "description": "Make capture deterministic. Use for offline frame capture, assets, fonts, asynchronous loading and silent black-frame failures.",
+    "path": ".agents/skills/render-readiness/SKILL.md"
+  },
+  {
+    "name": "video-export",
+    "description": "Implement valid playable video export. Use for WebCodecs, muxing, audio sync, codecs and downloads.",
+    "path": ".agents/skills/video-export/SKILL.md"
+  },
+  {
+    "name": "visual-regression",
+    "description": "Review animation quality and catch regressions. Use for motion changes, generated films, playback or claimed visual fixes.",
+    "path": ".agents/skills/visual-regression/SKILL.md"
+  },
+  {
+    "name": "agent-safe-editing",
+    "description": "Apply compact safe agent edits. Use for revision conflicts, source patches, asset references and untrusted task inputs.",
+    "path": ".agents/skills/agent-safe-editing/SKILL.md"
+  },
+  {
+    "name": "package-release",
+    "description": "Prepare reproducible integration releases. Use for package exports, peer dependencies, versioning and production publishing.",
+    "path": ".agents/skills/package-release/SKILL.md"
+  },
+  {
+    "name": "performance-budget",
+    "description": "Optimize agent and runtime cost without losing quality. Use for token budgets, compile caching, rendering memory and expensive effects.",
+    "path": ".agents/skills/performance-budget/SKILL.md"
+  },
+  {
+    "name": "accessible-delivery",
+    "description": "Deliver accessible readable motion. Use for captions, reduced motion, keyboard player controls and flash checks.",
+    "path": ".agents/skills/accessible-delivery/SKILL.md"
+  }
+]

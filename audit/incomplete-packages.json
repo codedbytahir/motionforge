@@ -1,0 +1,10 @@
+[
+  [
+    "lucide-react",
+    "dist/esm/lucide-react.mjs"
+  ],
+  [
+    "bun-types",
+    "./index.d.ts"
+  ]
+]

@@ -1,0 +1,32 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Config files
+tsconfig.json
+tsup.config.ts
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# Development files
+node_modules/
+.github/
+.vscode/
+.idea/
+
+# Build artifacts
+*.log
+.DS_Store
+Thumbs.db
+
+# Documentation source
+ai-guidelines/
+demo/
+
+# Misc
+.editorconfig
+.eslintcache
+.prettierrc

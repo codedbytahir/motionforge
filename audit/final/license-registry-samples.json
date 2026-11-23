@@ -1,0 +1,54 @@
+{
+  "@esbuild/linux-x64": {
+    "command": [
+      "npm",
+      "view",
+      "@esbuild/linux-x64@0.28.2",
+      "name",
+      "version",
+      "license",
+      "--json"
+    ],
+    "response": "{\n  \"name\": \"@esbuild/linux-x64\",\n  \"version\": \"0.28.2\",\n  \"license\": \"MIT\"\n}\n",
+    "exit": 0
+  },
+  "@rollup/rollup-linux-x64-gnu": {
+    "command": [
+      "npm",
+      "view",
+      "@rollup/rollup-linux-x64-gnu",
+      "name",
+      "version",
+      "license",
+      "--json"
+    ],
+    "response": "{\n  \"name\": \"@rollup/rollup-linux-x64-gnu\",\n  \"version\": \"4.68.8\",\n  \"license\": \"MIT\"\n}\n",
+    "exit": 0
+  },
+  "fsevents": {
+    "command": [
+      "npm",
+      "view",
+      "fsevents",
+      "name",
+      "version",
+      "license",
+      "--json"
+    ],
+    "response": "{\n  \"name\": \"fsevents\",\n  \"version\": \"2.3.3\",\n  \"license\": \"MIT\"\n}\n",
+    "exit": 0
+  },
+  "webgl-constants": {
+    "command": [
+      "npm",
+      "view",
+      "webgl-constants",
+      "name",
+      "version",
+      "license",
+      "--json"
+    ],
+    "response": "{\n  \"name\": \"webgl-constants\",\n  \"version\": \"1.1.1\"\n}\n",
+    "exit": 0
+  }
+}

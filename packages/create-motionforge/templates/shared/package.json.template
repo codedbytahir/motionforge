@@ -6,21 +6,25 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "motionforge": "^1.2.0",
+    "motionforge": "^1.5.0",
     "lottie-web": "^5.13.0",
-    "next": "15.1.0",
+    "next": "^16.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "framer-motion": "^11.13.1",
-    "lucide-react": "^0.468.0"
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^0.468.0",
+    "three": "^0.184.0",
+    "@react-three/fiber": "^9.6.1",
+    "@react-three/drei": "^10.7.7"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@types/three": "^0.184.1"
   }
 }

@@ -1,3 +1,7 @@
+# MotionForge 1.5 — Trolic integration
+
+See RELEASE.md for API additions, migration notes, validation and current export limitations. Use `motionforge/trolic` for the lightweight compiler-injected React bridge.
+
 # MotionForge
 
 <div align="center">

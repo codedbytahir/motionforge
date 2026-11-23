@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "rootStatus": 200,
+  "offlinePageStatus": 200,
+  "realOfflineUiDownload": true,
+  "pageErrors": [],
+  "hostedWorkerEndpoint": 501,
+  "mobileOverflow": false
+}

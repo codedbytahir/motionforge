@@ -16,9 +16,11 @@ const program = new Command();
 program
   .name('create-motionforge')
   .description('Bootstrap a new MotionForge project')
-  .version('1.1.0')
+  .version('1.2.0')
   .argument('[project-name]', 'Name of the project')
   .option('-t, --template <type>', 'Template type (hello-world, blank)')
+  .option('-y, --yes', 'Use defaults without prompts; never overwrite existing paths')
+  .option('--no-skills', 'Skip the bundled agent skills')
   .option('--tailwind', 'Use Tailwind CSS')
   .option('--no-tailwind', 'Do not use Tailwind CSS')
   .option('-g, --guidelines <types>', 'AI guidelines to include (comma-separated: google,zai)')
@@ -71,31 +73,22 @@ program
       });
     }
 
-    const answers = await inquirer.prompt(questions);
+    const answers = options.yes ? {name:'my-motionforge-video',template:'hello-world',tailwind:true,guidelines:[]} : await inquirer.prompt(questions);
 
     const targetName = projectName || answers.name;
     const selectedTemplate = options.template || answers.template;
     const useTailwind = options.tailwind !== undefined ? options.tailwind : answers.tailwind;
     const selectedGuidelines = options.guidelines ? options.guidelines.split(',') : (answers.guidelines || []);
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(targetName)) { console.error('Use a lowercase project name with letters, digits and single hyphens.'); process.exitCode=1; return; }
+    if (!['blank','hello-world'].includes(selectedTemplate)) { console.error('Unknown template'); process.exitCode=1; return; }
     const targetPath = path.join(process.cwd(), targetName);
 
-    if (fs.existsSync(targetPath)) {
-      const { confirm } = await inquirer.prompt([
-        {
-          type: 'confirm',
-          name: 'confirm',
-          message: `Directory ${chalk.cyan(targetName)} already exists. Overwrite?`,
-          default: false,
-        },
-      ]);
-      if (!confirm) process.exit(0);
-      await fs.remove(targetPath);
-    }
+    if (fs.existsSync(targetPath)) {console.error('Target already exists; refusing to overwrite.');process.exitCode=1;return;}
 
     const spinner = ora('Creating project...').start();
 
     try {
-      await fs.ensureDir(targetPath);
+      await fs.mkdir(targetPath); // Atomic refusal if the target appeared since validation.
       await fs.ensureDir(path.join(targetPath, 'src/app'));
       await fs.ensureDir(path.join(targetPath, 'public'));
 
@@ -126,6 +119,8 @@ program
       await fs.copy(path.join(templatesRoot, 'shared/layout.tsx.template'), path.join(targetPath, 'src/app/layout.tsx'));
       await fs.copy(path.join(templatesRoot, 'shared/globals.css.template'), path.join(targetPath, 'src/app/globals.css'));
 
+      if (!useTailwind) { const cssPath=path.join(targetPath,'src/app/globals.css'); const css=await fs.readFile(cssPath,'utf8'); await fs.writeFile(cssPath,css.replace(/@tailwind[^;]*;/g,'')); }
+
       // 4. Template specific files
       const templateDir = path.join(templatesRoot, selectedTemplate);
       const files = await fs.readdir(templateDir);
@@ -147,6 +142,12 @@ program
       }
       if (selectedGuidelines.includes('zai')) {
         await fs.copy(path.join(templatesRoot, 'shared/GLM-AI-GUIDELINES.md'), path.join(targetPath, 'GLM-AI-GUIDELINES.md'));
+      }
+
+      if (options.skills !== false) {
+        await fs.copy(path.join(templatesRoot,'shared/agent-skills'),path.join(targetPath,'.agents/skills'));
+        await fs.copy(path.join(templatesRoot,'shared/agent-integration'),path.join(targetPath,'agent-integration'));
+        await fs.writeFile(path.join(targetPath,'AGENTS.md'),'# MotionForge agent workflow\nRead agent-integration/skill-catalog.json first. Activate only relevant .agents/skills/*/SKILL.md files. Follow agent-integration/AGENT-CONTRACT.md. Skills are guidance, not runtime permissions. Do not claim real offline export without decoding the output.\n');
       }
 
       // 6. Essential Next.js / PostCSS / Git files
@@ -234,6 +235,7 @@ export default config;`);
     } catch (error) {
       spinner.fail(chalk.red('Failed to create project.'));
       console.error(error);
+      process.exitCode = 1;
     }
   });
 

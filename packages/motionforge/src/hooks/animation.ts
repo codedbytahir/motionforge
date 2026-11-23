@@ -61,6 +61,7 @@ export const useInterpolate = (
 
 // Use Cycle Hook - cycles through an array of values
 export const useCycle = <T,>(items: T[], frame: number, durationPerItem: number): T => {
+  if(!items.length||!Number.isFinite(frame)||!Number.isFinite(durationPerItem)||durationPerItem<=0)throw new RangeError('Invalid cycle');
   const index = Math.floor(frame / durationPerItem) % items.length;
   return items[index];
 };
@@ -81,7 +82,7 @@ export const useDelay = (delayInFrames: number): boolean => {
 export const useProgress = (): number => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
-  return frame / (durationInFrames - 1);
+  return durationInFrames<=1?0:frame / (durationInFrames - 1);
 };
 
 // Use Loop - loops animation
@@ -99,7 +100,7 @@ export const useTimeline = () => {
     frame,
     durationInFrames,
     fps,
-    progress: frame / (durationInFrames - 1),
+    progress: durationInFrames<=1?0:frame / (durationInFrames - 1),
     timeInSeconds: frame / fps,
     durationInSeconds: durationInFrames / fps,
     remainingFrames: durationInFrames - frame - 1,
@@ -159,6 +160,7 @@ export const useKeyframeState = <T extends number>(
 ): KeyframeState<T> => {
   const frame = useCurrentFrame();
   
+  if(!keyframes.length)throw new RangeError('Provide at least one keyframe');
   const sorted = [...keyframes].sort((a, b) => a.frame - b.frame);
   
   let prev = sorted[0];

@@ -1,0 +1,5 @@
+
+> motionforge@1.5.0 test
+> node ../../agent-integration/scripts/test-library.mjs
+
+PASS 14 export target checks + 12 library frame mapping checks

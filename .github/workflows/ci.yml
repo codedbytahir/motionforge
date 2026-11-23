@@ -1,41 +1,32 @@
 name: CI
-
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
-
+    branches: [main]
+permissions:
+  contents: read
 jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
         with:
-          bun-version: latest
-
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
-
-      - name: Install Root Dependencies
-        run: bun install
-
-      - name: Build Framework
-        working-directory: packages/motionforge
+          node-version: '24'
+      - run: npm install --global npm@11.16.0
+      - run: npm ci --ignore-scripts
+      - run: npm ci --prefix packages/motionforge --ignore-scripts
+      - run: npm ci --prefix packages/create-motionforge --ignore-scripts
+      - run: npm run typecheck --prefix packages/motionforge
+      - run: npm run build --prefix packages/motionforge
+      - run: npm test --prefix packages/motionforge
+      - run: npm run test:package --prefix packages/motionforge
+      - run: npm test --prefix packages/create-motionforge
+      - run: node audit/final/test-review.mjs
+      - run: npm run build
+      - name: Dependency scan
         run: |
-          bun install
-          bun x tsup
-
-      - name: Build CLI
-        working-directory: packages/create-motionforge
-        run: |
-          bun install
-          ls bin/index.js
+          npm audit --omit=dev
+          npm audit --prefix packages/motionforge
+          npm audit --prefix packages/create-motionforge

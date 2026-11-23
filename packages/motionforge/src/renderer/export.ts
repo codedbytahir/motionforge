@@ -83,9 +83,7 @@ export class CanvasRenderer {
         this.ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
       } catch (e) {
         console.error('Failed to capture frame:', e);
-        // Fallback: fill with background color
-        this.ctx.fillStyle = '#0a0a0a';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        throw new Error('Frame capture failed; refusing to export a substituted background: '+String(e));
       }
     }
 
@@ -201,6 +199,7 @@ export class WebCodecsEncoder {
   }
 
   async start(fps: number, bitrate: number = 5000000): Promise<void> {
+    throw new Error('WebCodecs export is disabled until a verified container muxer is integrated. Use WebMEncoder for best-effort recording.');
     if (typeof VideoEncoder === 'undefined') {
       throw new Error('WebCodecs is not supported in this browser');
     }
@@ -408,7 +407,7 @@ export class VideoExportManager {
   ): Promise<ExportResult> {
     const startTime = Date.now();
     const { config, onProgress, signal } = options;
-    const useWebCodecs = typeof VideoEncoder !== 'undefined';
+    const useWebCodecs = false; // Do not select the unfinished raw-chunk exporter.
 
     try {
       this.isRendering = true;

@@ -1,0 +1,34 @@
+[WARNING]
+Mediabunny was loaded twice. This will likely cause Mediabunny not to work correctly. Check if multiple dependencies are importing different versions of Mediabunny, or if something is being bundled incorrectly.
+renderer exports [
+  'CanvasRenderer',
+  'FrameCache',
+  'FrameSequenceEncoder',
+  'MemoCache',
+  'RenderJobManager',
+  'VideoExportManager',
+  'WebCodecsEncoder',
+  'WebMEncoder',
+  'buildFFmpegCommand',
+  'calculateProgress',
+  'calculateVideoSize',
+  'checkEncodingSupport',
+  'createDebouncedCache',
+  'createThrottledCache',
+  'downloadFrame',
+  'downloadVideo',
+  'estimateFileSize',
+  'estimateRenderTime',
+  'exportOfflineVideo',
+  'frameCache',
+  'frameToDataURL',
+  'generateFrames',
+  'mixOfflineAudio',
+  'renderCompositionToVideo',
+  'renderJobManager',
+  'renderVideo',
+  'validateRenderConfig',
+  'videoExportManager'
+]
+manual review regressions PASS
+cache regression PASS

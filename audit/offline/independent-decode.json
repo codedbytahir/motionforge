@@ -1,0 +1,8 @@
+{
+  "independentDecoder": "FFmpeg",
+  "videoFrames": 60,
+  "decodedAudioSamples": 96648,
+  "firstAudioPulseSeconds": 1.0000208333333334,
+  "audioDurationSeconds": 2.0135,
+  "passed": true
+}

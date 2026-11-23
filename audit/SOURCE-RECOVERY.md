@@ -1,0 +1,3 @@
+# Source recovery
+The workspace snapshot retained archives but omitted several nested source directories. Recovered the edited 1.5 library/scaffold from releases/motionforge-next-source.zip. The older motionforge-before-1.5 archive was library-scoped, not a complete repository: its recovered library sources were preserved in audit/recovered-library-src and were not used as the root application.
+The unchanged root application source was recovered from the public repository at d0f2466. Current local root package/config changes were preserved. Restored safety changes to renderer placeholder facades, hosted endpoint and manual npm publication trigger. No credential was used for the public clone.

@@ -1,0 +1,117 @@
+{
+  "name": "motionforge",
+  "version": "1.5.0",
+  "description": "A React-based framework for creating videos programmatically. Build stunning videos with React components, spring animations, and frame-perfect control.",
+  "author": "MotionForge Team",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "import": "./dist/icons/index.js",
+      "require": "./dist/icons/index.cjs"
+    },
+    "./player": {
+      "types": "./dist/player/Player.d.ts",
+      "import": "./dist/player/Player.js"
+    },
+    "./renderer": {
+      "types": "./dist/renderer/index.d.ts",
+      "import": "./dist/renderer/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./trolic": {
+      "types": "./dist/trolic.d.ts",
+      "import": "./dist/trolic.js",
+      "require": "./dist/trolic.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "RELEASE.md",
+    "PACKAGING-FIX.md",
+    "OFFLINE-EXPORT.md",
+    "third-party"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "tsup --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm test && npm run test:package",
+    "test": "node ../../agent-integration/scripts/test-library.mjs",
+    "test:package": "node scripts/test-package.mjs",
+    "prepack": "npm run build",
+    "test:offline": "node ../../agent-integration/scripts/test-offline.mjs"
+  },
+  "keywords": [
+    "react",
+    "video",
+    "animation",
+    "motion",
+    "remotion",
+    "video-editing",
+    "programmatic-video",
+    "canvas",
+    "frame-by-frame",
+    "spring-animation",
+    "motion-graphics",
+    "video-generation",
+    "react-video",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codedbytahir/motionforge.git",
+    "directory": "packages/motionforge"
+  },
+  "bugs": {
+    "url": "https://github.com/codedbytahir/motionforge/issues"
+  },
+  "homepage": "https://motionforge.dev",
+  "peerDependencies": {
+    "@react-three/drei": ">=10.0.0",
+    "@react-three/fiber": ">=9.0.0",
+    "framer-motion": ">=12.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "three": ">=0.170.0"
+  },
+  "dependencies": {
+    "lottie-web": "^5.13.0"
+  },
+  "devDependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.184.1",
+    "framer-motion": "^12.40.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.184.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "mediabunny": "1.41.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

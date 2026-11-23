@@ -1,6 +1,6 @@
 {
   "name": "motionforge",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "A React-based framework for creating videos programmatically. Build stunning videos with React components, spring animations, and frame-perfect control.",
   "author": "MotionForge Team",
   "license": "MIT",
@@ -27,22 +27,35 @@
       "types": "./dist/renderer/index.d.ts",
       "import": "./dist/renderer/index.js"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./trolic": {
+      "types": "./dist/trolic.d.ts",
+      "import": "./dist/trolic.js",
+      "require": "./dist/trolic.cjs"
+    }
   },
   "files": [
     "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "RELEASE.md",
+    "PACKAGING-FIX.md",
+    "OFFLINE-EXPORT.md",
+    "third-party"
   ],
   "sideEffects": [
     "**/*.css"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "node scripts/build.mjs",
     "dev": "tsup --watch",
     "lint": "eslint src --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "bun run build"
+    "prepublishOnly": "npm run build && npm test && npm run test:package",
+    "test": "node ../../agent-integration/scripts/test-library.mjs",
+    "test:package": "node scripts/test-package.mjs",
+    "prepack": "npm run build",
+    "test:offline": "node ../../agent-integration/scripts/test-offline.mjs"
   },
   "keywords": [
     "react",
@@ -87,11 +100,12 @@
     "@types/react-dom": "^19.0.0",
     "@types/three": "^0.184.1",
     "framer-motion": "^12.40.0",
-    "three": "^0.184.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "three": "^0.184.0",
     "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "mediabunny": "1.41.0"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -99,5 +113,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
+  },
+  "overrides": {
+    "esbuild": "0.28.2"
   }
 }

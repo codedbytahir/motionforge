@@ -1,0 +1,79 @@
+
+> motionforge@1.5.0 build
+> node scripts/build.mjs
+
+CLI Building entry: {"trolic":"src/trolic.ts"}
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/user/motionforge/packages/motionforge/tsup.config.ts
+CLI Target: es2020
+ESM Build start
+CJS Build start
+ESM dist/trolic.js 6.44 KB
+ESM ⚡️ Build success in 35ms
+CJS dist/trolic.cjs 8.41 KB
+CJS ⚡️ Build success in 35ms
+DTS Build start
+DTS ⚡️ Build success in 1356ms
+DTS dist/trolic.d.ts  1.44 KB
+DTS dist/trolic.d.cts 1.44 KB
+CLI Building entry: src/index.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/user/motionforge/packages/motionforge/tsup.config.ts
+CLI Target: es2020
+ESM Build start
+CJS Build start
+DTS Build start
+CJS dist/index.cjs     536.11 KB
+CJS dist/index.cjs.map 1.35 MB
+CJS ⚡️ Build success in 2877ms
+ESM dist/index.js     526.64 KB
+ESM dist/index.js.map 1.35 MB
+ESM ⚡️ Build success in 2878ms
+DTS ⚡️ Build success in 5704ms
+DTS dist/index.d.ts  49.62 KB
+DTS dist/index.d.cts 49.62 KB
+CLI Building entry: {"icons/index":"src/icons/index.tsx"}
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/user/motionforge/packages/motionforge/tsup.config.ts
+CLI Target: es2020
+ESM Build start
+CJS Build start
+ESM dist/icons/index.js     34.73 KB
+ESM dist/icons/index.js.map 55.14 KB
+ESM ⚡️ Build success in 25ms
+CJS dist/icons/index.cjs     41.36 KB
+CJS dist/icons/index.cjs.map 55.52 KB
+CJS ⚡️ Build success in 33ms
+DTS Build start
+DTS ⚡️ Build success in 1400ms
+DTS dist/icons/index.d.ts  6.88 KB
+DTS dist/icons/index.d.cts 6.88 KB
+CLI Building entry: {"player/Player":"src/player/Player.tsx"}
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/user/motionforge/packages/motionforge/tsup.config.ts
+CLI Target: es2020
+ESM Build start
+ESM dist/player/Player.js   23.15 KB
+ESM dist/export-AHT6OA4O.js 468.00 B
+ESM dist/chunk-PSXEQGWG.js  14.12 KB
+ESM ⚡️ Build success in 146ms
+DTS Build start
+DTS ⚡️ Build success in 1941ms
+DTS dist/player/Player.d.ts 475.00 B
+CLI Building entry: {"renderer/index":"src/renderer/index.ts"}
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/user/motionforge/packages/motionforge/tsup.config.ts
+CLI Target: es2020
+ESM Build start
+ESM dist/renderer/index.js  368.64 KB
+ESM dist/export-AHT6OA4O.js 468.00 B
+ESM dist/chunk-PSXEQGWG.js  14.12 KB
+ESM ⚡️ Build success in 158ms
+DTS Build start
+DTS ⚡️ Build success in 1476ms
+DTS dist/renderer/index.d.ts 10.80 KB

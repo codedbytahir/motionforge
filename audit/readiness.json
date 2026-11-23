@@ -1,0 +1,93 @@
+{
+  "generatedAt": "2026-11-15T11:56:17.748Z",
+  "packageValidation": "green",
+  "productionReadiness": "blocked",
+  "checks": [
+    {
+      "name": "library-build",
+      "status": "pass",
+      "exit": 0,
+      "ms": 13341
+    },
+    {
+      "name": "library-types",
+      "status": "pass",
+      "exit": 0,
+      "ms": 5096
+    },
+    {
+      "name": "library-tests",
+      "status": "pass",
+      "exit": 0,
+      "ms": 206
+    },
+    {
+      "name": "packed-consumer",
+      "status": "pass",
+      "exit": 0,
+      "ms": 26206
+    },
+    {
+      "name": "scaffold-tests",
+      "status": "pass",
+      "exit": 0,
+      "ms": 2522
+    },
+    {
+      "name": "browser-integration",
+      "status": "pass",
+      "exit": 0,
+      "ms": 2468
+    },
+    {
+      "name": "skill-structure",
+      "status": "pass",
+      "exit": 0,
+      "ms": 47
+    }
+  ],
+  "blockers": [
+    {
+      "name": "complete-manual-review",
+      "status": "blocked",
+      "reason": "Full line-by-line review of all source is not complete."
+    },
+    {
+      "name": "dependency-security",
+      "status": "blocked",
+      "reason": "Dependency vulnerability and transitive license audit not completed."
+    }
+  ],
+  "resolvedTargets": [
+    {
+      "name": "root-production-build",
+      "status": "green",
+      "evidence": "Root install, Prisma generation, Next production build, standalone hydration and actual offline UI download passed."
+    },
+    {
+      "name": "offline-audio-video-export",
+      "status": "green",
+      "evidence": "Canvas readiness callback + WebCodecs + real WebM muxing + PCM mix verified by browser and independent FFmpeg; 60 frames, pulse at 1.0000208 seconds."
+    }
+  ],
+  "note": "Two requested engineering blockers resolved. Remaining full-review/security tasks are not silently marked complete.",
+  "finalAudit": {
+    "status": "blocked",
+    "report": "audit/final/REVIEW.md",
+    "manualReview": "incomplete",
+    "licenseClearance": "incomplete",
+    "rootKnownAdvisories": {
+      "runtime": 0,
+      "all": 1
+    },
+    "libraryKnownAdvisories": {
+      "runtime": 0,
+      "all": 0
+    },
+    "cliKnownAdvisories": {
+      "runtime": 0,
+      "all": 0
+    },
+    "artifacts": "Previous release archives predate current audit edits; rebuild before publishing"
+  }
+}

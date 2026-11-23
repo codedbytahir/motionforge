@@ -1,182 +1,54 @@
 'use client';
-
-import React, { useEffect, useRef, useState, useMemo } from 'react';
-import lottie, { AnimationItem } from 'lottie-web';
-import { useCurrentFrame } from '../core/context';
-import { useRelativeCurrentFrame } from './Sequence';
+import React, {useEffect, useRef, useState} from 'react';
+import type {AnimationItem} from 'lottie-web';
+import {useCurrentFrame, useVideoConfig} from '../core/context';
+import {useRelativeCurrentFrame} from './Sequence';
+import {mapSourceFrame} from '../utils/frame-time';
 
 export interface LottieProps {
-  /**
-   * Source of the Lottie animation. Can be a URL to a JSON file or an imported JSON object.
-   */
-  src: string | object;
-  /**
-   * The frame at which the Lottie animation should start playing.
-   * Default is 0.
-   */
-  frameStart?: number;
-  /**
-   * The frame at which the Lottie animation should end playing.
-   * Default is the last frame of the Lottie animation.
-   */
-  frameEnd?: number;
-  /**
-   * Playback rate of the Lottie animation.
-   * Default is 1.
-   */
-  playbackRate?: number;
-  /**
-   * Whether the Lottie animation should loop.
-   * Default is false.
-   */
-  loop?: boolean;
-  /**
-   * Width of the Lottie container.
-   */
-  width?: number | string;
-  /**
-   * Height of the Lottie container.
-   */
-  height?: number | string;
-  /**
-   * Style overrides for the Lottie container.
-   */
-  style?: React.CSSProperties;
-  /**
-   * CSS class name for the Lottie container.
-   */
-  className?: string;
+ src: string | object;
+ frameStart?: number;
+ frameEnd?: number;
+ playbackRate?: number;
+ loop?: boolean;
+ width?: number | string;
+ height?: number | string;
+ style?: React.CSSProperties;
+ className?: string;
+ loadingTimeoutMs?: number;
+ onReady?: () => void;
+ onError?: (error: Error) => void;
 }
-
-/**
- * Lottie Component for MotionForge.
- *
- * Provides production-grade Lottie support with deterministic frame synchronization.
- * Synchronizes with the MotionForge frame system instead of using time-based playback.
- */
-export const Lottie: React.FC<LottieProps> = ({
-  src,
-  frameStart = 0,
-  frameEnd,
-  playbackRate = 1,
-  loop = false,
-  width,
-  height,
-  style,
-  className,
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<AnimationItem | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const absoluteFrame = useCurrentFrame();
-  const relativeFrame = useRelativeCurrentFrame();
-
-  // Use relative frame if inside a Sequence, otherwise use absolute frame
-  const currentFrame = relativeFrame !== null ? relativeFrame : absoluteFrame;
-
-  // Handle initialization
-  useEffect(() => {
-    if (typeof window === 'undefined' || !containerRef.current) return;
-
-    let isCancelled = false;
-
-    const params: any = {
-      container: containerRef.current,
-      renderer: 'svg',
-      loop: false,
-      autoplay: false,
-      rendererSettings: {
-        progressiveLoad: false,
-        hideOnTransparent: true,
-      }
-    };
-
-    if (typeof src === 'string') {
-      params.path = src;
-    } else {
-      params.animationData = src;
-    }
-
-    try {
-      const anim = lottie.loadAnimation(params);
-      animationRef.current = anim;
-
-      const onLoaded = () => {
-        if (!isCancelled) {
-          setIsLoaded(true);
-        }
-      };
-
-      // Both events can be useful depending on how Lottie is loaded
-      anim.addEventListener('DOMLoaded', onLoaded);
-      anim.addEventListener('data_ready', onLoaded);
-
-      return () => {
-        isCancelled = true;
-        anim.destroy();
-        animationRef.current = null;
-      };
-    } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
-      return () => {};
-    }
-  }, [src]);
-
-  // Handle frame synchronization
-  useEffect(() => {
-    if (!animationRef.current || !isLoaded) return;
-
-    const anim = animationRef.current;
-
-    // totalFrames is available once loaded
-    const totalLottieFrames = anim.totalFrames;
-
-    // Determine the range of frames to play
-    const start = frameStart;
-    const end = frameEnd ?? totalLottieFrames;
-    const duration = end - start;
-
-    if (duration <= 0) return;
-
-    // Map MotionForge currentFrame to Lottie frame
-    // playbackRate affects how fast we move through the Lottie timeline
-    let targetFrame = currentFrame * playbackRate;
-
-    if (loop) {
-      targetFrame = targetFrame % duration;
-    } else {
-      targetFrame = Math.min(targetFrame, duration - 0.01);
-    }
-
-    // finalFrame is relative to the Lottie's original timeline
-    const finalFrame = start + targetFrame;
-
-    // goToAndStop(value, isFrame) - second arg true means it's a frame number, not time
-    anim.goToAndStop(finalFrame, true);
-  }, [currentFrame, isLoaded, frameStart, frameEnd, playbackRate, loop]);
-
-  const containerStyle: React.CSSProperties = useMemo(() => ({
-    width: width ?? '100%',
-    height: height ?? '100%',
-    ...style,
-  }), [width, height, style]);
-
-  if (error) {
-    return (
-      <div style={{ color: 'red', border: '1px solid red', padding: '10px' }}>
-        <strong>Lottie Error:</strong> {error}
-      </div>
-    );
-  }
-
-  return (
-    <div
-      ref={containerRef}
-      style={containerStyle}
-      className={className}
-      data-lottie-loaded={isLoaded}
-    />
-  );
+/** Frame-driven SVG playback. Source FPS is converted to composition FPS. */
+export const Lottie: React.FC<LottieProps> = ({src,frameStart=0,frameEnd,playbackRate=1,loop=false,width,height,style,className,loadingTimeoutMs=10000,onReady,onError}) => {
+ const container=useRef<HTMLDivElement>(null),animation=useRef<AnimationItem|null>(null);
+ const [loadRevision,setLoadRevision]=useState(0);
+ const [ready,setReady]=useState(false),[error,setError]=useState<string|null>(null);
+ const callbacks=useRef({onReady,onError});callbacks.current={onReady,onError};
+ const absolute=useCurrentFrame(),relative=useRelativeCurrentFrame(),{fps}=useVideoConfig();
+ const frame=relative??absolute;
+ useEffect(()=>{
+  let cancelled=false,settled=false,anim:AnimationItem|null=null;
+  setReady(false);setError(null);
+  const fail=(cause:unknown)=>{if(cancelled||settled)return;settled=true;clearTimeout(timer);const e=cause instanceof Error?cause:new Error('Lottie failed to load');setError(e.message);anim?.destroy();if(animation.current===anim)animation.current=null;callbacks.current.onError?.(e);};
+  const timer=setTimeout(()=>fail(new Error('Lottie loading timed out')),loadingTimeoutMs);
+  if(!Number.isFinite(loadingTimeoutMs)||loadingTimeoutMs<100||loadingTimeoutMs>60000){fail(new Error('loadingTimeoutMs must be 100..60000'));return ()=>{cancelled=true;clearTimeout(timer);};}
+  void import('lottie-web').then(module=>{
+   if(cancelled||settled||!container.current)return;
+   anim=module.default.loadAnimation({container:container.current,renderer:'svg',autoplay:false,loop:false,...(typeof src==='string'?{path:src}:{animationData:JSON.parse(JSON.stringify(src))}),rendererSettings:{progressiveLoad:false,hideOnTransparent:true}});
+   animation.current=anim;
+   const loaded=()=>{if(cancelled||settled)return;settled=true;clearTimeout(timer);setReady(true);setLoadRevision(v=>v+1);};
+   anim.addEventListener('DOMLoaded',loaded);
+   anim.addEventListener('data_failed',()=>fail(new Error('Lottie data failed to load')));
+   if(anim.isLoaded)queueMicrotask(loaded);
+  }).catch(fail);
+  return ()=>{cancelled=true;clearTimeout(timer);anim?.destroy();if(animation.current===anim)animation.current=null;};
+ },[src,loadingTimeoutMs]);
+ useEffect(()=>{
+  const anim=animation.current;if(!ready||!anim)return;
+  try{const target=mapSourceFrame({frame,compositionFps:fps,sourceFps:anim.frameRate,frameStart,frameEnd:frameEnd??anim.totalFrames,rate:playbackRate,loop});anim.goToAndStop(target,true);}catch(cause){const e=cause instanceof Error?cause:new Error(String(cause));setError(e.message);callbacks.current.onError?.(e);}
+ },[frame,fps,ready,loadRevision,src,frameStart,frameEnd,playbackRate,loop]);
+ // Announce readiness after the frame synchronization effect has run.
+ useEffect(()=>{if(ready&&!error)callbacks.current.onReady?.();},[ready,error,loadRevision]);
+ return <div style={{width:width??'100%',height:height??'100%',...style}} className={className} data-lottie-loaded={ready&&!error} data-motionforge-error={error??undefined}><div ref={container} style={{width:'100%',height:'100%'}}/>{error?<div role="alert">Lottie: {error}</div>:null}</div>;
 };

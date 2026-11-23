@@ -1,0 +1,967 @@
+{
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "lines": 42,
+      "sha256": "fad253155b49136234d3677e95c95c499113bb093d58c780d4cfb8ab47f6c2b4",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": ".github/workflows/publish.yml",
+      "lines": 98,
+      "sha256": "67a5a6b652709dbca0f0eabadd1aac36b8895518983f92367b110657a8d4afb4",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": ".github/workflows/pullfrog.yml",
+      "lines": 77,
+      "sha256": "b7a46b65af8e147faa3181b30da798e81d6dc54f6e4227d8e3c8c71d138798bf",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/create-motionforge/bin/index.js",
+      "lines": 246,
+      "sha256": "1fec634146d9ec90aaa317140fed94927c34b98ce4cf2ebafab024827359bd50",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/create-motionforge/package-lock.json",
+      "lines": 1027,
+      "sha256": "0e77c0679a924c3a20fc22679a614893cd845dbd59c1f191ab3c7bd56c467794",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/create-motionforge/package.json",
+      "lines": 47,
+      "sha256": "b2549aee1e7c54d53edde45bb56545dce1416d37a1e2ef521fb018f19ce48f00",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/create-motionforge/templates/shared/tsconfig.json",
+      "lines": 27,
+      "sha256": "83d292a6930a317ea31ef48e220097d2ca10c6c505f41d5954795acef48ca3b9",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/browser-fixture.tsx",
+      "lines": 10,
+      "sha256": "ae677107fc53816b7c72ac76ea3084eca71e6c9171ef849469f4d0b0cb00c00b",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/package-lock.json",
+      "lines": 2377,
+      "sha256": "7d753d2f5a8950c2e2dc9cb8f578e6a87145a04ed325288d6d67180d158ce0ef",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/package.json",
+      "lines": 113,
+      "sha256": "b1ad457597ad65afdab5dadc43fb43bdb1b3f137f3602dcb8408c5c4962fad14",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/scripts/postbuild.mjs",
+      "lines": 8,
+      "sha256": "cfcd339ac47e8a05aaf223727a1a3860754611d536b663e263e6342b3aa12724",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/scripts/test-package.mjs",
+      "lines": 24,
+      "sha256": "7e73a8fc9c5a347621e9502a1eb1d846988393730f4cadb163f9304513eb18db",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/Composition.tsx",
+      "lines": 155,
+      "sha256": "6cdc7b0d98de1227f9186ec7eabb8590292fada93a9df1957995e368c96752b5",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/Effects.tsx",
+      "lines": 1377,
+      "sha256": "0d089ea4ad27c92c876d991d3349937d29d634106fea0ed7d8747c7d57a69a39",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/HyperFrame.tsx",
+      "lines": 144,
+      "sha256": "f347ec3d6e2b661fcc1fb82c52afccc7fed0d1d62bc86f715ab0875c4749876f",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/Lottie.tsx",
+      "lines": 54,
+      "sha256": "883387aa2a3fee406cc8cb58b3ede49273d206ee6a57d2623099b7bef8f94624",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/Media.tsx",
+      "lines": 413,
+      "sha256": "63faafc71129f7b759c7e5bfcaad10a406175f9369a4ca19c00ae465fa2a5126",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/Sequence.tsx",
+      "lines": 275,
+      "sha256": "c0086202f8b4e24f313230d07fa06f3db156da9700639fc50959b3c95d95e521",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/Trolic.tsx",
+      "lines": 22,
+      "sha256": "664d8e98324c66275c3261eee4b8143026d14e93200bcde20c65db7653a514ad",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/animations/CardExpansionMask.tsx",
+      "lines": 53,
+      "sha256": "f03127a16c8373b0a0be397cdbdf4d2817dafdc1b79cd9f05349c1c8a13512f4",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/animations/DepthGallery3D.tsx",
+      "lines": 71,
+      "sha256": "365da3680bbdf025a6415a05c2964c54e9158ecaa76d30635b01e4a46ca397ea",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/animations/DitheringEffect.tsx",
+      "lines": 90,
+      "sha256": "3ab0a92814d349a93ac2f0f10b9af36a306cd8abad7883b9f792376d4ab200ce",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/animations/FlipImageReveal.tsx",
+      "lines": 87,
+      "sha256": "02d2ae5de45e130b4f36a9f05189f1d1e7fd46e2df3a802eff5ba2d97af74d56",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/animations/KineticTypography.tsx",
+      "lines": 146,
+      "sha256": "b80ebca682982eafe869ff654fb18c0f6a580197ea8cc561694d0cfe8c2d6c8a",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/animations/LiquidText.tsx",
+      "lines": 112,
+      "sha256": "7faae9670bb883a2b8537c15936228633b55fe0e47c6d4b2b9c351f85ab3d922",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/animations/ShaderImageReveal.tsx",
+      "lines": 97,
+      "sha256": "b68422303924c42e5c609b85c977a70b829e1bdbc72c2d21c80f9d6a6780a411",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/animations/StickyGridScroll.tsx",
+      "lines": 92,
+      "sha256": "24d4570c18594e24ee08f9d7aa095b413f188f78cbe411f09e27ca46fb35b8cb",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/components/animations/TextStack3D.tsx",
+      "lines": 99,
+      "sha256": "5c0db2df28aa3979e2a46e552b46ae8c8e0005e60087573ab0e17c500cc53a8f",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/core/context.tsx",
+      "lines": 293,
+      "sha256": "94ad94c58cb54ed278f4481d0d10c8a72f6dae02767d613eadb4aee1bc121de0",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/core/types.ts",
+      "lines": 141,
+      "sha256": "87ad1e15bd40f57c384b869878a83abd6ef204f6d47b928615264c835e9f75e6",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/demo/DemoCinematicTypography.tsx",
+      "lines": 45,
+      "sha256": "b3311f66aeb55c75cdbe10f93faf38415a100b1faeba95bdbc25f993ff8d5b7c",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/demo/DemoComposition.tsx",
+      "lines": 537,
+      "sha256": "cfd96eda92e255d90370424da6762e6473d35afd8278a22128c2b1c73712847a",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/demo/DemoComposition2.tsx",
+      "lines": 382,
+      "sha256": "3b7c7da4694145b5165cd6f43f9a7825667ab6aff52d2685c9ab3ecfbb0591b8",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/demo/DemoComposition3.tsx",
+      "lines": 520,
+      "sha256": "f555c7552c282b4c42579077763b3f48944bd222da1d27c9238956a2ae6b2672",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/demo/DemoComposition4.tsx",
+      "lines": 353,
+      "sha256": "2475e967269a9e58e4122fff1edb0e014e4d3849a66e5cb98073063d59d17318",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/demo/DemoComposition5.tsx",
+      "lines": 494,
+      "sha256": "82cf0c9c0273e336f2398a40efd4bb29f5160771e094bdddc17870f934deee55",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/demo/DemoLottie.tsx",
+      "lines": 130,
+      "sha256": "2701831a0aefe06a5f02d131696e9ddfcd2f944b648a2ab768e5fb03e92f1b5d",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/demo/DemoWebGL.tsx",
+      "lines": 32,
+      "sha256": "812d33b28dfda8efb821f99e63e0475ee405a3bbaa187b019e702cc2d9629528",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/hooks/animation.ts",
+      "lines": 334,
+      "sha256": "24214fc4775bf2eba3822fc3637b8135a833ab7f30d8da3105be0b5be48bb5d0",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/hooks/performance.ts",
+      "lines": 180,
+      "sha256": "bd57d96ac2297cf696a830d215a129058e30a6e2ed81bfa4bc1a996aa696bdd3",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/icons/index.tsx",
+      "lines": 1444,
+      "sha256": "03590811830a2581f2ab03978f0f7df8d3ab597990dc545bedb6dab7567eab3f",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/index.ts",
+      "lines": 245,
+      "sha256": "1000e44261bbf76a40de6098978632dd1240df1bbc77786d8f250c8ed88c3be6",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/player/Player.tsx",
+      "lines": 595,
+      "sha256": "76802879cff5a437d60451528fbbe47255026582236854151e298932be8fdb97",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/renderer/cache.ts",
+      "lines": 284,
+      "sha256": "41ee9d6896a24f0b6db811e68122a980133a931d73044f9006d449bfabda9516",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/renderer/export.ts",
+      "lines": 704,
+      "sha256": "68e51f68260b441e28ab8a8ced0811eb6b0b3dac760d1fa68bc1412c29713a17",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/renderer/index.ts",
+      "lines": 342,
+      "sha256": "c6a527f2dd9ebbf625f35dcf9298457b89978b61aab23e8306115e11a15a76d1",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/trolic.ts",
+      "lines": 5,
+      "sha256": "89903f1a8c272f59f64c625bccf88280ce2d49290fa29e67e3180018eedfc6ce",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/utils/animation.ts",
+      "lines": 465,
+      "sha256": "6280be0c46c068af4886acdb6072d080826c9a10bea29cc4518090517eed427d",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/utils/frame-time.ts",
+      "lines": 8,
+      "sha256": "9885f7c58ae201813fa2b087f825429180bf8482c6220b1339e3c067333a452a",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/src/utils/transitions.ts",
+      "lines": 218,
+      "sha256": "3f7eb733241bc18883fb6a38cb2f0c7288c179f812204d363e3a3a312124898a",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/tsconfig.json",
+      "lines": 25,
+      "sha256": "f37fd06c9e39abb690770d7670aec15c03b08d6bc60ab8384296960f940b196c",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "packages/motionforge/tsup.config.ts",
+      "lines": 53,
+      "sha256": "72bc9767f8977ff087544623aa86ac5ba1be233924482774e99d02df91459e71",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/app/api/render/route.ts",
+      "lines": 272,
+      "sha256": "cfbe98654ea04b0b3b940a91555bc368470b67db7266f7c2aa736bbdd32b1a69",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/app/api/route.ts",
+      "lines": 5,
+      "sha256": "bb3323e70b608cf916b285f8942d8efabb02166f84f9e5a8aa6fe9e417344bce",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/app/layout.tsx",
+      "lines": 51,
+      "sha256": "1934607317d073c5309079c3c131306e5b4b53a50cb332b0b657543acc7149ab",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/app/page.tsx",
+      "lines": 263,
+      "sha256": "28d3922e56790727c729db66f04496ff1e75486f3f80194c3dc7c102a251525a",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/accordion.tsx",
+      "lines": 66,
+      "sha256": "7251e973cc6896411e3348c1e9cd10bb359934b0e766055c9a3439b07b775edc",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/alert-dialog.tsx",
+      "lines": 157,
+      "sha256": "59967c334f56dd44100e49b1fc18db428e7f15f5a28b9c2c4f9a3b7dcb4db4b7",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/alert.tsx",
+      "lines": 66,
+      "sha256": "49d8311589b810b106aada8ef7b13f70b2b1f68cfce4e1458b7f31a191f420e9",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/aspect-ratio.tsx",
+      "lines": 11,
+      "sha256": "6a75117416aa89200cf31e8d61643b428e812f479caea857c80004b26d893e79",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/avatar.tsx",
+      "lines": 53,
+      "sha256": "e8672934f1c315f36cdae39380454ba8c2da62aca420dfb827d96693091419c4",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/badge.tsx",
+      "lines": 46,
+      "sha256": "f41c11fc13e9a1f1b849349cb51b137ddd27de0a17c5339675c789d58f556cc4",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/breadcrumb.tsx",
+      "lines": 109,
+      "sha256": "22f3f4c13ed1085c4131379bfccc6fb173a474f861636bc2736506820153aa08",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/button.tsx",
+      "lines": 59,
+      "sha256": "82403231e33fd3d45b111e5e819df194cdfa7cef9a726770185724a60bd20932",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/calendar.tsx",
+      "lines": 213,
+      "sha256": "fe832b1ba33bd42a41cd2b66c7e156f5f421af87f8ceb799eea5db48bab6d294",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/card.tsx",
+      "lines": 92,
+      "sha256": "78cdb63dff3ec7ef074ada630ff20a5d8004768b6cbe24ed134a8bfba12bafbb",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/carousel.tsx",
+      "lines": 241,
+      "sha256": "b7ea0dda3903d972c186f739e23da61f547bc83b5a0bf13b16856577846d5fc3",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/chart.tsx",
+      "lines": 353,
+      "sha256": "670849399b33fecf7e46aa222c52f6a7c294faac079f5227f8c01c594822fd5d",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/checkbox.tsx",
+      "lines": 32,
+      "sha256": "4c395ef15549e46068eb3b32a2a10fb5bfdb01f6834a3c0231a218a529015c83",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/collapsible.tsx",
+      "lines": 33,
+      "sha256": "c2c74dc3e99482d00a57de673b56920860c2ff4b330373d783843f505dc11dae",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/command.tsx",
+      "lines": 184,
+      "sha256": "4fb4f8f95dfbe884ae598661b80e541d62eacdfe2101beab58819ab58b96c2ea",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/context-menu.tsx",
+      "lines": 252,
+      "sha256": "6573f8ed4232ae9801a3098a5cd4549b43a1e0ac1fd2c495e552a862d81fba22",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/dialog.tsx",
+      "lines": 143,
+      "sha256": "491a87bfae8f28773624d353bf56b9288d0852413e814d508e0d086dc7b06edb",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/drawer.tsx",
+      "lines": 135,
+      "sha256": "0c9464ed4f95207ff6ec0b8f433f550388ea0fe57fecd36bbe100b084ee46a3e",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/dropdown-menu.tsx",
+      "lines": 257,
+      "sha256": "9b346378821ba06f9501e4571fd7678cd8819d6833f833daff72bec699565c06",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/form.tsx",
+      "lines": 167,
+      "sha256": "b41b4b10f5e11b2acc1accb7b027eba0581b5cdd549d3ccef92e30d1f4efcf54",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/hover-card.tsx",
+      "lines": 44,
+      "sha256": "031f6a309d87c8e42a2282fccc277dde75e373de8c93dad881582c9dc13e05d0",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/input-otp.tsx",
+      "lines": 77,
+      "sha256": "35d561c352fde4e34fc3481839649728300c01cfadac62aa84c375d6d812f4de",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/input.tsx",
+      "lines": 21,
+      "sha256": "6628e8fde207857b9ba08910d386eeea8213d7d745b4e0ae8b95332b52730db9",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/label.tsx",
+      "lines": 24,
+      "sha256": "9ec42c8a57e82311118b794318409ee02b2cebfa49ba6cce8457cff6448cd471",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/menubar.tsx",
+      "lines": 276,
+      "sha256": "d3c5b6060323b78aef1b32650e22d3d951d1b125404f76ffb967ed80446a3ddd",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/navigation-menu.tsx",
+      "lines": 168,
+      "sha256": "d71f57fe0f365541fbf5d00196b0b78a461d8c4f38d35293e5754680d93b9245",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/pagination.tsx",
+      "lines": 127,
+      "sha256": "53ffa0474d07dbfe1fb67f043a0ad7e7d24feecf950e65da8b929a90179c6ad4",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/popover.tsx",
+      "lines": 48,
+      "sha256": "29a217781737bbf5c430859b3de46097a44ada81c4143c2d05543d2167de0ee1",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/progress.tsx",
+      "lines": 31,
+      "sha256": "e7a89220fb49e18d6613956781cfd5eb38d5da36379e93f5fc90ccec127dc871",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/radio-group.tsx",
+      "lines": 45,
+      "sha256": "b12ca5cef859dd75b274337234bae66e413b0f97845243254a1dedcb2d7a7237",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/resizable.tsx",
+      "lines": 56,
+      "sha256": "41043c0f3dec3a41e163fcfbba4ed8138eeafcedd1aa40c007c3e195f34d37df",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/scroll-area.tsx",
+      "lines": 58,
+      "sha256": "1c5d0b242d0513848f4bfa9b57ba7f438d9b1120617029941bfaa137196ecead",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/select.tsx",
+      "lines": 185,
+      "sha256": "8795c9fac7c48d565ff6c47cbf4cca8bfefe25d8cb3d7e7aeba36855739a76ab",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/separator.tsx",
+      "lines": 28,
+      "sha256": "e9dddbd8dbbc0eccd683306481b0f0bbc8e2b60ea97817416ebb9fe7fbbbdca8",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/sheet.tsx",
+      "lines": 139,
+      "sha256": "3d6a560c635fd91094e43191ecf73b124ccb2537e6060f85d5d31fcf68150e74",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/sidebar.tsx",
+      "lines": 726,
+      "sha256": "73561977bb06800b7d7700d844e4219b8dc4d14ac732c7a448e807005286d9f7",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/skeleton.tsx",
+      "lines": 13,
+      "sha256": "f2aea81d8baf2b621945382aabac150e3db40f20d19ac1abea7aff805f1dc33c",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/slider.tsx",
+      "lines": 63,
+      "sha256": "55140ef92c201c82d530dede076603611fbfb2cdc899e4d8459b58f6cbb2b235",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/sonner.tsx",
+      "lines": 25,
+      "sha256": "958d33cd8a85293728acad21c1f3881da56b805bc11a3ec862d6aa355c152d90",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/switch.tsx",
+      "lines": 31,
+      "sha256": "17f2390d98e8ce4d9e90155eac1918266914d6a9ada7c276b5d1c917cef0e969",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/table.tsx",
+      "lines": 116,
+      "sha256": "7b8c7a952cf49e78aafe5f628c3bd90f7e01bd5602eb5d3650bef5727a8186d7",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/tabs.tsx",
+      "lines": 66,
+      "sha256": "e8469e599381cf021ce751c27cca3d8cb06440a45665ca9c2ef2efb0acef1fd9",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/textarea.tsx",
+      "lines": 18,
+      "sha256": "de4e9fb0fd8e8ed10ea2e475ffe202a922ffe77e3f3edb2c517b0781447ad1b4",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/toast.tsx",
+      "lines": 129,
+      "sha256": "45d3d86ddb0b098a2bbbdca8458369d4a1fb046f77d9e106b690727ff6658afd",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/toaster.tsx",
+      "lines": 35,
+      "sha256": "e4957974d6393d08f8237e6660a522e4f314610c6743b21c28f256efdb7fff7c",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/toggle-group.tsx",
+      "lines": 73,
+      "sha256": "09eebce0dcbac76f860d4b6df5261c4f385f5ba233f88a0cd8dde91b1772abeb",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/toggle.tsx",
+      "lines": 47,
+      "sha256": "b201563ea8cdef3680a3d9bf272cfc5918a5ab6e1079d7ff8d6273df7fce2849",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/components/ui/tooltip.tsx",
+      "lines": 61,
+      "sha256": "8d8a3645f547334b759341daf94a20b12a8ba17e8de4ad6e4e1c64b38842c1e3",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/hooks/use-mobile.ts",
+      "lines": 19,
+      "sha256": "ad0936f84f1df79d3697bfbff9c18f8ad58431c1cbaf2359c6a853b0fcc9f28b",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/hooks/use-toast.ts",
+      "lines": 194,
+      "sha256": "12f8fcd1101acdd4a1cf6952d85aa8997d2a53aa9956d3cb77a85d441e54b1a9",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/db.ts",
+      "lines": 13,
+      "sha256": "ce5d51390121a452bc0a4d5208deaff71c583177773bcbbcd15b0af8ab48e2fc",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/Composition.tsx",
+      "lines": 155,
+      "sha256": "6cdc7b0d98de1227f9186ec7eabb8590292fada93a9df1957995e368c96752b5",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/Effects.tsx",
+      "lines": 1377,
+      "sha256": "0d089ea4ad27c92c876d991d3349937d29d634106fea0ed7d8747c7d57a69a39",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/Lottie.tsx",
+      "lines": 182,
+      "sha256": "6251eb42344682e4a035378d985ae892959d035c75e4faf3af86e98548d56639",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/Media.tsx",
+      "lines": 413,
+      "sha256": "63faafc71129f7b759c7e5bfcaad10a406175f9369a4ca19c00ae465fa2a5126",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/Sequence.tsx",
+      "lines": 275,
+      "sha256": "c0086202f8b4e24f313230d07fa06f3db156da9700639fc50959b3c95d95e521",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/animations/CardExpansionMask.tsx",
+      "lines": 53,
+      "sha256": "f03127a16c8373b0a0be397cdbdf4d2817dafdc1b79cd9f05349c1c8a13512f4",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/animations/DepthGallery3D.tsx",
+      "lines": 71,
+      "sha256": "365da3680bbdf025a6415a05c2964c54e9158ecaa76d30635b01e4a46ca397ea",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/animations/DitheringEffect.tsx",
+      "lines": 90,
+      "sha256": "3ab0a92814d349a93ac2f0f10b9af36a306cd8abad7883b9f792376d4ab200ce",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/animations/FlipImageReveal.tsx",
+      "lines": 87,
+      "sha256": "02d2ae5de45e130b4f36a9f05189f1d1e7fd46e2df3a802eff5ba2d97af74d56",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/animations/KineticTypography.tsx",
+      "lines": 146,
+      "sha256": "b80ebca682982eafe869ff654fb18c0f6a580197ea8cc561694d0cfe8c2d6c8a",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/animations/LiquidText.tsx",
+      "lines": 112,
+      "sha256": "7faae9670bb883a2b8537c15936228633b55fe0e47c6d4b2b9c351f85ab3d922",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/animations/ShaderImageReveal.tsx",
+      "lines": 97,
+      "sha256": "b68422303924c42e5c609b85c977a70b829e1bdbc72c2d21c80f9d6a6780a411",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/animations/StickyGridScroll.tsx",
+      "lines": 92,
+      "sha256": "24d4570c18594e24ee08f9d7aa095b413f188f78cbe411f09e27ca46fb35b8cb",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/components/animations/TextStack3D.tsx",
+      "lines": 99,
+      "sha256": "5c0db2df28aa3979e2a46e552b46ae8c8e0005e60087573ab0e17c500cc53a8f",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/core/context.tsx",
+      "lines": 293,
+      "sha256": "94ad94c58cb54ed278f4481d0d10c8a72f6dae02767d613eadb4aee1bc121de0",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/core/types.ts",
+      "lines": 141,
+      "sha256": "87ad1e15bd40f57c384b869878a83abd6ef204f6d47b928615264c835e9f75e6",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/demo/DemoCinematicTypography.tsx",
+      "lines": 45,
+      "sha256": "b3311f66aeb55c75cdbe10f93faf38415a100b1faeba95bdbc25f993ff8d5b7c",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/demo/DemoComposition.tsx",
+      "lines": 537,
+      "sha256": "cfd96eda92e255d90370424da6762e6473d35afd8278a22128c2b1c73712847a",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/demo/DemoComposition2.tsx",
+      "lines": 382,
+      "sha256": "3b7c7da4694145b5165cd6f43f9a7825667ab6aff52d2685c9ab3ecfbb0591b8",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/demo/DemoComposition3.tsx",
+      "lines": 520,
+      "sha256": "f555c7552c282b4c42579077763b3f48944bd222da1d27c9238956a2ae6b2672",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/demo/DemoComposition4.tsx",
+      "lines": 353,
+      "sha256": "2475e967269a9e58e4122fff1edb0e014e4d3849a66e5cb98073063d59d17318",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/demo/DemoComposition5.tsx",
+      "lines": 494,
+      "sha256": "82cf0c9c0273e336f2398a40efd4bb29f5160771e094bdddc17870f934deee55",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/demo/DemoLottie.tsx",
+      "lines": 130,
+      "sha256": "2701831a0aefe06a5f02d131696e9ddfcd2f944b648a2ab768e5fb03e92f1b5d",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/demo/DemoWebGL.tsx",
+      "lines": 32,
+      "sha256": "812d33b28dfda8efb821f99e63e0475ee405a3bbaa187b019e702cc2d9629528",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/hooks/animation.ts",
+      "lines": 334,
+      "sha256": "24214fc4775bf2eba3822fc3637b8135a833ab7f30d8da3105be0b5be48bb5d0",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/hooks/performance.ts",
+      "lines": 180,
+      "sha256": "bd57d96ac2297cf696a830d215a129058e30a6e2ed81bfa4bc1a996aa696bdd3",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/icons/index.tsx",
+      "lines": 1444,
+      "sha256": "03590811830a2581f2ab03978f0f7df8d3ab597990dc545bedb6dab7567eab3f",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/index.ts",
+      "lines": 240,
+      "sha256": "5ca962cf2d33fa4d2aa8c5036b8308507a1f49d7611a67c17bb6d4cedfd485f8",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/player/Player.tsx",
+      "lines": 595,
+      "sha256": "76802879cff5a437d60451528fbbe47255026582236854151e298932be8fdb97",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/renderer/cache.ts",
+      "lines": 284,
+      "sha256": "41ee9d6896a24f0b6db811e68122a980133a931d73044f9006d449bfabda9516",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/renderer/export.ts",
+      "lines": 705,
+      "sha256": "79aab26929edcdeebe84e78b35d55b789af83a63cb6fef4a77d6663cbd8171cb",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/renderer/index.ts",
+      "lines": 342,
+      "sha256": "c6a527f2dd9ebbf625f35dcf9298457b89978b61aab23e8306115e11a15a76d1",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/utils/animation.ts",
+      "lines": 465,
+      "sha256": "6280be0c46c068af4886acdb6072d080826c9a10bea29cc4518090517eed427d",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/remotion/utils/transitions.ts",
+      "lines": 218,
+      "sha256": "3f7eb733241bc18883fb6a38cb2f0c7288c179f812204d363e3a3a312124898a",
+      "manualReview": "not-complete"
+    },
+    {
+      "path": "src/lib/utils.ts",
+      "lines": 6,
+      "sha256": "7c8c3dfc0cdd370d44932828eb067ef771c8fe7996693221d5d4b90af6d54f2d",
+      "manualReview": "not-complete"
+    }
+  ],
+  "automatedSignals": [
+    {
+      "path": "packages/create-motionforge/bin/index.js",
+      "line": 243,
+      "kind": "suppressed-check",
+      "excerpt": "// @ts-ignore"
+    },
+    {
+      "path": "packages/motionforge/src/components/Effects.tsx",
+      "line": 295,
+      "kind": "randomness",
+      "excerpt": "const offset = shouldGlitch ? Math.random() * intensity : 0;"
+    },
+    {
+      "path": "packages/motionforge/src/components/Effects.tsx",
+      "line": 296,
+      "kind": "randomness",
+      "excerpt": "const colorOffset = shouldGlitch ? Math.random() * 2 - 1 : 0;"
+    },
+    {
+      "path": "packages/motionforge/src/components/HyperFrame.tsx",
+      "line": 78,
+      "kind": "raw-html",
+      "excerpt": "iframeRef.current.srcdoc = doc;"
+    },
+    {
+      "path": "packages/motionforge/src/components/HyperFrame.tsx",
+      "line": 101,
+      "kind": "suppressed-check",
+      "excerpt": "// @ts-ignore"
+    },
+    {
+      "path": "packages/motionforge/src/components/HyperFrame.tsx",
+      "line": 103,
+      "kind": "suppressed-check",
+      "excerpt": "// @ts-ignore"
+    },
+    {
+      "path": "packages/motionforge/src/components/HyperFrame.tsx",
+      "line": 107,
+      "kind": "raw-html",
+      "excerpt": "// Fallback to postMessage if direct access is blocked (though same-origin srcdoc should be fine)"
+    },
+    {
+      "path": "packages/motionforge/src/demo/DemoComposition4.tsx",
+      "line": 298,
+      "kind": "placeholder-render",
+      "excerpt": "subtitle=\"Upward rising flames simulation\""
+    },
+    {
+      "path": "packages/motionforge/src/renderer/index.ts",
+      "line": 71,
+      "kind": "placeholder-render",
+      "excerpt": "frames.push(`frame-${frame}`);"
+    },
+    {
+      "path": "src/app/api/render/route.ts",
+      "line": 60,
+      "kind": "randomness",
+      "excerpt": "const jobId = `render_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;"
+    },
+    {
+      "path": "src/app/api/render/route.ts",
+      "line": 230,
+      "kind": "placeholder-render",
+      "excerpt": "// Simulate frame-by-frame rendering"
+    },
+    {
+      "path": "src/app/api/render/route.ts",
+      "line": 247,
+      "kind": "placeholder-render",
+      "excerpt": "// Simulate frame processing time"
+    },
+    {
+      "path": "src/components/ui/chart.tsx",
+      "line": 83,
+      "kind": "raw-html",
+      "excerpt": "dangerouslySetInnerHTML={{"
+    },
+    {
+      "path": "src/components/ui/sidebar.tsx",
+      "line": 611,
+      "kind": "randomness",
+      "excerpt": "return `${Math.floor(Math.random() * 40) + 50}%`"
+    },
+    {
+      "path": "src/lib/remotion/components/Effects.tsx",
+      "line": 295,
+      "kind": "randomness",
+      "excerpt": "const offset = shouldGlitch ? Math.random() * intensity : 0;"
+    },
+    {
+      "path": "src/lib/remotion/components/Effects.tsx",
+      "line": 296,
+      "kind": "randomness",
+      "excerpt": "const colorOffset = shouldGlitch ? Math.random() * 2 - 1 : 0;"
+    },
+    {
+      "path": "src/lib/remotion/demo/DemoComposition4.tsx",
+      "line": 298,
+      "kind": "placeholder-render",
+      "excerpt": "subtitle=\"Upward rising flames simulation\""
+    },
+    {
+      "path": "src/lib/remotion/renderer/index.ts",
+      "line": 71,
+      "kind": "placeholder-render",
+      "excerpt": "frames.push(`frame-${frame}`);"
+    }
+  ],
+  "note": "All inventoried text lines scanned with patterns; not equivalent to manual line-by-line review."
+}

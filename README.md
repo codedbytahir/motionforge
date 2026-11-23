@@ -2,6 +2,8 @@
 
 **The Cinematic Programmatic Video Engine**
 
+> **Source preview — not an audit-cleared stable release.** Intended SDK 1.5.0 / CLI 1.2.0. Manual review and license clearance remain incomplete; see [audit status](audit/final/REVIEW.md) and [publishing guide](audit/final/PUBLISHING.md). npm publication is separate.
+
 <div align="center">
   <video src="./public/demo-cinematic.webm" width="100%" autoplay muted loop></video>
 </div>
@@ -10,7 +12,7 @@ MotionForge is a high-performance framework for creating videos programmatically
 
 ---
 
-## ✨ New in v2.0: Cinematic Suite
+## ✨ Cinematic Suite
 
 We've integrated a suite of high-end animations designed for modern video production:
 

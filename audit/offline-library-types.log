@@ -1,0 +1,4 @@
+
+> motionforge@1.5.0 typecheck
+> tsc --noEmit
+

@@ -1,0 +1,79 @@
+
+> motionforge@1.5.0 build
+> node -e "require('fs').rmSync('dist',{recursive:true,force:true})" && tsup && node scripts/postbuild.mjs
+
+CLI Building entry: {"trolic":"src/trolic.ts"}
+CLI Using tsconfig: tsconfig.json
+CLI Building entry: {"icons/index":"src/icons/index.tsx"}
+CLI Using tsconfig: tsconfig.json
+CLI Building entry: {"player/Player":"src/player/Player.tsx"}
+CLI Using tsconfig: tsconfig.json
+CLI Building entry: {"renderer/index":"src/renderer/index.ts"}
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/user/motionforge/packages/motionforge/tsup.config.ts
+CLI tsup v8.5.1
+CLI Using tsup config: /home/user/motionforge/packages/motionforge/tsup.config.ts
+CLI tsup v8.5.1
+CLI Using tsup config: /home/user/motionforge/packages/motionforge/tsup.config.ts
+CLI tsup v8.5.1
+CLI Using tsup config: /home/user/motionforge/packages/motionforge/tsup.config.ts
+CLI Building entry: src/index.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/user/motionforge/packages/motionforge/tsup.config.ts
+CLI Target: es2020
+ESM Build start
+CJS Build start
+CLI Target: es2020
+ESM Build start
+CJS Build start
+CLI Target: es2020
+ESM Build start
+CLI Target: es2020
+ESM Build start
+CLI Target: es2020
+ESM Build start
+CJS Build start
+ESM dist/icons/index.js     34.73 KB
+ESM dist/icons/index.js.map 55.14 KB
+ESM ⚡️ Build success in 112ms
+ESM dist/renderer/index.js  9.67 KB
+ESM dist/export-AHT6OA4O.js 468.00 B
+ESM dist/chunk-PSXEQGWG.js  14.12 KB
+ESM ⚡️ Build success in 106ms
+CJS dist/icons/index.cjs     41.36 KB
+CJS dist/icons/index.cjs.map 55.52 KB
+CJS ⚡️ Build success in 122ms
+ESM dist/player/Player.js   23.15 KB
+ESM dist/export-AHT6OA4O.js 468.00 B
+ESM dist/chunk-PSXEQGWG.js  14.12 KB
+ESM ⚡️ Build success in 129ms
+CJS dist/trolic.cjs 8.41 KB
+CJS ⚡️ Build success in 147ms
+ESM dist/trolic.js 6.44 KB
+ESM ⚡️ Build success in 152ms
+DTS Build start
+DTS Build start
+DTS Build start
+DTS Build start
+DTS Build start
+ESM dist/index.js     170.13 KB
+ESM dist/index.js.map 386.47 KB
+ESM ⚡️ Build success in 3687ms
+CJS dist/index.cjs     179.54 KB
+CJS dist/index.cjs.map 386.70 KB
+CJS ⚡️ Build success in 3687ms
+DTS ⚡️ Build success in 7254ms
+DTS dist/trolic.d.ts  1.44 KB
+DTS dist/trolic.d.cts 1.44 KB
+DTS ⚡️ Build success in 7029ms
+DTS dist/renderer/index.d.ts 9.63 KB
+DTS ⚡️ Build success in 7225ms
+DTS dist/icons/index.d.ts  6.88 KB
+DTS dist/icons/index.d.cts 6.88 KB
+DTS ⚡️ Build success in 8282ms
+DTS dist/player/Player.d.ts 475.00 B
+DTS ⚡️ Build success in 11456ms
+DTS dist/index.d.ts  48.45 KB
+DTS dist/index.d.cts 48.45 KB

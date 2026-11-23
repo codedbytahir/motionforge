@@ -1,0 +1,2 @@
+license declarations: Counter({'MIT': 922, 'Apache-2.0': 65, 'UNKNOWN': 53, 'ISC': 41, 'MPL-2.0': 15, 'Apache-2.0 AND MIT': 11, 'BSD-3-Clause': 11, 'LGPL-3.0-or-later': 10, 'BSD-2-Clause': 8, 'BlueOak-1.0.0': 4, '0BSD': 4, 'Apache-2.0 AND LGPL-3.0-or-later': 3, 'Apache-2.0 AND LGPL-3.0-or-later AND MIT': 1, 'Python-2.0': 1, 'CC-BY-4.0': 1, 'CC0-1.0': 1, 'MIT AND ISC': 1})
+first party files 152

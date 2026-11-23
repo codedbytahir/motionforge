@@ -33,6 +33,7 @@ export class FrameCache<T = ImageData> {
   constructor(options: { maxSize?: number; maxAge?: number } = {}) {
     this.maxSize = options.maxSize ?? 100 * 1024 * 1024; // 100MB default
     this.maxAge = options.maxAge ?? 5 * 60 * 1000; // 5 minutes default
+    if (!Number.isFinite(this.maxSize) || this.maxSize < 1 || !Number.isFinite(this.maxAge) || this.maxAge < 0) throw new RangeError('Invalid cache budget/TTL');
   }
 
   /**
@@ -79,7 +80,10 @@ export class FrameCache<T = ImageData> {
    */
   set(key: string, data: T, size?: number): void {
     // Estimate size if not provided
-    const entrySize = size ?? this.estimateSize(data);
+    const entrySize = Math.max(1,size ?? this.estimateSize(data));
+    if (!Number.isFinite(entrySize)) throw new RangeError('Cache size must be finite');
+    this.cache.delete(key); // Replacement should not evict unrelated entries.
+    if (entrySize > this.maxSize) return;
 
     // Evict entries if we would exceed max size
     this.evictIfNeeded(entrySize);
@@ -160,7 +164,7 @@ export class FrameCache<T = ImageData> {
     while (this.getSize() + neededSize > this.maxSize && this.cache.size > 0) {
       // Remove oldest entry (first in Map)
       const firstKey = this.cache.keys().next().value;
-      if (firstKey) {
+      if (firstKey !== undefined) {
         this.cache.delete(firstKey);
       } else {
         break;
@@ -172,7 +176,7 @@ export class FrameCache<T = ImageData> {
    * Estimate size of data
    */
   private estimateSize(data: T): number {
-    if (data instanceof ImageData) {
+    if (typeof ImageData !== 'undefined' && data instanceof ImageData) {
       return data.data.length;
     }
     if (typeof data === 'string') {

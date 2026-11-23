@@ -1,6 +1,6 @@
 {
   "name": "create-motionforge",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "CLI tool to bootstrap MotionForge projects",
   "bin": {
     "create-motionforge": "./bin/index.js"
@@ -8,11 +8,13 @@
   "files": [
     "bin",
     "templates",
-    "README.md"
+    "README.md",
+    "RELEASE.md"
   ],
   "type": "module",
   "scripts": {
-    "start": "node ./bin/index.js"
+    "start": "node ./bin/index.js",
+    "test": "node ../../agent-integration/scripts/test-scaffold.mjs"
   },
   "keywords": [
     "motionforge",
@@ -38,5 +40,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
+  },
+  "engines": {
+    "node": ">=20.19.0"
   }
 }

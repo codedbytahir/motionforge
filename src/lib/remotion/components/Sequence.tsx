@@ -1,7 +1,7 @@
 'use client';
 
 import React, { ReactNode, createContext, useContext, useState, useEffect } from 'react';
-import { useCurrentFrame } from '../core/context';
+import { FrameContext, useCurrentFrame } from '../core/context';
 
 // Sequence Context
 interface SequenceContextValue {
@@ -97,12 +97,12 @@ const SequenceFrameProvider: React.FC<SequenceFrameProviderProps> = ({
   relativeFrame,
   children,
 }) => {
-  // This would need to integrate with the main frame context
-  // For now, we pass the relative frame through context
+  const parent = useContext(FrameContext);
+  if (!parent) throw new Error('Sequence requires a FrameProvider');
   return (
-    <RelativeFrameContext.Provider value={relativeFrame}>
-      {children}
-    </RelativeFrameContext.Provider>
+    <FrameContext.Provider value={{...parent, frame: relativeFrame}}>
+      <RelativeFrameContext.Provider value={relativeFrame}>{children}</RelativeFrameContext.Provider>
+    </FrameContext.Provider>
   );
 };
 

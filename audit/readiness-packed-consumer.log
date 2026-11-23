@@ -1,0 +1,5 @@
+
+> motionforge@1.5.0 test:package
+> node scripts/test-package.mjs
+
+PASS tarball: 14 export targets; strict NodeNext + Bundler; CSS resolution; npm consumer TS 5.9.3
